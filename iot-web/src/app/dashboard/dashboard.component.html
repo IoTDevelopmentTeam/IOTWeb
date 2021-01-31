@@ -1,10 +1,31 @@
-<div style="display: block;">
-    <canvas baseChart
-    [datasets]="barChartData"
-    [labels]="barChartLabels"
-    [options]="barChartOptions"
-    [legend]="barChartLegend"
-    [chartType]="barChartType">
-</canvas>
-  </div>
+<div style="float:right;"><button routerLink="/device">Device</button></div>
+
   
+  
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        
+          <canvas baseChart
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
+          [legend]="barChartLegend"
+          [chartType]="barChartType">
+      </canvas>
+       
+      </div>
+      <div class="col-md-6">
+          <canvas baseChart
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType">
+      </canvas>
+        
+      </div>
+      
+    </div>
+  </div>

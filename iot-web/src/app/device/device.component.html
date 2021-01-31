@@ -1,4 +1,92 @@
-<p>device works!</p>
+<!-- <p>device works!</p>
 <input [(ngModel)]="x" required>
 
-<button (click)="getValue()">Get value</button>
+<button (click)="getValue()">Get value</button> -->
+
+<h1>{{pageName}}</h1>
+<span>{{title}}</span>
+<ul>
+    <li *ngFor="let device of devices">
+      
+        <div>
+          <div>
+            <input type="text" name="deviceId" [disabled]="true" id="deviceId" value="{{device.deviceId}}">
+         
+            <input type="text" name="deviceTagName" [disabled]="true" id="deviceTagName" value="{{device.deviceTagName}}">
+         
+            <input type="button" value="Detail" (click)="openDeviceDetailPopup(device)">
+            <button >X</button>
+          </div>
+        </div>
+    </li>
+</ul>
+
+<div *ngIf="showAddDevice" class="popupOuterClass">
+    <div class="popupMainClass">
+        <span class="close" (click)="AddDeviceCancel()">&times;</span>
+        <p>Add Device</p>
+        <label>Device Id : </label>
+        <input [(ngModel)]="deviceAddId" required />
+        <br/>
+        <label>Device TagName : </label>
+        <input [(ngModel)]="deviceAddTagName" required/>
+        <br/>
+        <label>Unique Identifier : </label>
+        <input [(ngModel)]="deviceAddUniqueIdentifier" required >
+        <br/>
+        <button (click)="AddDeviceSubmit()">Save</button>
+        <button (click)="AddDeviceCancel()">Close</button>
+    </div>
+</div>
+<div *ngIf="showDetailDevice" class="popupOuterClass">
+    <div class="popupMainClass">
+    <span class="close" (click)="DetailDeviceCancel()">&times;</span>
+    <p>Add Pane</p>
+    <label>Device TagName : </label>
+    <input [(ngModel)]="deviceDetailTagName" required/>
+    <br/>
+    <label>Data Type : </label>
+    <select name="DataType" #DataType (change)="onDataTypeSelected(DataType.value)" >
+        <option value="SelectDataType">--Select Data Type--</option>
+        <option value="Graph">Graph</option>
+        <option value="LiveData">Live Data</option>
+        <option value="Map">Map</option>
+    </select>
+    <br/>
+    <div *ngIf="showGraph" id="divGraphType">
+        <label>Graph Type : </label>
+        <select name="GraphType" id="GraphType" >
+            <option value="LineChart">Line Chart</option>
+            <option value="BarGraph">Bar Graph</option>
+            <option value="PieChart">Pie Chart</option>
+            <option value="GaugeChart">Gauge Chart</option>
+        </select>
+    <br/>
+    </div>
+    <div *ngIf="showMap" id="divMapType">
+        <label>Map Type : </label>
+        <select name="MapType" id="MapType">
+          
+        </select>
+    <br/>
+    </div>
+    <div *ngIf="showParam" id="divParam">
+        <label>Select Device Param : </label>
+        <ul>
+            <li>
+
+            </li>
+        </ul>
+    <br/>
+    </div>
+    <br/>
+    <button type="submit" (click)="DetailDeviceSubmit()">Save</button>
+    <button (click)="DetailDeviceCancel()">Close</button>
+    </div>
+</div>
+<!-- <button type="submit">Save</button> -->
+
+<!-- <button routerLink="/device/add">Add Device</button> -->
+<input type="button" value="Add Device" (click)="openAddDevicePopup()">
+<router-outlet></router-outlet>
+

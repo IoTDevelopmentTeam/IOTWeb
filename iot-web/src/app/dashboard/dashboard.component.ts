@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
+import {DashboardModel} from './dashboard-model';
+import {IotDataService} from '../iot-data.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,18 +12,71 @@ import { Color, Label } from 'ng2-charts';
 export class DashboardComponent implements OnInit {
   public barChartOptions = {
     scaleShowVerticalLines: false,
-    responsive: true
+    responsive: true,
+    scales: {
+      yAxes: [{
+          ticks: {
+              suggestedMin: 0
+              
+          }
+      }]
+    }
   };
-  public barChartLabels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  public barChartLabels:Array<string>= [];
   public barChartType = 'bar' as ChartType;
   public barChartLegend = true;
   public barChartData = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
+    {data:[1,2,3], label: 'Series A'}    
   ];
-  constructor() { }
+
+  public lineChartOptions = {
+    scaleShowVerticalLines: false,
+    responsive: true,
+    scales: {
+      yAxes: [{
+          ticks: {
+              suggestedMin: 0,
+              suggestedMax: 100
+          }
+      }]
+    }
+  };
+  public lineChartLabels:Array<string>= [];
+  public lineChartType = 'line' as ChartType;
+  public lineChartLegend = true;
+  public lineChartData = [
+    {data:[1,2,3], label: 'Series A'}    
+  ];
+
+  dashboarddata:DashboardModel=new DashboardModel();
+  dashboarddatas: Array<DashboardModel>=[];
+  constructor(private iotdataservice:IotDataService) { 
+    this.dashboarddatas=[];
+    this.barChartData[0].data=[];
+    this.lineChartData[0].data=[];
+
+  }
 
   ngOnInit(): void {
+    this.getDeviceData();
+  }
+  getDeviceData(){
+        
+     this.iotdataservice.getDeviceData().subscribe(data=>
+      {
+        this.dashboarddatas=data;
+        for(let data of this.dashboarddatas)
+        {
+         this.barChartLabels.push(data.content.loc);
+         this.barChartData[0].data.push(data.content.temp);
+         this.lineChartLabels.push(data.content.loc);
+         this.lineChartData[0].data.push(data.content.temp);
+        } 
+      }
+      
+    );
+     
+    
   }
 
 }

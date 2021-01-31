@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from "rxjs/index";
-import {DeviceModel} from './device/device-model'
+import {DeviceModel,DeviceAddModel} from './device/device-model'
 
 @Injectable({
   providedIn: 'root'
@@ -16,17 +16,16 @@ export class DeviceService {
   }
 
   getAllDeviceList(UserId:number):Observable<DeviceModel[]>{
-    console.log('test');
-    console.log(this.http.get<DeviceModel[]>(this.ApiUrl+'/'+UserId.toString()));
+    
     return this.http.get<DeviceModel[]>(this.ApiUrl+'/'+UserId.toString());
     
   }
    
-  addDevice(device:DeviceModel):Observable<any>
+  addDevice(device:DeviceAddModel):Observable<any>
   {
-    window.alert(device.DeviceTagName);
-    window.alert(device.InputBy);
-    window.alert(device.InputDate);
+   alert(JSON.stringify(device));
+   alert(this.addDeviceApiUrl);
+   //this.http.post(this.addDeviceApiUrl,device)
     return this.http.post(this.addDeviceApiUrl,device);
   }
   updateDevice(device:DeviceModel):Observable<any>

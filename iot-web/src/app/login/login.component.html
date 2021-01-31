@@ -1,0 +1,12 @@
+<form align="center">
+<p>User Login</p>
+<label>User Name : </label>
+<input type="text" id="txtUserName" #UserName/>
+<br/>
+<label>Password : </label>
+<input type="password" id="txtPassword" #Password/>
+<br/>
+<input type="button" value="Log In" (click)="UserLogin(UserName.value,Password.value)"/>
+</form>
+
+
