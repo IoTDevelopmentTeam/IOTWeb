@@ -6,6 +6,12 @@ export class DashboardModel {
     ptime:string='';
 }
 
+export class DeviceAssociationResult
+    {
+        IsDeviceUserAssociationSucceded:boolean=false;
+        Message:string='';
+    }
+
 export class data{
     loc:string='';
     temp:number=0;

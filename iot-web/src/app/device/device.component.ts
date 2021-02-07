@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { DeviceService } from '../device.service';
 import { UserService } from '../user.service';
-import { DeviceModel,DeviceDetail,DeviceAddModel } from './device-model';
+import { DeviceModel,DeviceDetail,DeviceAddModel,UserDeviceModel,UserDeviceModelResult } from './device-model';
 import {FormGroup,FormControl,FormBuilder,Validators} from '@angular/forms';
 import { UserModel } from '../login/user-model';
 
@@ -32,7 +32,11 @@ export class DeviceComponent implements OnInit {
   deviceAddTagName:string ='';
   deviceAddUniqueIdentifier:string ='';
   deviceDetailTagName:string='';
-  deviceadd:DeviceAddModel=new DeviceAddModel();
+  
+  userdevice:UserDeviceModel=new UserDeviceModel();
+  result:UserDeviceModelResult=new UserDeviceModelResult();
+
+
 
   constructor(private deviceservice:DeviceService,private userservice:UserService) { 
     this.devices=[];
@@ -79,16 +83,29 @@ export class DeviceComponent implements OnInit {
   closeDeviceDetailPopup(){
     this.showDetailDevice=false;
   }
-  AddDeviceSubmit(){
+  AddDeviceSubmit=async()=>{
     alert(this.deviceAddTagName);
     //this.deviceAddId,this.deviceAddTagName,this.deviceAddUniqueIdentifier,new Date(),this.user.userId);
-    this.deviceadd.DeviceTagName=this.deviceAddTagName;
-    this.deviceadd.DeviceUniqueIdentifier=this.deviceAddUniqueIdentifier;
-    this.deviceadd.InputBy=this.user.userId;
-    this.deviceadd.InputDate=new Date();
-    var data=this.deviceservice.addDevice(this.deviceadd);
-    this.closeAddDevicePopup();
-    this.getAllUserById(this.user.userId);
+    
+
+    this.userdevice.TagName=this.deviceAddTagName;
+    this.userdevice.DeviceName=this.deviceAddUniqueIdentifier;
+    this.userdevice.UserId=this.user.userId;
+
+     const promise=await this.deviceservice.addDevice(this.userdevice).toPromise().then(res => { 
+      
+        this.result=res;
+        alert('Device mapped successfully.');
+        this.closeAddDevicePopup();
+        this.getAllUserById(this.user.userId);
+      })
+      .catch(res=>
+        {alert('Error occured during device mapping.\n Error: '+JSON.stringify(res))
+      });
+       
+    alert(this.result.Mmessage);
+    
+   
   }
   AddDeviceCancel(){
     this.closeAddDevicePopup();

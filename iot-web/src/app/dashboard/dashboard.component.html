@@ -3,10 +3,10 @@
   
   
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        
+  <table border="0" width="100%">
+   <tr>
+     <td>
+      <div >
           <canvas baseChart
           [datasets]="barChartData"
           [labels]="barChartLabels"
@@ -14,9 +14,11 @@
           [legend]="barChartLegend"
           [chartType]="barChartType">
       </canvas>
-       
+   
       </div>
-      <div class="col-md-6">
+    </td>
+    <td>
+      <div>
           <canvas baseChart
           [datasets]="lineChartData"
           [labels]="lineChartLabels"
@@ -26,6 +28,7 @@
       </canvas>
         
       </div>
-      
-    </div>
-  </div>
+    </td>
+      </tr>
+    
+  </table>

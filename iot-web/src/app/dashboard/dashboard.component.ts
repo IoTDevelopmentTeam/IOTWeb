@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
   public barChartType = 'bar' as ChartType;
   public barChartLegend = true;
   public barChartData = [
-    {data:[1,2,3], label: 'Series A'}    
+    {data:[1,2,3], label: ''}    
   ];
 
   public lineChartOptions = {
@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit {
   public lineChartType = 'line' as ChartType;
   public lineChartLegend = true;
   public lineChartData = [
-    {data:[1,2,3], label: 'Series A'}    
+    {data:[1,2,3], label: ''}    
   ];
 
   dashboarddata:DashboardModel=new DashboardModel();
@@ -71,6 +71,8 @@ export class DashboardComponent implements OnInit {
          this.barChartData[0].data.push(data.content.temp);
          this.lineChartLabels.push(data.content.loc);
          this.lineChartData[0].data.push(data.content.temp);
+         this.barChartData[0].label=data.thingname;
+         this.lineChartData[0].label=data.thingname;
         } 
       }
       

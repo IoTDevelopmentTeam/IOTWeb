@@ -17,12 +17,22 @@ export class DeviceModel {
     }
 }
 
+export class UserDeviceModelResult{
+    IsDeviceUserAssociationSucceded:boolean=false;
+    Mmessage:string='';
+}
 export class DeviceAddModel {
-    DeviceId:number=0;
+   
     DeviceUniqueIdentifier:string='';
     DeviceTagName:string='';
     InputDate:Date=new Date();
-    InputBy:number=0;
+    InputBy:string='';
+}
+
+export class UserDeviceModel{
+    DeviceName:string='';
+    TagName:string='';
+    UserId:number=0;
 }
 
 export class DeviceDetail{

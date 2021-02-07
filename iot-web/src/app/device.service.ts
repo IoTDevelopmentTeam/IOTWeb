@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpParams} from '@angular/common/http';
+import { HttpClient,HttpHeaders} from '@angular/common/http';
+
 import {Observable} from "rxjs/index";
-import {DeviceModel,DeviceAddModel} from './device/device-model'
+import {DeviceModel,DeviceAddModel,UserDeviceModel} from './device/device-model'
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,20 @@ import {DeviceModel,DeviceAddModel} from './device/device-model'
 export class DeviceService {
   ApiUrl:string='http://localhost:50364/api/Device/DeviceList';
   addDeviceApiUrl:string='http://localhost:50364/api/Device/AddDevice';
+  addDeviceToUserApiUrl:string='http://localhost:50364/api/Device/UserDeviceAssociation';
   
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'JSON(application/json)'
+     
+    })
+  };
+ 
+  
+ 
   constructor(private http:HttpClient) { 
-   
+    
+    
   }
 
   getAllDeviceList(UserId:number):Observable<DeviceModel[]>{
@@ -21,12 +33,19 @@ export class DeviceService {
     
   }
    
-  addDevice(device:DeviceAddModel):Observable<any>
+  addDevice(userdevice:UserDeviceModel):Observable<any>
   {
-   alert(JSON.stringify(device));
-   alert(this.addDeviceApiUrl);
-   //this.http.post(this.addDeviceApiUrl,device)
-    return this.http.post(this.addDeviceApiUrl,device);
+   const headers = new HttpHeaders()
+   headers.set('content-type', 'application/json'); 
+   headers.set('Access-Control-Allow-Credentials', 'true'); 
+   headers.set('Access-Control-Allow-Origin', '*'); 
+   headers.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, PUT, OPTIONS'); 
+   headers.set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With'); 
+    
+
+    return this.http.post<any>(this.addDeviceToUserApiUrl,userdevice,{headers});
+    
+  
   }
   updateDevice(device:DeviceModel):Observable<any>
   {

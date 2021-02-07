@@ -1,0 +1,28 @@
+<div align="center">
+    <p>User Registration</p>
+    <label>userId : </label>
+    <input [(ngModel)]="userId"/>
+    <br/>
+    <label>User Name : </label>
+    <input [(ngModel)]="userName"/>
+    <input type="button" value="Check Availability" (click)="AvailabilityCheck()"/>
+    <br/>
+    <label>Email : </label>
+    <input [(ngModel)]="email"/>
+    <br/>
+    <label>Phone No : </label>
+    <input [(ngModel)]="phoneNo"/>
+    <br/>
+    <label>User Type : </label>
+    <input [(ngModel)]="userType"/>
+    <br/>
+    <label>Password : </label>
+    <input type="password" [(ngModel)]="password"/>
+    <br/>
+    <label>Confirm Password : </label>
+    <input type="password" [(ngModel)]="confirmPassword"/>
+    <br/>
+    <input type="button" value="Register" (click)="UserRegister()"/>
+   
+    
+</div>

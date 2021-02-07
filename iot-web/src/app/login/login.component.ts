@@ -13,27 +13,46 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
   user:UserModel=new UserModel();
-  
+  UserName:string='';
+  Password:string='';
   constructor(private userservice:UserService,private router:Router) { }
 
   ngOnInit(): void {
   }
   
-   UserLogin(userid:string,pwd:string){
-    
-    this.userservice.loginCheck(userid,pwd).subscribe(data=>
+   UserLogin=async()=>{
+    this.user.userName=this.UserName;
+    this.user.password=this.Password;
+  
+    const promise=await this.userservice.loginCheck(this.user).toPromise().then(res => { // Success
+      
+      this.user=res;
+      this.userservice.setUser(this.user);
+      if(this.user.userId>0)
       {
-        this.user=data;
+        if(this.user.userType==1)
+        this.router.navigateByUrl('/admindashboard');
+        else
+        this.router.navigateByUrl('/dashboard');
       }
-    );
-    // setTimeout(this.userservice.loginCheck, 100)
-        this.userservice.setUser(this.user);
-    if(this.user.userId>0)
-    {this.router.navigateByUrl('/dashboard');}
-    else
-    {window.alert('Invalid User');
+      else
+      {
+        window.alert('Invalid User');
+     
+      }
+      
+    } )
+    .catch(res=>
+      {alert('Error occured during Login.\n Error: '+JSON.stringify(res))});
+     
+
+    // this.userservice.loginCheck(this.user).subscribe(data=>
+    //   {
+    //     this.user=data;
+    //   }
+    // );
     
-  }
+        
     
     
   }
