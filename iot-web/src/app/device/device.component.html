@@ -42,11 +42,14 @@
     <div class="popupMainClass">
     <span class="close" (click)="DetailDeviceCancel()">&times;</span>
     <p>Add Pane</p>
+    <label>Device Id : </label>
+    <input [(ngModel)]="deviceDetailId" required/>
+    <br/>
     <label>Device TagName : </label>
     <input [(ngModel)]="deviceDetailTagName" required/>
     <br/>
     <label>Data Type : </label>
-    <select name="DataType" #DataType (change)="onDataTypeSelected(DataType.value)" >
+    <select name="DataType" #DataType [(ngModel)]="DataTypeValue" (change)="onDataTypeSelected(DataType.value)" >
         <option value="SelectDataType">--Select Data Type--</option>
         <option value="Graph">Graph</option>
         <option value="LiveData">Live Data</option>
@@ -55,29 +58,100 @@
     <br/>
     <div *ngIf="showGraph" id="divGraphType">
         <label>Graph Type : </label>
-        <select name="GraphType" id="GraphType" >
+        <select name="GraphType" #GraphType [(ngModel)]="GraphTypeValue" (change)="onGraphTypeSelected(GraphType.value)">
+            <option value="SelectGraphType">--Select Graph Type--</option>
             <option value="LineChart">Line Chart</option>
             <option value="BarGraph">Bar Graph</option>
             <option value="PieChart">Pie Chart</option>
             <option value="GaugeChart">Gauge Chart</option>
         </select>
-    <br/>
+    
     </div>
+    <br/>
     <div *ngIf="showMap" id="divMapType">
         <label>Map Type : </label>
-        <select name="MapType" id="MapType">
-          
+        <select name="MapType" #MapType [(ngModel)]="MapTypeValue" (change)="onMapTypeSelected(MapType.value)">
+            <option value="SelectMapType">--Select Map Type--</option>
+            <option value="CurrentLocation">Current Location</option>
+            <option value="RouteMap">Route Map</option>
         </select>
     <br/>
     </div>
     <div *ngIf="showParam" id="divParam">
         <label>Select Device Param : </label>
-        <ul>
-            <li>
-
-            </li>
-        </ul>
+        <ul *ngFor="let attrName of attrNames">
+             <li *ngFor="let info of attrName.split(',')">
+               <input type="checkbox">{{info}}
+            </li> 
+         </ul>
     <br/>
+    </div>
+    <div *ngIf="showLineChart" id="divLineChart">
+        <label>Y Axis : </label>
+        <select name="LineChart" [(ngModel)]="LineChart">
+            <option value="SelectAttribute">--Select Attribute--</option>
+            <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
+            
+        </select>
+        <br/>
+        <label>X Axis : </label>
+        <input value="Time"/>
+        
+    </div>
+    <div *ngIf="showBarChart" id="divBarChart">
+        <label>Y Axis : </label>
+        <select name="BarChart" [(ngModel)]="BarChart">
+            <option value="SelectAttribute">--Select Attribute--</option>
+            <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
+            
+        </select>
+        <br/>
+        <label>X Axis : </label>
+        <input value="Time"/>
+        
+    </div>
+    <div *ngIf="showPieChart" id="divPieChart">
+        <label>Select Attribute : </label>
+        <select name="PieChart" [(ngModel)]="PieChart">
+            <option value="SelectAttribute">--Select Attribute--</option>
+            <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
+        </select>
+             
+    </div>
+    <div *ngIf="showGaugeChart" id="divGaugeChart">
+        <label>Select Attribute : </label>
+        <select name="GaugeChart" [(ngModel)]="GaugeChart">
+            <option value="SelectAttribute">--Select Attribute--</option>
+            <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
+        </select>
+        <br/>
+        <label>Alert value : </label>
+        <input [(ngModel)]="alertValue" required/>
+        <br/>
+        <label>Low Value : </label>
+        <input [(ngModel)]="lowValue" required/>
+        <br/>  
+        <label>Medium Value : </label>
+        <input [(ngModel)]="mediumValue" required/>
+        <br/> 
+        <label>High Value : </label>
+        <input [(ngModel)]="highValue" required/>
+        <br/> 
+    </div>
+    <br/>
+    <div *ngIf="showCurrentLocation" id="divCurrentLocation">
+        <label>Latitude : </label>
+        <select name="Latitude" [(ngModel)]="Latitude">
+            <option value="SelectAttribute">--Select Attribute--</option>
+            <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
+        </select>
+        <br/>
+        <label>Longitude : </label>
+        <select name="Longitude" [(ngModel)]="Longitude">
+            <option value="SelectAttribute">--Select Attribute--</option>
+            <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
+        </select>
+             
     </div>
     <br/>
     <button type="submit" (click)="DetailDeviceSubmit()">Save</button>
