@@ -20,7 +20,7 @@ export class DeviceComponent implements OnInit {
   configDetails:ConfigDetails=new ConfigDetails(0,0,'','');
   configs:ConfigDetails[]=[];
  
-  device: DeviceModel=new DeviceModel(1,'Device 1','Device 1',new Date(),1);
+  device: DeviceModel=new DeviceModel(1,'Device 1','Device 1','Device 1',new Date(),1);
   devices: Array<DeviceModel>=[];
   //devices: Array<DeviceModel> = [new DeviceModel(1,'Device 1','Device 1','2021/01/01',1),new DeviceModel(2,'Device 2','Device 2','2021/01/01',1)];
   showDetailDevice:boolean=false;
@@ -120,7 +120,7 @@ MapTypeValue:string='';
     this.showDetailDevice=false;
   }
   AddDeviceSubmit=async()=>{
-    alert(this.deviceAddTagName);
+   
     //this.deviceAddId,this.deviceAddTagName,this.deviceAddUniqueIdentifier,new Date(),this.user.userId);
     
 
@@ -155,7 +155,8 @@ MapTypeValue:string='';
         var paneId=data;
         if(paneId>0)
         {
-          var configDetail=this.PrepareConfigData(paneId);
+          var configDetail=[];
+          configDetail= this.PrepareConfigData(paneId);
           const promise= this.deviceservice.addConfigDetails(configDetail).toPromise().then(data=>
             {})
             .catch(res=>
@@ -174,10 +175,10 @@ MapTypeValue:string='';
   }
 
   PrepareConfigData(paneid:number):any{
-    
+    this.configs=[];
     if(this.DataTypeValue=="LiveData")
     {
-
+      alert(this.attrNames);
     }
     else if(this.DataTypeValue=="Graph"){
       if(this.GraphTypeValue=="LineChart")
@@ -185,7 +186,7 @@ MapTypeValue:string='';
         this.configs[0]=new ConfigDetails(2,paneid,'X-axis','Time');
         this.configs[1]=new ConfigDetails(2,paneid,'Y-axis',this.LineChart);
       }
-      else if(this.GraphTypeValue=="BarChart")
+      else if(this.GraphTypeValue=="BarGraph")
       {
 
         this.configs[0]=new ConfigDetails(3,paneid,'X-axis','Time');
@@ -215,11 +216,15 @@ MapTypeValue:string='';
       }
       else if(this.MapTypeValue=="RouteMap")
       {
-        this.configs[0]=new ConfigDetails(7,paneid,'Longitude',this.Longitude);
+        this.configs[0]=new ConfigDetails(7,paneid,'ParameterName','ParameterValue');
       }
     }
 
   return this.configs;
+  }
+  LiveDataChange(param:string){
+    alert(param);
+   
   }
   DetailDeviceCancel(){
     this.closeDeviceDetailPopup();

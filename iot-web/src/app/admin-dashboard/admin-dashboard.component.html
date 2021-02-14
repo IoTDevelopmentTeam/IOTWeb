@@ -1,8 +1,122 @@
-<p>admin-dashboard</p>
-<label>Device Unique Identifier : </label>
-<input [(ngModel)]="deviceAddUniqueIdentifier">
-<br/>
+<!-- <p>admin-dashboard</p>
+<label>No of tags : </label>
+<input type="number" min="1" max="20" [(ngModel)]="tagsNo"/>
 <button (click)="generateTagName()">Generate TagName</button>
 <br/>
 <label>Generated Device TagName is : {{tagName}}</label>
-<!-- <input [(ngModel)]="tagName"></label> -->
+
+<br/>
+<table border="1">
+    <thead>
+        <td>Is Used</td>
+        <td>Tag Name</td>
+        <td>Generated On</td>
+        <td>Mapped Device Name</td>
+        <td>First Use</td>
+        <td>Exp date</td>
+    </thead>
+    <tr *ngFor="let device of devices">
+        <td><input type="checkbox" checked="true"></td>
+        <td>{{device.deviceTagName}}</td>
+        <td>{{device.inputDate}}</td>
+        <td>{{device.deviceName}}</td>
+        <td></td>
+        <td></td>
+        
+    </tr>
+</table> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../CSS/light.css">
+</head>
+<body>
+
+<div class="container-fluid ">
+        <div class="container ">
+            <div class="row ">
+                
+                <div class="col-sm-10 login-box">
+                    <div class="row">
+					
+					<div class="small-logo">
+                                <img class="img-fluid" src="../Images/logo.png" >
+                            </div>
+
+						<div class="col-md-12 mt-3">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title">Generate TagName</h5>
+									<h6 class="card-subtitle text-muted">You can provide more text about create tag.</h6>
+								</div>
+								
+								<div class="card-body">
+									<form class="form-group tag-group">
+									
+										<label class="form-label">Number of Tags</label>
+										<div class="form-inline">
+                                            
+                                            
+											<input type="number" min="1" max="20" [(ngModel)]="tagsNo" class="form-control mb-0" name="validation-email" >
+											<button type="submit" class="btn btn-primary ml-3" (click)="generateTagName()">Submit</button>
+										</div>
+									</form>
+									<small class="form-text text-muted">Created Tags : {{tagName}}</small>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Table Start -->
+						
+						<div class="col-12 mb-3">
+							<div class="card">
+								<div class="card-header">
+									<h5 class="card-title">Tag Table</h5>
+									<h6 class="card-subtitle text-muted">Some more text will go here</h6>
+								</div>
+								<div class="table-responsive">
+									<table class="table mb-0">
+										<thead>
+											<tr>
+                                                <th scope="col">Is Used</th>
+												<th scope="col">Tag Name</th>
+												<th scope="col">Generated On</th>
+												<th scope="col">Mapped Device Name</th>
+												<th scope="col">First Use</th>
+												<th scope="col">Exp Date</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr *ngFor="let device of devices">
+                                                <td><input type="checkbox" checked="false"></td>
+                                                <td>{{device.deviceTagName}}</td>
+                                                <td>{{device.inputDate}}</td>
+                                                <td>{{device.deviceName}}</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						
+						<!-- End table -->
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+

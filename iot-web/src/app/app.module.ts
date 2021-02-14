@@ -11,6 +11,7 @@ import { HttpClientModule } from  '@angular/common/http';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +27,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
     ChartsModule,
     FormsModule,
     HttpClientModule
+ 
   ],
   providers: [],
   bootstrap: [AppComponent]

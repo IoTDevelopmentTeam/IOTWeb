@@ -2,14 +2,16 @@ export class DeviceModel {
     deviceId:number;
     deviceUniqueIdentifier:string;
     deviceTagName:string;
+    deviceName:string;
     inputDate:Date;
     inputBy:number;
     
-    constructor(deviceId: number,deviceUniqueIdentifier:string,deviceTagName:string,inputDate:Date,inputBy:number   ) {
+    constructor(deviceId: number,deviceUniqueIdentifier:string,deviceTagName:string,deviceName:string,inputDate:Date,inputBy:number   ) {
         
         this.deviceId = deviceId;
         this.deviceUniqueIdentifier=deviceUniqueIdentifier;
         this.deviceTagName=deviceTagName;
+        this.deviceName=deviceName;
         this.inputDate=inputDate;
         this.inputBy = inputBy;
 

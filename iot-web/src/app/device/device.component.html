@@ -10,9 +10,7 @@
       
         <div>
           <div>
-            <input type="text" name="deviceId" [disabled]="true" id="deviceId" value="{{device.deviceId}}">
-         
-            <input type="text" name="deviceTagName" [disabled]="true" id="deviceTagName" value="{{device.deviceTagName}}">
+            <input type="text" name="deviceName" [disabled]="true" id="deviceName" value="{{device.deviceName}}">
          
             <input type="button" value="Detail" (click)="openDeviceDetailPopup(device)">
             <button >X</button>
@@ -81,7 +79,7 @@
         <label>Select Device Param : </label>
         <ul *ngFor="let attrName of attrNames">
              <li *ngFor="let info of attrName.split(',')">
-               <input type="checkbox">{{info}}
+               <input type="checkbox" (click)="LiveDataChange(info)">{{info}}
             </li> 
          </ul>
     <br/>

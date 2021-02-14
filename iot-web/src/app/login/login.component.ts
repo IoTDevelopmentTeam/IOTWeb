@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
   user:UserModel=new UserModel();
-  UserName:string='';
+  Email:string='';
   Password:string='';
   constructor(private userservice:UserService,private router:Router) { }
 
@@ -21,11 +21,19 @@ export class LoginComponent implements OnInit {
   }
   
    UserLogin=async()=>{
-    this.user.userName=this.UserName;
+    this.user.email=this.Email;
     this.user.password=this.Password;
-  
+    
+    if(this.user.email!=""&& this.user.password!="")
+     {
+    
     const promise=await this.userservice.loginCheck(this.user).toPromise().then(res => { // Success
-      
+            
+      if(res==null)
+      { 
+        window.alert('Invalid Email or Password.');
+      }
+      else {
       this.user=res;
       this.userservice.setUser(this.user);
       if(this.user.userId>0)
@@ -40,21 +48,15 @@ export class LoginComponent implements OnInit {
         window.alert('Invalid User');
      
       }
+    }
       
     } )
     .catch(res=>
-      {alert('Error occured during Login.\n Error: '+JSON.stringify(res))});
+      {
+        alert('Error occured during Login.\n Error: '+JSON.stringify(res))});
      
-
-    // this.userservice.loginCheck(this.user).subscribe(data=>
-    //   {
-    //     this.user=data;
-    //   }
-    // );
-    
-        
-    
-    
+   
+      }  
   }
 
 }

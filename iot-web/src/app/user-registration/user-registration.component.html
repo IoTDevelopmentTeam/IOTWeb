@@ -1,4 +1,4 @@
-<div align="center">
+<!-- <div align="center">
     <p>User Registration</p>
     <label>userId : </label>
     <input [(ngModel)]="userId"/>
@@ -6,6 +6,12 @@
     <label>User Name : </label>
     <input [(ngModel)]="userName"/>
     <input type="button" value="Check Availability" (click)="AvailabilityCheck()"/>
+    <div *ngIf="userNameAvailable">
+    <p>Username already exist.</p>
+    </div>
+    <div *ngIf="userNameNotAvailable">
+    <p>Username available.</p>
+    </div>
     <br/>
     <label>Email : </label>
     <input [(ngModel)]="email"/>
@@ -25,4 +31,128 @@
     <input type="button" value="Register" (click)="UserRegister()"/>
    
     
-</div>
+</div> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./user-registration.component.css">
+</head>
+<body>
+
+<div class="container-fluid ">
+        <div class="container ">
+            <div class="row ">
+                
+                <div class="col-sm-10 login-box">
+                    <div class="row">
+                       <div class="col-lg-4 col-md-5 box-de">
+                           <div class="small-logo">
+                                <i class="fab fa-asymmetrik"></i>
+                            </div>
+                            <div class="ditk-inf sup-oi">
+                                <h2 class="w-100">Already Have an Account </h2>
+                                <p>Simply login to your account by clicking the login Button</p>
+                                <a routerLink="">
+                                    <button type="button" class="btn btn-outline-light">SIGN IN</button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-md-7 log-det">
+                            
+                            <h2>Create Account</h2>
+                            <div class="row">
+                                <ul>
+                                    <li><i class="fab fa-facebook-f"></i></li>
+                                    <li><i class="fab fa-twitter"></i></li>
+                                    <li><i class="fab fa-linkedin-in"></i></li>
+                                </ul>
+                            </div>
+                            <div class="row">
+                                <p class="small-info">or use your email account</p>
+                            </div>
+
+
+                            <div class="text-box-cont">
+                                
+                                 <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="far fa-envelope"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" [(ngModel)]="email" class="form-control" placeholder="Email Address" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <i class="far fa-envelope"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" [(ngModel)]="phoneNo" class="form-control" placeholder="Phone Number" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="card-body">
+                                    <label class="custom-control custom-radio">
+                                        <input  name="custom-radio" type="radio" class="custom-control-input" [(ngModel)]="userType" id="Student" value="2">
+                                        <span class="custom-control-label">Student</span>
+                                    </label>
+									<label class="custom-control custom-radio">
+                                        <input name="custom-radio" type="radio" class="custom-control-input" [(ngModel)]="userType" id="Business" value="3">
+                                        <span class="custom-control-label">Business</span>
+									</label>
+                                </div>
+                                 
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                                    </div>
+                                    <input type="password" [(ngModel)]="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                                    </div>
+                                    <input type="password" [(ngModel)]="confirmPassword" class="form-control" placeholder="Confirm Password" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <select class="form-control mb-3" name="SecurityQuestion" [(ngModel)]="securityQues">
+                                     <option selected="" value="SelectQuestion" value="0">--Select Question--</option>
+                                     <option *ngFor="let secQues of listSecurityQues" value={{secQues.questionId}}>{{secQues.question}}</option> 
+                                        
+                                    </select>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                                    </div>
+                                    <input type="text" [(ngModel)]="securityAns" class="form-control" placeholder="Security Answer" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                               
+                                <div class="input-group center sup mb-3">
+                                    <button class="btn btn-success btn-round" (click)="UserRegister()">SIGN UP</button>
+                                </div>    
+                            </div>
+                            
+
+
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
