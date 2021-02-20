@@ -10,6 +10,8 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from  '@angular/common/http';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { UserUpdateComponent } from './user-update/user-update.component';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
     DeviceComponent,
     LoginComponent,
     UserRegistrationComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    ForgotPasswordComponent,
+    UserUpdateComponent
   ],
   imports: [
     BrowserModule,

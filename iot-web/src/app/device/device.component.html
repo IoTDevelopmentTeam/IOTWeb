@@ -23,14 +23,14 @@
     <div class="popupMainClass">
         <span class="close" (click)="AddDeviceCancel()">&times;</span>
         <p>Add Device</p>
-        <label>Device Id : </label>
+        <!-- <label>Device Id : </label>
         <input [(ngModel)]="deviceAddId" required />
-        <br/>
+        <br/> -->
         <label>Device TagName : </label>
         <input [(ngModel)]="deviceAddTagName" required/>
         <br/>
-        <label>Unique Identifier : </label>
-        <input [(ngModel)]="deviceAddUniqueIdentifier" required >
+        <label>Device Label name : </label>
+        <input [(ngModel)]="deviceAddLabelName" required >
         <br/>
         <button (click)="AddDeviceSubmit()">Save</button>
         <button (click)="AddDeviceCancel()">Close</button>
@@ -40,12 +40,12 @@
     <div class="popupMainClass">
     <span class="close" (click)="DetailDeviceCancel()">&times;</span>
     <p>Add Pane</p>
-    <label>Device Id : </label>
-    <input [(ngModel)]="deviceDetailId" required/>
+    <label>Device Label Name : </label>
+    <input [(ngModel)]="deviceDetailLabelName" required/>
     <br/>
-    <label>Device TagName : </label>
+    <!-- <label>Device TagName : </label>
     <input [(ngModel)]="deviceDetailTagName" required/>
-    <br/>
+    <br/> -->
     <label>Data Type : </label>
     <select name="DataType" #DataType [(ngModel)]="DataTypeValue" (change)="onDataTypeSelected(DataType.value)" >
         <option value="SelectDataType">--Select Data Type--</option>
@@ -79,7 +79,7 @@
         <label>Select Device Param : </label>
         <ul *ngFor="let attrName of attrNames">
              <li *ngFor="let info of attrName.split(',')">
-               <input type="checkbox" (click)="LiveDataChange(info)">{{info}}
+               <input type="checkbox" name={{info}} (click)="LiveDataChange($event)">{{info}}
             </li> 
          </ul>
     <br/>

@@ -5,80 +5,70 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./login.component.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+  <!-- <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/fontawsom-all.min.css"> -->
+  <!--link rel="stylesheet" href="css/login.css"-->
+  <link rel="stylesheet" href="../CSS/light.css">
 </head>
 <body>
-
-<!-- <div align="center">
-<p>User Login</p>
-<label>User Name : </label>
-<input [(ngModel)]="UserName"/>
-<br/>
-<label>Password : </label>
-<input type="password" [(ngModel)]="Password"/>
-<br/>
-<input type="button" value="Log In" (click)="UserLogin()"/>
-<br/>
-<label>New User? <a routerLink="/register">Register</a> now.</label>
-</div> -->
-
-
 
 <div class="container-fluid ">
         <div class="container ">
             <div class="row ">
                 <div class="col-sm-10 login-box">
                     <div class="row">
-                        <div class="col-lg-8 col-md-7 log-det">
-                            <div class="small-logo">
-                                <i class="fab fa-asymmetrik"></i>
+					
+						<div class="col-lg-4 col-md-5 log-left-pannel">
+							<div class="small-logo mb-5">
+                                <img class="img-fluid" src="images/logo.png" >
                             </div>
-                            <h2>Sign in</h2>
-                            <div class="row">
-                                <ul>
-                                    <li><i class="fab fa-facebook-f"></i></li>
-                                    <li><i class="fab fa-twitter"></i></li>
-                                    <li><i class="fab fa-linkedin-in"></i></li>
-                                </ul>
-                            </div>
-                            <div class="row">
-                                <p class="small-info">or use your email account</p>
-                            </div>
-
-
-                            <div class="text-box-cont">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-                                    </div>
-                                    <input type="text" [(ngModel)]="Email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
-                                </div>
-                                 <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
-                                    </div>
-                                    <input type="password" [(ngModel)]="Password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
-                                </div>
-                                <div class="row">
-                                    <p class="forget-p"><a href="#">Forget Password ?</a></p>
-                                </div>
-                                <div class="input-group center mb-3">
-                                    <button class="btn btn-success btn-round" (click)="UserLogin()">SIGN IN</button>
-                                </div>    
-                            </div>
-                            
-
-
+							<div class="sign-inf">
+								<div class="sign-inf-cont">
+									<h2 class="w-100">Din't Have an Account </h2>
+									<p>Simply Create your account by clicking the Signup Button</p>
+									<a routerLink="/register">
+									<button type="button" class="btn btn-lg btn-primary btn-round">SIGN UP</button>
+									</a>
+								</div>
+							</div>
                         </div>
-                        <div class="col-lg-4 col-md-5 box-de">
-                            <div class="ditk-inf">
-                                <h2 class="w-100">Din't Have an Account </h2>
-                                <p>Simply Create your account by clicking the Signup Button</p>
-                                <a routerLink="/register">
-                                <button type="button" class="btn btn-outline-light" >SIGN UP</button>
-                                </a>
-                            </div>
+						
+                        <div class="col-lg-8 col-md-7 log-right-pannel dark">
+							<div class="text-box-cont">
+								<h2 class="h2 mb-5">Sign in</h2>
+								<form>
+									<div class="form-group">
+										<label>Email</label>
+										<div class="form-d-flex">
+											<div class="input-group-prepend">
+												<span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
+											</div>
+											<input [(ngModel)]="Email" class="form-control" type="email" name="email" placeholder="Enter your email">
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Password</label>
+										<div class="form-d-flex">
+											<div class="input-group-prepend">
+												<span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+											</div>
+											<input [(ngModel)]="Password" class="form-control" type="password" name="password" placeholder="Enter your password">
+										</div>
+									</div>
+									<div class="form-group">
+										<small><a routerLink="/forgetpassword">Forgot password?</a></small>
+									</div>
+									<div class="text-center mt-5">
+										<a (click)="UserLogin()" class="btn btn-lg btn-primary btn-round">Sign in</a>
+									</div>
+								</form>
+							</div>
                         </div>
+						
+						
+                        
+						
                     </div>
                 </div>
             </div>
@@ -89,8 +79,4 @@
 </html>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
-
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>

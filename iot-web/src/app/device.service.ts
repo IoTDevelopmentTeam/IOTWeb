@@ -9,17 +9,17 @@ import {DeviceModel,DeviceAddModel,UserDeviceModel,PaneDetails,ConfigDetails} fr
   providedIn: 'root'
 })
 export class DeviceService {
-  // ApiUrl:string='http://localhost:50364/api/Device/DeviceList';
-  // addDeviceApiUrl:string='http://localhost:50364/api/Device/AddDevice';
-  // addDeviceToUserApiUrl:string='http://localhost:50364/api/Device/UserDeviceAssociation';
-  // panelDetailsApi:string='http://localhost:50364/api/Pane/AddPaneDetails';
-  // configDetailsApi:string='http://localhost:50364/api/Pane/AddConfigDetails';
+  ApiUrl:string='http://localhost:50364/api/Device/DeviceList';
+  addDeviceApiUrl:string='http://localhost:50364/api/Device/AddDevice';
+  addDeviceToUserApiUrl:string='http://localhost:50364/api/Device/UserDeviceAssociation';
+  panelDetailsApi:string='http://localhost:50364/api/Pane/AddPaneDetails';
+  configDetailsApi:string='http://localhost:50364/api/Pane/AddConfigDetails';
   
-  ApiUrl:string='http://52.14.214.29/api/Device/DeviceList';
-  addDeviceApiUrl:string='http://52.14.214.29/api/Device/AddDevice';
-  addDeviceToUserApiUrl:string='http://52.14.214.29/api/Device/UserDeviceAssociation';
-  panelDetailsApi:string='http://52.14.214.29/api/Pane/AddPaneDetails';
-  configDetailsApi:string='http://52.14.214.29/api/Pane/AddConfigDetails';
+  // ApiUrl:string='http://52.14.214.29/api/Device/DeviceList';
+  // addDeviceApiUrl:string='http://52.14.214.29/api/Device/AddDevice';
+  // addDeviceToUserApiUrl:string='http://52.14.214.29/api/Device/UserDeviceAssociation';
+  // panelDetailsApi:string='http://52.14.214.29/api/Pane/AddPaneDetails';
+  // configDetailsApi:string='http://52.14.214.29/api/Pane/AddConfigDetails';
   
 
   httpOptions = {
@@ -49,8 +49,8 @@ export class DeviceService {
         'Content-Type':  'application/json'
       })
     };
-    //const endpoint = 'http://localhost:50364/api/Pane/AttributeName/'+deviceName;
-    const endpoint = 'http://52.14.214.29/api/Pane/AttributeName/'+deviceName;
+    const endpoint = 'http://localhost:50364/api/Pane/AttributeName/'+deviceName;
+    // const endpoint = 'http://52.14.214.29/api/Pane/AttributeName/'+deviceName;
      return this.http.get<string[]>(endpoint);
 
      //return this.http.get<DashboardModel[]>(endpoint,httpOptions);

@@ -94,12 +94,13 @@
 										</thead>
 										<tbody>
 											<tr *ngFor="let device of devices">
-                                                <td><input type="checkbox" checked="false"></td>
+
+                                                <td ><input type="checkbox" checked=false></td>
                                                 <td>{{device.deviceTagName}}</td>
                                                 <td>{{device.inputDate}}</td>
                                                 <td>{{device.deviceName}}</td>
-                                                <td></td>
-                                                <td></td>
+                                                <td>{{device.firstUse}}</td>
+                                                <td>{{device.expDate}}</td>
                                             </tr>
 										</tbody>
 									</table>

@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 
 import {UserService} from '../user.service';
 import {UserModel,SecurityQuestions} from '../login/user-model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-registration',
   templateUrl: './user-registration.component.html',
-  styleUrls: ['./user-registration.component.css']
+  styleUrls: ['../CSS/light.css','../CSS/bootstrap.min.css']
 })
 export class UserRegistrationComponent implements OnInit {
   userId:number=0;
@@ -22,7 +23,7 @@ export class UserRegistrationComponent implements OnInit {
   // userNameAvailable:boolean=false;
   // userNameNotAvailable:boolean=false;
   user:UserModel=new UserModel();
-  constructor(private userservice:UserService) { }
+  constructor(private userservice:UserService,private router:Router) { }
 
   ngOnInit(): void {
     this.GetSecurityQuestions();
@@ -54,7 +55,7 @@ export class UserRegistrationComponent implements OnInit {
       
       this.user=res;
       alert('User registration successfully.');
-      this.clearFormContent();
+      this.router.navigateByUrl('');
            
     } )
     .catch(res=>
@@ -62,15 +63,7 @@ export class UserRegistrationComponent implements OnInit {
     }
 
   }
-  clearFormContent()
-  {
-    // this.email='';
-    // this.phoneNo=0;
-    // this.userType=0;
-    // this.password='';
-    // this.securityQues=0;
-    // this.securityAns='';
-  } 
+ 
   AvailabilityCheck=async()=>{
   //   if(this.userName!=""){
   //   const promise=await this.userservice.CheckUserNameAvialable(this.userName).toPromise().then(res => { // Success

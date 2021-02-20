@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { DeviceService } from '../device.service';
 import { UserService } from '../user.service';
-import { DeviceModel,DeviceDetail,DeviceAddModel,UserDeviceModel,UserDeviceModelResult,PaneDetails,ConfigDetails } from './device-model';
+import { DeviceModel,DeviceDetail,UserDeviceModel,UserDeviceModelResult,PaneDetails,ConfigDetails } from './device-model';
 import {FormGroup,FormControl,FormBuilder,Validators} from '@angular/forms';
 import { UserModel } from '../login/user-model';
 
@@ -33,10 +33,11 @@ export class DeviceComponent implements OnInit {
   x:string ='';
   deviceAddId:number =0;
   deviceAddTagName:string ='';
-  deviceAddUniqueIdentifier:string ='';
-  deviceDetailTagName:string='';
+  deviceAddLabelName:string ='';
+  deviceDetailLabelName:string='';
   deviceDetailId:number=0;
   attrNames:string[]=[];
+  checkedAttrNames:string[]=[];
 
   showBarChart:Boolean=false;
   showLineChart:Boolean=false;
@@ -99,7 +100,7 @@ MapTypeValue:string='';
   }
   openDeviceDetailPopup=async(device:DeviceModel)=>{
     
-    
+    this.checkedAttrNames=[];
     const promise=await this.deviceservice.getAttributeNames(device.deviceTagName).toPromise().then(data=>
       {
         this.attrNames=data;
@@ -110,7 +111,7 @@ MapTypeValue:string='';
     {alert('Error occured during fetching Attributes.\n Error: '+JSON.stringify(res))}
     );
     this.showDetailDevice=true;
-    this.deviceDetailTagName=device.deviceTagName;
+    this.deviceDetailLabelName=device.deviceName;
     this.deviceDetailId=device.deviceId;
     // this.detail.DeviceLabelName=device.DeviceId;
     
@@ -125,7 +126,7 @@ MapTypeValue:string='';
     
 
     this.userdevice.TagName=this.deviceAddTagName;
-    this.userdevice.DeviceName=this.deviceAddUniqueIdentifier;
+    this.userdevice.DeviceName=this.deviceAddLabelName;
     this.userdevice.UserId=this.user.userId;
 
      const promise=await this.deviceservice.addDevice(this.userdevice).toPromise().then(res => { 
@@ -178,7 +179,14 @@ MapTypeValue:string='';
     this.configs=[];
     if(this.DataTypeValue=="LiveData")
     {
-      alert(this.attrNames);
+      alert(this.checkedAttrNames);
+      if(this.checkedAttrNames.length!=0)
+      {
+        for(var i=0;i<this.checkedAttrNames.length;i++)
+        {
+          this.configs[i]=new ConfigDetails(1,paneid,'Attribute',this.checkedAttrNames[i]);
+        }
+      }
     }
     else if(this.DataTypeValue=="Graph"){
       if(this.GraphTypeValue=="LineChart")
@@ -222,8 +230,17 @@ MapTypeValue:string='';
 
   return this.configs;
   }
-  LiveDataChange(param:string){
-    alert(param);
+  LiveDataChange(e:any){
+    
+    if(e.target.checked==true)
+    this.checkedAttrNames.push(e.target.name);
+    else
+    {
+      const index = this.checkedAttrNames.indexOf(e.target.name, 0);
+      if (index > -1) {
+        this.checkedAttrNames.splice(index, 1);
+      }
+    }
    
   }
   DetailDeviceCancel(){

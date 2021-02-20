@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { UserService } from '../user.service';
 import { AdminService } from '../admin.service';
-import { DeviceAddModel} from '../device/device-model';
+import { DeviceAdminModel,DeviceAddModel} from '../device/device-model';
 import { UserModel } from '../login/user-model';
 import {DeviceModel} from '../device/device-model';
 import { async } from '@angular/core/testing';
@@ -19,7 +19,7 @@ export class AdminDashboardComponent implements OnInit {
   deviceAddUniqueIdentifier:string='';
   tagName:string='';
   tagsNo:number=1;
-  devices: Array<DeviceModel>=[];
+  devices: Array<DeviceAdminModel>=[];
   constructor(private userservice:UserService,private adminservice:AdminService) { 
     this.user=new UserModel();
   }

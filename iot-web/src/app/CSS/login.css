@@ -330,15 +330,6 @@ body {
 	padding: 20px;
 }
 
-.log-det .small-logo {
-	display: flex;
-	align-items: center;
-}
-
-.log-det .small-logo i {
-	font-size: 32px;
-	margin-right: 10px;
-}
 
 .log-det h2 {
 	margin-top: 20px;
@@ -408,7 +399,6 @@ body {
 
 .box-de {
 	background-color: #2d53fe;
-	display: flex;
 }
 
 .box-de .ditk-inf {
@@ -429,17 +419,6 @@ body {
 	margin-top: 25px;
 }
 
-.box-de .small-logo {
-	position: absolute;
-	top: 20px;
-	left: 20px;
-	color: #FFF;
-}
-
-.box-de .small-logo i {
-	font-size: 22px;
-	margin-right: 5px;
-}
 
 @media screen and (max-width: 767px) {
 	.box-de {

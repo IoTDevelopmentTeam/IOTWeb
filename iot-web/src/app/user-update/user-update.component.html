@@ -1,0 +1,157 @@
+
+       <!-- <input type="text" [(ngModel)]="email" class="form-control" placeholder="Email Address" aria-label="Username" aria-describedby="basic-addon1">
+  
+       <input type="text" [(ngModel)]="phoneNo" class="form-control" placeholder="Phone Number" aria-label="Username" aria-describedby="basic-addon1">
+ 
+       <select class="form-control mb-3" name="SecurityQuestion" [(ngModel)]="securityQues">
+        <option selected="" value="SelectQuestion" value="0">--Select Question--</option>
+        <option *ngFor="let secQues of listSecurityQues" value={{secQues.questionId}}>{{secQues.question}}</option> 
+           
+       </select>
+ 
+       <input type="text" [(ngModel)]="securityAns" class="form-control" placeholder="Security Answer" aria-label="Username" aria-describedby="basic-addon1">
+        <button class="btn btn-success btn-round" (click)="UpdateUser()">Update</button> -->
+ 
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <title>Bootstrap Example</title>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+          <!-- <link rel="stylesheet" href="css/bootstrap.min.css">
+          <link rel="stylesheet" href="css/fontawsom-all.min.css"> -->
+          <link rel="stylesheet" href="../CSS/light.css">
+        </head>
+        <body class="no-bg">
+              <div class="wrapper">
+                 <nav id="sidebar" class="sidebar">
+                    <div class="sidebar-content js-simplebar">
+                       <!--a class="sidebar-brand" href="index.html">
+                       <span class="align-middle mr-3">Wishtree</span>
+                       </a-->
+                    <div class="bg-white w-100">
+                        <div class="small-dashbord-logo mb-3" style="max-width: 98px;">
+                            <img class="img-fluid" src="images/logo.png" >
+                        </div>
+                    </div>
+                       
+                       <ul class="sidebar-nav">
+                          <li class="sidebar-item">
+                             <a href="#pages" data-toggle="collapse" class="sidebar-link collapsed">
+                                <i class="align-middle" data-feather="layout"></i> 
+                                <span class="align-middle">Dashboards</span>
+                             </a>
+                             <ul id="pages" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
+                                <li class="sidebar-item"><a class="sidebar-link" href="#">Page1</a></li>
+                                <li class="sidebar-item"><a class="sidebar-link" href="#">Page2</a></li>
+                                <li class="sidebar-item"><a class="sidebar-link" href="#">Page3</a></li>
+                             </ul>
+                          </li>
+                          
+                       </ul>
+                       
+                    </div>
+                 </nav>
+                 <div class="main">
+                    <nav class="navbar navbar-expand navbar-light navbar-bg">
+                       <a class="sidebar-toggle">
+                            <i class="hamburger align-self-center"></i>
+                       </a>
+                       <div class="navbar-collapse collapse">
+                          <ul class="navbar-nav navbar-align">
+                             <li class="nav-item dropdown">
+                                <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
+                                    <img src="images/avatar.jpg" class="avatar img-fluid rounded-circle mr-1" alt="Chris Wood" />
+                                </a>
+                                <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
+                                 <span class="text-dark">Sajal Panda</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" routerLink="/dashboard"><i class="align-middle mr-1" data-feather="user"></i> Dashboard</a>
+                                   <a class="dropdown-item"><i class="align-middle mr-1" data-feather="user"></i> Profile</a>
+                                   <a class="dropdown-item" href="#"><i class="align-middle mr-1" data-feather="user"></i> Change Password</a>
+                                   
+                                   <div class="dropdown-divider"></div>
+                                   <a class="dropdown-item" href="#">Sign out</a>
+                                </div>
+                             </li>
+                          </ul>
+                       </div>
+                    </nav>
+                    
+                    <!-- Main Body -->
+                    
+                    
+                    <main class="content">
+                        <div class="container-fluid p-0">
+        
+                            <h1 class="h3 mb-3">Profile</h1>
+        
+                            <div class="row">
+                                       
+                                <div class="col-md-8 col-xl-9">
+                                    <div class="card"><div class="card-header">
+                                            <h5 class="card-title mb-0">Profile Details</h5>
+                                        </div><div class="card-body">
+                                        
+                                                       
+                                                        <div class="form-group">
+                                                            <label for="inputEmail4">Email</label>
+                                                            <input [(ngModel)]="email" type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="inputPhone">Phone Number</label>
+                                                            <input type="text" [(ngModel)]="phoneNo" class="form-control" placeholder="Phone Number" >
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="inputUserType">User Type</label>
+                                                            <input disabled="true" type="text" [(ngModel)]="userType" class="form-control" placeholder="Phone Number" >
+                                                        </div>
+                                                       
+                                                        <div class="form-row">
+                                                            
+                                                                <label for="inputSecQues">Security Question</label>
+                                                                <select name="SecurityQuestion" [(ngModel)]="securityQues" class="form-control">
+                                                                    <option selected="" value="SelectQuestion" value="0">--Select Question--</option>
+                                                                    <option *ngFor="let secQues of listSecurityQues" value={{secQues.questionId}}>{{secQues.question}}</option> 
+                                                                </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="inputSecAns">Security Answer</label>
+                                                            <input [(ngModel)]="securityAns" type="email" class="form-control" >
+                                                        </div>
+                                                        
+                                                        <button (click)="UpdateUser()" type="submit" class="btn btn-primary">Save changes</button>
+                                                   
+                                    </div></div>
+                                </div>
+                            </div>
+        
+                        </div>
+                    </main>
+                    
+                    <!-- End of main body -->
+                    
+                 </div>
+              </div>
+              <!--script src="js/app.js"></script-->
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+           </body>
+        </html>
+        
+        <script>
+        $( document ).ready(function() {
+            $('.sidebar-toggle').click(function(){
+                if( $('#sidebar').hasClass("collapsed")){
+                    $('#sidebar').removeClass("collapsed");
+                }else{
+                    $('#sidebar').addClass("collapsed");
+                }
+            });
+        });
+        
+        </script>
+        

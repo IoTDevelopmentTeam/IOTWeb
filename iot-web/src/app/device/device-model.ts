@@ -25,12 +25,23 @@ export class UserDeviceModelResult{
 }
 export class DeviceAddModel {
    
-    DeviceUniqueIdentifier:string='';
+    DeviceLabelName:string='';
     DeviceTagName:string='';
     InputDate:Date=new Date();
     InputBy:string='';
 }
 
+export class DeviceAdminModel {
+   
+    deviceLabelName:string='';
+    deviceTagName:string='';
+    deviceName:string='';
+    inputDate:Date=new Date();
+    inputBy:string='';
+    isUsed:boolean=false;
+    firstUse?:Date;
+    expDate?:Date;
+}
 export class UserDeviceModel{
     DeviceName:string='';
     TagName:string='';

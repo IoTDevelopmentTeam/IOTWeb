@@ -21,3 +21,8 @@ export class UserSecurityQuestions{
     question :string='';
     securityQuesAns:string='';
 }
+
+export class ResetPassword{
+    email:string='';
+    password:string='';
+}

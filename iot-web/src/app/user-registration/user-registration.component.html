@@ -1,158 +1,156 @@
-<!-- <div align="center">
-    <p>User Registration</p>
-    <label>userId : </label>
-    <input [(ngModel)]="userId"/>
-    <br/>
-    <label>User Name : </label>
-    <input [(ngModel)]="userName"/>
-    <input type="button" value="Check Availability" (click)="AvailabilityCheck()"/>
-    <div *ngIf="userNameAvailable">
-    <p>Username already exist.</p>
-    </div>
-    <div *ngIf="userNameNotAvailable">
-    <p>Username available.</p>
-    </div>
-    <br/>
-    <label>Email : </label>
-    <input [(ngModel)]="email"/>
-    <br/>
-    <label>Phone No : </label>
-    <input [(ngModel)]="phoneNo"/>
-    <br/>
-    <label>User Type : </label>
-    <input [(ngModel)]="userType"/>
-    <br/>
-    <label>Password : </label>
-    <input type="password" [(ngModel)]="password"/>
-    <br/>
-    <label>Confirm Password : </label>
-    <input type="password" [(ngModel)]="confirmPassword"/>
-    <br/>
-    <input type="button" value="Register" (click)="UserRegister()"/>
-   
-    
-</div> -->
+          <!--                       
+                               
+        
+                                
+        <select class="form-control mb-3" name="SecurityQuestion" [(ngModel)]="securityQues">
+        <option selected="" value="SelectQuestion" value="0">--Select Question--</option>
+        <option *ngFor="let secQues of listSecurityQues" value={{secQues.questionId}}>{{secQues.question}}</option> 
+                                        
+        </select>
+                                
+        <input type="text" [(ngModel)]="securityAns" class="form-control" placeholder="Security Answer" aria-label="Username" aria-describedby="basic-addon1">
+        <button class="btn btn-success btn-round" (click)="UserRegister()">SIGN UP</button> -->
+                               
 
-<!DOCTYPE html>
+
+        <!DOCTYPE html>
 <html lang="en">
 <head>
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./user-registration.component.css">
+  <link rel="stylesheet" href="../CSS/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="css/fontawsom-all.min.css"> -->
+  <!--link rel="stylesheet" href="css/login.css"-->
+  <link rel="stylesheet" href="../CSS/light.css">
 </head>
 <body>
 
-<div class="container-fluid ">
+
+	<div class="container-fluid ">
         <div class="container ">
             <div class="row ">
-                
                 <div class="col-sm-10 login-box">
                     <div class="row">
-                       <div class="col-lg-4 col-md-5 box-de">
-                           <div class="small-logo">
-                                <i class="fab fa-asymmetrik"></i>
+					
+						<div class="col-lg-4 col-md-5 log-left-pannel">
+							<div class="small-logo mb-5">
+                                <img class="img-fluid" src="images/logo.png" >
                             </div>
-                            <div class="ditk-inf sup-oi">
-                                <h2 class="w-100">Already Have an Account </h2>
-                                <p>Simply login to your account by clicking the login Button</p>
-                                <a routerLink="">
-                                    <button type="button" class="btn btn-outline-light">SIGN IN</button>
-                                </a>
-                            </div>
+							<div class="sign-inf">
+								<div class="sign-inf-cont">
+									<h2 class="w-100">You already have an Account </h2>
+									<p>Simply go to login page by clicking the SignIn Button</p>
+									<a href="">
+									<button type="button" class="btn btn-lg btn-primary btn-round">SIGN In</button>
+									</a>
+								</div>
+							</div>
                         </div>
-                        <div class="col-lg-8 col-md-7 log-det">
-                            
-                            <h2>Create Account</h2>
-                            <div class="row">
-                                <ul>
-                                    <li><i class="fab fa-facebook-f"></i></li>
-                                    <li><i class="fab fa-twitter"></i></li>
-                                    <li><i class="fab fa-linkedin-in"></i></li>
-                                </ul>
-                            </div>
-                            <div class="row">
-                                <p class="small-info">or use your email account</p>
-                            </div>
+						
+                        <div class="col-lg-8 col-md-7 log-right-pannel dark">
+							<div class="text-box-cont">
+								<h2 class="h2 mb-5">Sign Up</h2>
+								<form>
+									<div class="form-group">
+										<label>Email</label>
+										<div class="form-d-flex">
+											<div class="input-group-prepend">
+												<span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
+											</div>
+											<input [(ngModel)]="email" class="form-control" type="email" name="Email" placeholder="Enter your Email">
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label>Phone Number</label>
+										<div class="form-d-flex">
+											<div class="input-group-prepend">
+												<span class="input-group-text" id="basic-addon1"><i class="fas fa-envelope"></i></span>
+											</div>
+											<input [(ngModel)]="phoneNo" class="form-control" type="phone" name="phone" placeholder="Phone Number">
+										</div>
+									</div>
+
+                                    <div class="form-inline mb-3">
+										<label class="custom-control custom-radio">
+										  <input name="custom-radio" type="radio" checked class="custom-control-input" [(ngModel)]="userType" id="Student" value="2">
+										  <span class="custom-control-label">Student</span>
+										</label>
+										<label class="custom-control custom-radio ml-3">
+										  <input name="custom-radio" type="radio" class="custom-control-input" [(ngModel)]="userType" id="Business" value="3"> 
+										  <span class="custom-control-label">Business</span>
+										</label>						
+									</div>
 
 
-                            <div class="text-box-cont">
-                                
-                                 <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">
-                                            <i class="far fa-envelope"></i>
-                                        </span>
-                                    </div>
-                                    <input type="text" [(ngModel)]="email" class="form-control" placeholder="Email Address" aria-label="Username" aria-describedby="basic-addon1">
-                                </div>
-
-
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">
-                                            <i class="far fa-envelope"></i>
-                                        </span>
-                                    </div>
-                                    <input type="text" [(ngModel)]="phoneNo" class="form-control" placeholder="Phone Number" aria-label="Username" aria-describedby="basic-addon1">
-                                </div>
-                                <div class="card-body">
-                                    <label class="custom-control custom-radio">
-                                        <input  name="custom-radio" type="radio" class="custom-control-input" [(ngModel)]="userType" id="Student" value="2">
-                                        <span class="custom-control-label">Student</span>
-                                    </label>
-									<label class="custom-control custom-radio">
-                                        <input name="custom-radio" type="radio" class="custom-control-input" [(ngModel)]="userType" id="Business" value="3">
-                                        <span class="custom-control-label">Business</span>
-									</label>
-                                </div>
-                                 
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
-                                    </div>
-                                    <input type="password" [(ngModel)]="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
-                                    </div>
-                                    <input type="password" [(ngModel)]="confirmPassword" class="form-control" placeholder="Confirm Password" aria-label="Username" aria-describedby="basic-addon1">
-                                </div>
-
-                                <div class="input-group mb-3">
-                                    <select class="form-control mb-3" name="SecurityQuestion" [(ngModel)]="securityQues">
-                                     <option selected="" value="SelectQuestion" value="0">--Select Question--</option>
-                                     <option *ngFor="let secQues of listSecurityQues" value={{secQues.questionId}}>{{secQues.question}}</option> 
-                                        
-                                    </select>
-                                </div>
-
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
-                                    </div>
-                                    <input type="text" [(ngModel)]="securityAns" class="form-control" placeholder="Security Answer" aria-label="Username" aria-describedby="basic-addon1">
-                                </div>
-                               
-                                <div class="input-group center sup mb-3">
-                                    <button class="btn btn-success btn-round" (click)="UserRegister()">SIGN UP</button>
-                                </div>    
-                            </div>
-                            
-
-
+                                   <div class="form-group">
+										<label>Password</label>
+										<div class="form-d-flex">
+											<div class="input-group-prepend">
+												<span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+											</div>
+											<input [(ngModel)]="password" class="form-control" type="password" name="password" placeholder="Enter your password">
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Confirm Password</label>
+										<div class="form-d-flex">
+											<div class="input-group-prepend">
+												<span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+											</div>
+											<input  [(ngModel)]="confirmPassword" class="form-control" type="password" name="cpassword" placeholder="Enter your password again">
+										</div>
+									</div>
+									
+                                    
+									
+									<div class="form-group">
+                                        <label>Security Question</label>
+										<div class="form-d-flex">
+											<div class="input-group-prepend">
+												<span class="input-group-text" id="basic-addon1"><i class="fas fa-question"></i></span>
+											</div>
+											<select class="form-control" name="SecurityQuestion" [(ngModel)]="securityQues">
+                                                <option selected="" value="SelectQuestion" value="0">--Select Question--</option>
+                                                <option *ngFor="let secQues of listSecurityQues" value={{secQues.questionId}}>{{secQues.question}}</option> 
+                                                        
+											</select>
+										</div>
+									</div>
+								
+                                    <div class="form-group">
+										<label>Security Answer</label>
+										<div class="form-d-flex">
+											<div class="input-group-prepend">
+												<span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+											</div>
+											<input [(ngModel)]="securityAns" class="form-control" type="text" name="password" placeholder="Security Answer">
+										</div>
+									</div>
+                                   
+									
+									<div class="text-center mt-5">
+										<a (click)="UserRegister()" class="btn btn-lg btn-primary btn-round">Sign up</a>
+									</div>
+								</form>
+							</div>
                         </div>
-                       
+						
+						
+                        
+						
                     </div>
                 </div>
             </div>
         </div>
     </div>
+	
+	
+	
 </body>
 </html>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-

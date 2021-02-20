@@ -3,13 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import {UserModel} from './user-model';
 import {UserService} from '../user.service'
 import { Router } from '@angular/router';
-import { DeviceComponent } from '../device/device.component';
-import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['../CSS/light.css']
 })
 export class LoginComponent implements OnInit {
   user:UserModel=new UserModel();
