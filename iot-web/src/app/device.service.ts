@@ -3,23 +3,23 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders} from '@angular/common/http';
 
 import {Observable} from "rxjs/index";
-import {DeviceModel,DeviceAddModel,UserDeviceModel,PaneDetails,ConfigDetails} from './device/device-model'
+import {DeviceModel,UserDeviceModelResult,UserDeviceModel,PaneDetails,ConfigDetails} from './device/device-model'
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeviceService {
-  ApiUrl:string='http://localhost:50364/api/Device/DeviceList';
-  addDeviceApiUrl:string='http://localhost:50364/api/Device/AddDevice';
-  addDeviceToUserApiUrl:string='http://localhost:50364/api/Device/UserDeviceAssociation';
-  panelDetailsApi:string='http://localhost:50364/api/Pane/AddPaneDetails';
-  configDetailsApi:string='http://localhost:50364/api/Pane/AddConfigDetails';
+  // ApiUrl:string='http://localhost:50364/api/Device/DeviceList';
+  // addDeviceApiUrl:string='http://localhost:50364/api/Device/AddDevice';
+  // addDeviceToUserApiUrl:string='http://localhost:50364/api/Device/UserDeviceAssociation';
+  // panelDetailsApi:string='http://localhost:50364/api/Pane/AddPaneDetails';
+  // configDetailsApi:string='http://localhost:50364/api/Pane/AddConfigDetails';
   
-  // ApiUrl:string='http://52.14.214.29/api/Device/DeviceList';
-  // addDeviceApiUrl:string='http://52.14.214.29/api/Device/AddDevice';
-  // addDeviceToUserApiUrl:string='http://52.14.214.29/api/Device/UserDeviceAssociation';
-  // panelDetailsApi:string='http://52.14.214.29/api/Pane/AddPaneDetails';
-  // configDetailsApi:string='http://52.14.214.29/api/Pane/AddConfigDetails';
+  ApiUrl:string='http://52.14.214.29/api/Device/DeviceList';
+  addDeviceApiUrl:string='http://52.14.214.29/api/Device/AddDevice';
+  addDeviceToUserApiUrl:string='http://52.14.214.29/api/Device/UserDeviceAssociation';
+  panelDetailsApi:string='http://52.14.214.29/api/Pane/AddPaneDetails';
+  configDetailsApi:string='http://52.14.214.29/api/Pane/AddConfigDetails';
   
 
   httpOptions = {
@@ -49,15 +49,15 @@ export class DeviceService {
         'Content-Type':  'application/json'
       })
     };
-    const endpoint = 'http://localhost:50364/api/Pane/AttributeName/'+deviceName;
-    // const endpoint = 'http://52.14.214.29/api/Pane/AttributeName/'+deviceName;
+    // const endpoint = 'http://localhost:50364/api/Pane/AttributeName/'+deviceName;
+     const endpoint = 'http://52.14.214.29/api/Pane/AttributeName/'+deviceName;
      return this.http.get<string[]>(endpoint);
 
      //return this.http.get<DashboardModel[]>(endpoint,httpOptions);
         
   }
    
-  addDevice(userdevice:UserDeviceModel):Observable<any>
+  addDevice(userdevice:UserDeviceModel):Observable<UserDeviceModelResult>
   {
    const headers = new HttpHeaders()
    headers.set('content-type', 'application/json'); 
@@ -67,7 +67,7 @@ export class DeviceService {
    headers.set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With'); 
     
 
-    return this.http.post<any>(this.addDeviceToUserApiUrl,userdevice,{headers});
+    return this.http.post<UserDeviceModelResult>(this.addDeviceToUserApiUrl,userdevice,{headers});
     
   
   }

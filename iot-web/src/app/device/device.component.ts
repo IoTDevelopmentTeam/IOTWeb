@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 
 import { DeviceService } from '../device.service';
 import { UserService } from '../user.service';
 import { DeviceModel,DeviceDetail,UserDeviceModel,UserDeviceModelResult,PaneDetails,ConfigDetails } from './device-model';
 import {FormGroup,FormControl,FormBuilder,Validators} from '@angular/forms';
 import { UserModel } from '../login/user-model';
+import { Router , NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'app-device',
@@ -12,10 +13,12 @@ import { UserModel } from '../login/user-model';
   styleUrls: ['./device.component.css']
 })
 export class DeviceComponent implements OnInit {
-  pageName='Device Page';
-  title='Device-List';
+
   DeviceTagName:string='';
-  
+
+  @ViewChild('AddDeviceClose') AddDeviceClose:any;
+  @ViewChild('DetailDeviceClose') DetailDeviceClose:any;
+  displayName:string='';
   paneDetails:PaneDetails=new PaneDetails();
   configDetails:ConfigDetails=new ConfigDetails(0,0,'','');
   configs:ConfigDetails[]=[];
@@ -23,8 +26,7 @@ export class DeviceComponent implements OnInit {
   device: DeviceModel=new DeviceModel(1,'Device 1','Device 1','Device 1',new Date(),1);
   devices: Array<DeviceModel>=[];
   //devices: Array<DeviceModel> = [new DeviceModel(1,'Device 1','Device 1','2021/01/01',1),new DeviceModel(2,'Device 2','Device 2','2021/01/01',1)];
-  showDetailDevice:boolean=false;
-  showAddDevice:boolean=false;
+ 
   showParam:boolean=false;
   showMap:boolean=false;
   showGraph:boolean=false;
@@ -51,7 +53,7 @@ export class DeviceComponent implements OnInit {
   highValue:string='';
   
   userdevice:UserDeviceModel=new UserDeviceModel();
-  result:UserDeviceModelResult=new UserDeviceModelResult();
+  resultmapdevice:UserDeviceModelResult=new UserDeviceModelResult();
 
 LineChart:string='';
 BarChart:string='';
@@ -62,23 +64,64 @@ Longitude:string='';
 DataTypeValue:string='';
 GraphTypeValue:string='';
 MapTypeValue:string='';
+showSideBar:boolean=false;
 
-  constructor(private deviceservice:DeviceService,private userservice:UserService) { 
+showDeviceLabelNameMsg:boolean=false;
+showDeviceTagNameMsg:boolean=false;
+showDataTypeMsg:boolean=false;
+showGraphTypeMsg:boolean=false;
+showMapTypeMsg:boolean=false;
+showParamMsg:boolean=false;
+showLongitudeMsg:boolean=false;
+showLatitudeMsg:boolean=false;
+showHighValueMsg:boolean=false;
+showLowValueMsg:boolean=false;
+showMediumValueMsg:boolean=false;
+showAlertValueMsg:boolean=false;
+showBarChartMsg:boolean=false;
+showLineChartMsg:boolean=false;
+showPieChartMsg:boolean=false;
+showGaugeChartMsg:boolean=false;
+addPaneFlag:boolean=true;
+
+
+
+  constructor(private deviceservice:DeviceService,private userservice:UserService,private router:Router) { 
+    
     this.devices=[];
     this.user=new UserModel();
+
   }
+  
 
   ngOnInit(): void {
-    this.detail=new DeviceDetail();
-   this.user=this.userservice.getUser();
-   var UserId=this.user.userId;
-   this.getAllUserById(UserId); 
+    const userstring=sessionStorage.getItem('loggedinuser');
+    if(userstring!=null)
+    { const loggedinuser = JSON.parse(userstring);
+            
+      this.detail=new DeviceDetail();
+      // this.user=this.userservice.getUser();
+      this.user=loggedinuser;
+      var UserId=this.user.userId;
+      this.getAllUserById(UserId); 
+      this.displayName=this.user.email.substring(0,this.user.email.indexOf('@'));
+    }
+    else
+    this.router.navigateByUrl('/login');
   }
 
-  getValue()
+  funcShowSideBar()
   {
-    alert(this.x);
+    if(this.showSideBar==false)
+    this.showSideBar=true;
+    else
+    this.showSideBar=false;
   }
+  LogOut(){
+    sessionStorage.removeItem('loggedinuser');
+    this.router.navigateByUrl('/login');
+  }
+  
 
   getAllUserById(UserId:number){
     this.deviceservice.getAllDeviceList(UserId).subscribe(data=>
@@ -92,12 +135,8 @@ MapTypeValue:string='';
   onSubmit(){
     // window.alert('onSubmit');
   }
-  openAddDevicePopup(){
-     this.showAddDevice=true;
-  }
-  closeAddDevicePopup(){
-    this.showAddDevice=false;2021
-  }
+  
+ 
   openDeviceDetailPopup=async(device:DeviceModel)=>{
     
     this.checkedAttrNames=[];
@@ -110,48 +149,55 @@ MapTypeValue:string='';
     .catch(res=>
     {alert('Error occured during fetching Attributes.\n Error: '+JSON.stringify(res))}
     );
-    this.showDetailDevice=true;
+    
     this.deviceDetailLabelName=device.deviceName;
     this.deviceDetailId=device.deviceId;
     // this.detail.DeviceLabelName=device.DeviceId;
     
    
   }
-  closeDeviceDetailPopup(){
-    this.showDetailDevice=false;
-  }
+  
   AddDeviceSubmit=async()=>{
    
-    //this.deviceAddId,this.deviceAddTagName,this.deviceAddUniqueIdentifier,new Date(),this.user.userId);
-    
-
+    if(this.deviceAddTagName=="")
+      this.showDeviceTagNameMsg=true;
+    else
+      this.showDeviceTagNameMsg=false;
+    if(this.deviceAddLabelName=="")
+      this.showDeviceLabelNameMsg=true;
+    else  
+      this.showDeviceLabelNameMsg=false;
+    if(this.deviceAddTagName!=""&& this.deviceAddLabelName!="")
+    {
     this.userdevice.TagName=this.deviceAddTagName;
     this.userdevice.DeviceName=this.deviceAddLabelName;
     this.userdevice.UserId=this.user.userId;
 
      const promise=await this.deviceservice.addDevice(this.userdevice).toPromise().then(res => { 
       
-        this.result=res;
-        alert('Device mapped successfully.');
-        this.closeAddDevicePopup();
+        this.resultmapdevice=res;
+        alert(this.resultmapdevice.message);
+        if(this.resultmapdevice.isDeviceUserAssociationSucceded)
+        this.AddDeviceClose.nativeElement.click();
+        
+        
         this.getAllUserById(this.user.userId);
       })
       .catch(res=>
         {alert('Error occured during device mapping.\n Error: '+JSON.stringify(res))
       });
        
-    alert(this.result.Mmessage);
+    }
     
    
   }
-  AddDeviceCancel(){
-    this.closeAddDevicePopup();
-  }
+ 
   DetailDeviceSubmit=async()=>{
-   
+    this.CheckValues();
+   if(this.addPaneFlag==true)
+    {
     this.paneDetails.DeviceId=this.deviceDetailId;
-    this.deviceservice.addPanelDetails
-    const promise=await this.deviceservice.addPanelDetails(this.paneDetails).toPromise().then(data=>
+      const promise=await this.deviceservice.addPanelDetails(this.paneDetails).toPromise().then(data=>
       {
         var paneId=data;
         if(paneId>0)
@@ -159,7 +205,9 @@ MapTypeValue:string='';
           var configDetail=[];
           configDetail= this.PrepareConfigData(paneId);
           const promise= this.deviceservice.addConfigDetails(configDetail).toPromise().then(data=>
-            {})
+            {
+              alert('Pane added succesfully.');
+            })
             .catch(res=>
               {
                 alert('Error occured during saving Config Detail.\n Error: '+JSON.stringify(res))}
@@ -171,15 +219,154 @@ MapTypeValue:string='';
     .catch(res=>
     {alert('Error occured during saving Pane Detail.\n Error: '+JSON.stringify(res))}
     );
+    this.allGraphShowFalse();
+    this.showCurrentLocation=false;
+    this.showParam=false;
+    this.DetailDeviceClose.nativeElement.click();
+    }
+    this.addPaneFlag=true;
+  }
+  CheckValues()
+  {
+    if(this.DataTypeValue=="" || this.DataTypeValue=="SelectDataType")
+      {this.showDataTypeMsg=true;
+        this.addPaneFlag=false;
+      }
+    else{
+      this.showDataTypeMsg=false;
+      if(this.DataTypeValue=="LiveData")
+      {
+      if(this.checkedAttrNames.length==0)
+      {
+       this.showParamMsg=true;
+       this.addPaneFlag=false;
+      }
+      else
+      this.showParamMsg=false;
+    }
+    else if(this.DataTypeValue=="Graph"){
+      if(this.GraphTypeValue==""||this.GraphTypeValue=="SelectGraphType"){
+        this.showGraphTypeMsg=true;
+        this.addPaneFlag=false;
+      }
+      else{
+        this.showGraphTypeMsg=false;
+      if(this.GraphTypeValue=="LineChart")
+      {
+        if(this.LineChart=="SelectAttribute" || this.LineChart=="")
+        {
+          this.showLineChartMsg=true;
+          this.addPaneFlag=false;
+        }
+        else
+        this.showLineChartMsg=false;
+      }
+      else if(this.GraphTypeValue=="BarGraph")
+      {
 
-    this.closeDeviceDetailPopup();
+        if(this.BarChart=="SelectAttribute" || this.BarChart=="")
+        {
+          this.showBarChartMsg=true;
+          this.addPaneFlag=false;
+        }
+        else
+        this.showBarChartMsg=false;
+      }
+      else if(this.GraphTypeValue=="PieChart")
+      {
+        
+        if(this.PieChart=="SelectAttribute" || this.PieChart=="")
+        {
+          this.showPieChartMsg=true;
+          this.addPaneFlag=false;
+        }
+        else
+        this.showPieChartMsg=false;
+    
+      }
+      else if(this.GraphTypeValue=="GaugeChart")
+      {
+        if(this.GaugeChart=="SelectAttribute" || this.GaugeChart=="")
+        {
+          this.showGaugeChartMsg=true;
+          this.addPaneFlag=false;
+        }
+        else
+        this.showGaugeChartMsg=false;
+
+        if( this.lowValue=="")
+        {
+          this.showLowValueMsg=true;
+          this.addPaneFlag=false;
+        }
+        else
+        this.showLowValueMsg=false;
+        if( this.highValue=="")
+        {
+          this.showHighValueMsg=true;
+          this.addPaneFlag=false;
+        }
+        else
+        this.showHighValueMsg=false;
+        if( this.mediumValue=="")
+        {
+          this.showMediumValueMsg=true;
+          this.addPaneFlag=false;
+        }
+        else
+        this.showMediumValueMsg=false;
+
+        if( this.alertValue=="")
+        {
+          this.showAlertValueMsg=true;
+          this.addPaneFlag=false;
+        }
+        else
+        this.showAlertValueMsg=false;
+    
+      }
+    }
+    }
+    else if(this.DataTypeValue=="Map"){
+      if(this.MapTypeValue==""||this.MapTypeValue=="SelectMapType")
+      {
+        this.showMapTypeMsg=true;
+        this.addPaneFlag=false;
+      }
+      else
+      {
+        this.showMapTypeMsg=false;
+        if(this.MapTypeValue=="CurrentLocation"){
+          if(this.Latitude=="SelectAttribute" || this.Latitude=="")
+          {
+            this.showLatitudeMsg=true;
+            this.addPaneFlag=false;
+          }
+          else
+          this.showLatitudeMsg=false;
+          if(this.Longitude=="SelectAttribute" || this.Longitude=="")
+          {
+            this.showLongitudeMsg=true;
+            this.addPaneFlag=false;
+          }
+          else
+          this.showLongitudeMsg=false;
+        }
+        
+      }
+     
+    }
+    }
+
+   
+
   }
 
   PrepareConfigData(paneid:number):any{
     this.configs=[];
     if(this.DataTypeValue=="LiveData")
     {
-      alert(this.checkedAttrNames);
+      
       if(this.checkedAttrNames.length!=0)
       {
         for(var i=0;i<this.checkedAttrNames.length;i++)
@@ -243,12 +430,12 @@ MapTypeValue:string='';
     }
    
   }
-  DetailDeviceCancel(){
-    this.closeDeviceDetailPopup();
-  }
+  
     
   onDataTypeSelected(selectedValue:string){
     this.allGraphShowFalse();
+    this.showCurrentLocation=false;
+    this.showParam=false;
     if(selectedValue=="Graph")
     {
       this.showParam=false;
@@ -317,6 +504,7 @@ MapTypeValue:string='';
     }
   }
   
+
  allGraphShowFalse()
  {
   this.showLineChart=false;

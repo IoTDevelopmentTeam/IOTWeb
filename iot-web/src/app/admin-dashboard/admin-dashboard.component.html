@@ -27,16 +27,7 @@
 </table> -->
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../CSS/light.css">
-</head>
-<body>
+
 
 <div class="container-fluid ">
         <div class="container ">
@@ -46,7 +37,7 @@
                     <div class="row">
 					
 					<div class="small-logo">
-                                <img class="img-fluid" src="../Images/logo.png" >
+                                <img class="img-fluid" src="assets\logo.png" >
                             </div>
 
 						<div class="col-md-12 mt-3">
@@ -95,7 +86,9 @@
 										<tbody>
 											<tr *ngFor="let device of devices">
 
-                                                <td ><input type="checkbox" checked=false></td>
+                                                <td>
+												<div *ngIf="!device.isUsed" ><input type="checkbox" name={{device.deviceTagName}} (click)="IsUsedChange($event)"></div>
+                                                <div *ngIf="device.isUsed" ><input type="checkbox" name={{device.deviceTagName}} (click)="IsUsedChange($event)" checked></div></td>
                                                 <td>{{device.deviceTagName}}</td>
                                                 <td>{{device.inputDate}}</td>
                                                 <td>{{device.deviceName}}</td>
@@ -115,9 +108,3 @@
             </div>
         </div>
     </div>
-</body>
-</html>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-

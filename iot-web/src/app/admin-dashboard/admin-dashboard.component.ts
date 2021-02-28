@@ -5,7 +5,7 @@ import { AdminService } from '../admin.service';
 import { DeviceAdminModel,DeviceAddModel} from '../device/device-model';
 import { UserModel } from '../login/user-model';
 import {DeviceModel} from '../device/device-model';
-import { async } from '@angular/core/testing';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -20,14 +20,24 @@ export class AdminDashboardComponent implements OnInit {
   tagName:string='';
   tagsNo:number=1;
   devices: Array<DeviceAdminModel>=[];
-  constructor(private userservice:UserService,private adminservice:AdminService) { 
+  updateDevice:DeviceAdminModel=new DeviceAdminModel();
+  constructor(private userservice:UserService,private adminservice:AdminService,private router:Router) { 
     this.user=new UserModel();
   }
 
   ngOnInit(): void {
-    this.user=this.userservice.getUser();
-    var UserId=this.user.userId;
-    this.getAllDevices();
+
+    const userstring=sessionStorage.getItem('loggedinuser');
+    if(userstring!=null)
+    { const loggedinuser = JSON.parse(userstring);
+            
+      this.user=this.userservice.getUser();
+      var UserId=this.user.userId;
+      this.getAllDevices();
+    }
+    else
+    this.router.navigateByUrl('/login');
+    
   }
 
   getAllDevices(){
@@ -61,7 +71,28 @@ export class AdminDashboardComponent implements OnInit {
       {alert('Error occured during adding device.\n Error: '+JSON.stringify(res))});
      
   }
-  
 
+  IsUsedChange=async(e:any)=>{
+
+    
+    if(e.target.checked==true)
+    this.updateDevice.isUsed=true;
+    else
+    this.updateDevice.isUsed=false;
+    this.updateDevice.deviceTagName=e.target.name;
+
+         
+    const promise=await this.adminservice.UpdateDevice(this.updateDevice).toPromise().then(res => { // Success
+      this.getAllDevices();
+      
+    } )
+    .catch(res=>
+      {alert('Error occured during updating device.\n Error: '+JSON.stringify(res))
+      this.getAllDevices();
+    });
+     
+  }
+  
+  
 
 }

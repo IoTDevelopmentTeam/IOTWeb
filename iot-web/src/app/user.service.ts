@@ -15,19 +15,21 @@ export class UserService {
 
 
 
-  ApiUrl:string='http://localhost:50364/api/User/GetLoginUserDetails';
-  ApiAddUserUrl:string='http://localhost:50364/api/User/AddEditUser';
-  ApiUserAvailable:string='http://localhost:50364/api/User/UserNameExist';
-  ApiSecurityQuestions:string='http://localhost:50364/api/SecurityQuestion/SecurityQuestions';
-  ApiUserSecQues:string='http://localhost:50364/api/SecurityQuestion/UserSecurityQuestion';
-  ApiResetPwdUrl:string='http://localhost:50364/api/User/ResetPassword'
+  // ApiUrl:string='http://localhost:50364/api/User/GetLoginUserDetails';
+  // ApiAddUserUrl:string='http://localhost:50364/api/User/AddEditUser';
+  // ApiEmailAvailable:string='http://localhost:50364/api/User/EmailExist';
+  // ApiSecurityQuestions:string='http://localhost:50364/api/SecurityQuestion/SecurityQuestions';
+  // ApiUserSecQues:string='http://localhost:50364/api/SecurityQuestion/UserSecurityQuestion';
+  // ApiResetPwdUrl:string='http://localhost:50364/api/User/ResetPassword'
+
   
-  // ApiUrl:string='http://52.14.214.29/api/User/GetLoginUserDetails';
-  // ApiAddUserUrl:string='http://52.14.214.29/api/User/AddEditUser';
-  // ApiUserAvailable:string='http://52.14.214.29/api/User/UserNameExist';
-  // ApiSecurityQuestions:string='http://52.14.214.29/api/SecurityQuestion/SecurityQuestions';
-  // ApiUserSecQues:string='http://52.14.214.29/api/SecurityQuestion/UserSecurityQuestion';
-  //ApiResetPwdUrl:string='http://52.14.214.29/api/User/ResetPassword'
+  ApiUrl:string='http://52.14.214.29/api/User/GetLoginUserDetails';
+  ApiAddUserUrl:string='http://52.14.214.29/api/User/AddEditUser';
+  ApiEmailAvailable:string='http://52.14.214.29/api/User/EmailExist';
+  ApiSecurityQuestions:string='http://52.14.214.29/api/SecurityQuestion/SecurityQuestions';
+  ApiUserSecQues:string='http://52.14.214.29/api/SecurityQuestion/UserSecurityQuestion';
+  ApiResetPwdUrl:string='http://52.14.214.29/api/User/ResetPassword'
+  
   
   constructor(private http: HttpClient) { }
   
@@ -67,8 +69,8 @@ export class UserService {
   
   }
 
-  CheckUserNameAvialable(userName:string):Observable<boolean>{
-    return this.http.get<boolean>(this.ApiUserAvailable+'/'+userName);
+  CheckEmailAvialable(email:string):Observable<boolean>{
+    return this.http.get<boolean>(this.ApiEmailAvailable+'/'+email);
   }
 
   ResetPassword(resetpassword:ResetPassword):Observable<any>

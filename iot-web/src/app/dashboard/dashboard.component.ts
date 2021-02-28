@@ -3,13 +3,18 @@ import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 import {DashboardModel} from './dashboard-model';
 import {IotDataService} from '../iot-data.service';
+import { DeviceModel,DeviceDetail,UserDeviceModel,UserDeviceModelResult,PaneDetails,ConfigDetails } from '../device/device-model';
+import { UserModel } from '../login/user-model';
 
+import { DeviceService } from '../device.service';
+import { UserService } from '../user.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['../CSS/light.css']
+  styleUrls: ['../CSS/light.css','./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  
   public barChartOptions = {
     scaleShowVerticalLines: false,
     responsive: true,
@@ -54,11 +59,13 @@ export class DashboardComponent implements OnInit {
     this.dashboarddatas=[];
     this.barChartData[0].data=[];
     this.lineChartData[0].data=[];
+   
 
   }
 
   ngOnInit(): void {
     this.getDeviceData();
+    
   }
   getDeviceData(){
         
@@ -80,5 +87,7 @@ export class DashboardComponent implements OnInit {
      
     
   }
+
+  
 
 }

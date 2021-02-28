@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['../CSS/light.css','../CSS/bootstrap.min.css']
+  styleUrls: ['../CSS/light.css']
 })
 export class ForgotPasswordComponent implements OnInit {
   showResetPwd:boolean=false;
@@ -22,6 +22,11 @@ export class ForgotPasswordComponent implements OnInit {
   userSecQuestion:UserSecurityQuestions=new UserSecurityQuestions();
   resetpassword:ResetPassword=new ResetPassword();
 
+  showEmailMsg:boolean=false;
+  showSecAnsMsg:boolean=false;
+  showPwdMsg:boolean=false;
+  showConfirmPwdMsg:boolean=false;
+
  
   constructor(private userservice:UserService,private router:Router) { }
 
@@ -29,7 +34,11 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   FetchUserSecQues=async()=>{
-    
+    if(this.userEmail=="")
+      this.showEmailMsg=true;
+    else
+      this.showEmailMsg=false;
+
     if(this.userEmail!="")
      {
     
@@ -58,21 +67,38 @@ export class ForgotPasswordComponent implements OnInit {
     }
 
     CheckSecurityAns(){
-      if(this.secAns==this.userSecQuestion.securityQuesAns)
-      {
-        this.showResetPwd=true;
-        this.showDivSecQues=false;
-        this.showDivEmail=false;
-      }
+      if(this.secAns=="")
+        this.showSecAnsMsg=true;
       else
-      {
-        alert('Security Answas is not correct. Please contact admin for Password Reset.');
-      }
-    }
+        {
+          this.showSecAnsMsg=false;
+
+          if( this.secAns==this.userSecQuestion.securityQuesAns)
+          {
+            this.showResetPwd=true;
+            this.showDivSecQues=false;
+            this.showDivEmail=false;
+          }
+          else
+          {
+            alert('Security Answas is not correct. Please contact admin for Password Reset.');
+          }
+        }
+  }
 
     
     ResetPassword=async()=>{
-     alert(this.userEmail);
+      if(this.password=="")
+        this.showPwdMsg=true;
+      else
+        this.showPwdMsg=false;
+      if(this.confirmPassword=="")
+        this.showConfirmPwdMsg=true;
+      else
+        this.showConfirmPwdMsg=false;
+      if(this.password!=""&& this.confirmPassword!="" && this.password!=this.confirmPassword)
+        alert('Password does not match');
+
       if(this.userEmail!="" && this.password!="" && this.password==this.confirmPassword)
        {
          this.resetpassword.email=this.userEmail;

@@ -20,8 +20,8 @@ export class DeviceModel {
 }
 
 export class UserDeviceModelResult{
-    IsDeviceUserAssociationSucceded:boolean=false;
-    Mmessage:string='';
+    isDeviceUserAssociationSucceded:boolean=false;
+    message:string='';
 }
 export class DeviceAddModel {
    

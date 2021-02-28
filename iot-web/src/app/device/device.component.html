@@ -1,164 +1,408 @@
-<!-- <p>device works!</p>
-<input [(ngModel)]="x" required>
 
-<button (click)="getValue()">Get value</button> -->
-
-<h1>{{pageName}}</h1>
-<span>{{title}}</span>
-<ul>
-    <li *ngFor="let device of devices">
-      
-        <div>
-          <div>
-            <input type="text" name="deviceName" [disabled]="true" id="deviceName" value="{{device.deviceName}}">
-         
-            <input type="button" value="Detail" (click)="openDeviceDetailPopup(device)">
-            <button >X</button>
-          </div>
+<div class="wrapper">
+   
+    <div class="main">
+        
+       <nav class="navbar navbar-expand navbar-light navbar-bg">
+          <a class="sidebar-toggle" (click)="funcShowSideBar()">
+               <i class="hamburger align-self-center"></i>
+          </a>
+          <div class="small-dashbord-logo" style="max-width: 98px;">
+            <img class="img-fluid" src="assets\logo.png" >
         </div>
-    </li>
-</ul>
-
-<div *ngIf="showAddDevice" class="popupOuterClass">
-    <div class="popupMainClass">
-        <span class="close" (click)="AddDeviceCancel()">&times;</span>
-        <p>Add Device</p>
-        <!-- <label>Device Id : </label>
-        <input [(ngModel)]="deviceAddId" required />
-        <br/> -->
-        <label>Device TagName : </label>
-        <input [(ngModel)]="deviceAddTagName" required/>
-        <br/>
-        <label>Device Label name : </label>
-        <input [(ngModel)]="deviceAddLabelName" required >
-        <br/>
-        <button (click)="AddDeviceSubmit()">Save</button>
-        <button (click)="AddDeviceCancel()">Close</button>
-    </div>
-</div>
-<div *ngIf="showDetailDevice" class="popupOuterClass">
-    <div class="popupMainClass">
-    <span class="close" (click)="DetailDeviceCancel()">&times;</span>
-    <p>Add Pane</p>
-    <label>Device Label Name : </label>
-    <input [(ngModel)]="deviceDetailLabelName" required/>
-    <br/>
-    <!-- <label>Device TagName : </label>
-    <input [(ngModel)]="deviceDetailTagName" required/>
-    <br/> -->
-    <label>Data Type : </label>
-    <select name="DataType" #DataType [(ngModel)]="DataTypeValue" (change)="onDataTypeSelected(DataType.value)" >
-        <option value="SelectDataType">--Select Data Type--</option>
-        <option value="Graph">Graph</option>
-        <option value="LiveData">Live Data</option>
-        <option value="Map">Map</option>
-    </select>
-    <br/>
-    <div *ngIf="showGraph" id="divGraphType">
-        <label>Graph Type : </label>
-        <select name="GraphType" #GraphType [(ngModel)]="GraphTypeValue" (change)="onGraphTypeSelected(GraphType.value)">
-            <option value="SelectGraphType">--Select Graph Type--</option>
-            <option value="LineChart">Line Chart</option>
-            <option value="BarGraph">Bar Graph</option>
-            <option value="PieChart">Pie Chart</option>
-            <option value="GaugeChart">Gauge Chart</option>
-        </select>
-    
-    </div>
-    <br/>
-    <div *ngIf="showMap" id="divMapType">
-        <label>Map Type : </label>
-        <select name="MapType" #MapType [(ngModel)]="MapTypeValue" (change)="onMapTypeSelected(MapType.value)">
-            <option value="SelectMapType">--Select Map Type--</option>
-            <option value="CurrentLocation">Current Location</option>
-            <option value="RouteMap">Route Map</option>
-        </select>
-    <br/>
-    </div>
-    <div *ngIf="showParam" id="divParam">
-        <label>Select Device Param : </label>
-        <ul *ngFor="let attrName of attrNames">
-             <li *ngFor="let info of attrName.split(',')">
-               <input type="checkbox" name={{info}} (click)="LiveDataChange($event)">{{info}}
-            </li> 
-         </ul>
-    <br/>
-    </div>
-    <div *ngIf="showLineChart" id="divLineChart">
-        <label>Y Axis : </label>
-        <select name="LineChart" [(ngModel)]="LineChart">
-            <option value="SelectAttribute">--Select Attribute--</option>
-            <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
             
-        </select>
-        <br/>
-        <label>X Axis : </label>
-        <input value="Time"/>
-        
-    </div>
-    <div *ngIf="showBarChart" id="divBarChart">
-        <label>Y Axis : </label>
-        <select name="BarChart" [(ngModel)]="BarChart">
-            <option value="SelectAttribute">--Select Attribute--</option>
-            <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
+          <div class="navbar-collapse collapse">
+             <ul class="navbar-nav navbar-align">
+                <li class="nav-item dropdown">
+                   <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
+                       <img src="../Images/avatar.jpg" class="avatar img-fluid rounded-circle mr-1" alt="Chris Wood" />
+                   </a>
+                   <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
+                    <span class="text-dark">{{displayName}}</span>
+                   </a>
+                   <div class="dropdown-menu dropdown-menu-right">
+                     <a class="dropdown-item"  routerLink="/dashboard"><i class="align-middle mr-1" data-feather="user"></i> Dashboard</a>
+                      <a class="dropdown-item"   routerLink="/updateuser"><i class="align-middle mr-1" data-feather="user"></i> Profile</a>
+                       <a class="dropdown-item" href="#"><i class="align-middle mr-1" data-feather="user"></i> Change Password</a>
+                       
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" (click)="LogOut()">Sign out</a>
+                   </div>
+                </li>
+             </ul>
+          </div>
+       </nav>
+       
+       <!-- Main Body -->
+       <div class="d-flex">
+        <nav *ngIf="showSideBar" id="sidebar" class="sidebar">
+            <div class="sidebar-content js-simplebar">
+               <!--a class="sidebar-brand" href="index.html">
+               <span class="align-middle mr-3">Wishtree</span>
+               </a-->
             
-        </select>
-        <br/>
-        <label>X Axis : </label>
-        <input value="Time"/>
-        
-    </div>
-    <div *ngIf="showPieChart" id="divPieChart">
-        <label>Select Attribute : </label>
-        <select name="PieChart" [(ngModel)]="PieChart">
-            <option value="SelectAttribute">--Select Attribute--</option>
-            <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
-        </select>
              
-    </div>
-    <div *ngIf="showGaugeChart" id="divGaugeChart">
-        <label>Select Attribute : </label>
-        <select name="GaugeChart" [(ngModel)]="GaugeChart">
-            <option value="SelectAttribute">--Select Attribute--</option>
-            <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
-        </select>
-        <br/>
-        <label>Alert value : </label>
-        <input [(ngModel)]="alertValue" required/>
-        <br/>
-        <label>Low Value : </label>
-        <input [(ngModel)]="lowValue" required/>
-        <br/>  
-        <label>Medium Value : </label>
-        <input [(ngModel)]="mediumValue" required/>
-        <br/> 
-        <label>High Value : </label>
-        <input [(ngModel)]="highValue" required/>
-        <br/> 
-    </div>
-    <br/>
-    <div *ngIf="showCurrentLocation" id="divCurrentLocation">
-        <label>Latitude : </label>
-        <select name="Latitude" [(ngModel)]="Latitude">
-            <option value="SelectAttribute">--Select Attribute--</option>
-            <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
-        </select>
-        <br/>
-        <label>Longitude : </label>
-        <select name="Longitude" [(ngModel)]="Longitude">
-            <option value="SelectAttribute">--Select Attribute--</option>
-            <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
-        </select>
+            <ul class="sidebar-nav">
              
+             <li class="sidebar-item">
+                <a href="#device" data-toggle="collapse" class="sidebar-link expand">
+                <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Device</span>
+                </a>
+                <ul id="device" class="sidebar-dropdown list-unstyled expand " data-parent="#sidebar">
+                   <li class="sidebar-item"><a class="sidebar-link" href="#" data-toggle="modal" data-target="#divAddDevice">Add Device</a></li>
+                   <li class="sidebar-item">
+                      <a href="#addeddevice" data-toggle="collapse" class="sidebar-link collapsed">
+                      Your Devices
+                      </a>
+                      <ul id="addeddevice" class="sidebar-dropdown list-unstyled collapse">
+                        
+                         <li *ngFor="let device of devices" class="sidebar-item">
+                             <a class="sidebar-link" href="#" data-toggle="modal" data-target="#divDetailDevice" (click)="openDeviceDetailPopup(device)">{{device.deviceName}}</a>
+                          </li>
+                         
+                      </ul>
+                   </li>
+                   
+                </ul>
+             </li>
+             
+          </ul>
+          
+       </div>
+         </nav>
+         <main class="content">
+            <div class="container-fluid p-0">
+ 
+                <router-outlet></router-outlet>
+ 
+            </div>
+        </main>
+       </div>
+       
+      
+       
+       <!-- End of main body -->
+       
     </div>
-    <br/>
-    <button type="submit" (click)="DetailDeviceSubmit()">Save</button>
-    <button (click)="DetailDeviceCancel()">Close</button>
-    </div>
-</div>
-<!-- <button type="submit">Save</button> -->
+ </div>
 
-<!-- <button routerLink="/device/add">Add Device</button> -->
-<input type="button" value="Add Device" (click)="openAddDevicePopup()">
-<router-outlet></router-outlet>
+
+
+
+<div class="modal fade" id="divAddDevice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content dark">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Device</h5>
+          <button type="button" #AddDeviceClose class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         
+              <div class="form-group">
+                  <label>Tag Name </label>
+                  <div class="form-d-flex">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                      </div>
+                      <input [(ngModel)]="deviceAddTagName" class="form-control" type="text" name="tagName" placeholder="Enter TagName">
+                  </div>
+                  <div class="text-danger" *ngIf="showDeviceTagNameMsg">
+                    <label>Please enter Device Tagname.</label>
+                </div>
+              </div>
+              <div class="form-group">
+                  <label>Device Label Name </label>
+                  <div class="form-d-flex">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                      </div>
+                      <input [(ngModel)]="deviceAddLabelName" class="form-control" type="text" name="labelname" placeholder="Enter Device Label Name">
+                  </div>
+                  <div class="text-danger" *ngIf="showDeviceLabelNameMsg">
+                    <label>Please enter Device Label Name.</label>
+                </div>
+              </div>
+            </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" (click)="AddDeviceSubmit()" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="divDetailDevice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content dark">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Pane</h5>
+          <button type="button" #DetailDeviceClose class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         
+              <div class="form-group">
+                  <label>Device label Name</label>
+                  <div class="form-d-flex">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                      </div>
+                      <input readonly [(ngModel)]="deviceDetailLabelName" class="form-control" type="text" name="uname" placeholder="Device Label Name">
+                  </div>
+              </div>
+              <div class="form-group">
+                <label>Data Type</label>
+                <div class="form-d-flex">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-question"></i></span>
+                    </div>
+                            <select class="form-control" name="DataType" #DataType [(ngModel)]="DataTypeValue" (change)="onDataTypeSelected(DataType.value)" >
+                                <option selected="" value="SelectDataType">--Select Data Type--</option>
+                                <option value="Graph">Graph</option>
+                                <option value="LiveData">Live Data</option>
+                                <option value="Map">Map</option>
+                            </select>
+                </div>
+                <div class="text-danger" *ngIf="showDataTypeMsg">
+                    <label>Please select Data Type.</label>
+                </div>
+            </div>
+                
+            <div class="form-group" *ngIf="showGraph" id="divGraphType">
+                <label>Graph Type : </label>
+                <div class="form-d-flex">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-question"></i></span>
+                    </div>
+                <select  class="form-control" name="GraphType" #GraphType [(ngModel)]="GraphTypeValue" (change)="onGraphTypeSelected(GraphType.value)">
+                    <option selected="" value="SelectGraphType">--Select Graph Type--</option>
+                    <option value="LineChart">Line Chart</option>
+                    <option value="BarGraph">Bar Graph</option>
+                    <option value="PieChart">Pie Chart</option>
+                    <option value="GaugeChart">Gauge Chart</option>
+                </select>
+                </div>
+                <div class="text-danger" *ngIf="showGraphTypeMsg">
+                    <label>Please select Graph Type.</label>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="showMap" id="divMapType">
+                <label>Map Type : </label>
+                <div class="form-d-flex">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-question"></i></span>
+                    </div>
+                <select class="form-control" name="MapType" #MapType [(ngModel)]="MapTypeValue" (change)="onMapTypeSelected(MapType.value)">
+                    <option selected="" value="SelectMapType">--Select Map Type--</option>
+                    <option value="CurrentLocation">Current Location</option>
+                    <option value="RouteMap">Route Map</option>
+                </select>
+                </div>
+                <div class="text-danger" *ngIf="showMapTypeMsg">
+                    <label>Please select Map Type.</label>
+                </div>
+            </div>
+            <div class="form-group" *ngIf="showParam" id="divParam">
+                <label>Select Device Param : </label>
+                <ul *ngFor="let attrName of attrNames">
+                     <li *ngFor="let info of attrName.split(',')">
+                       <input type="checkbox" name={{info}} (click)="LiveDataChange($event)">{{info}}
+                    </li> 
+                 </ul>
+                 <div class="text-danger" *ngIf="showParamMsg">
+                    <label>Please select Device Parameter.</label>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="showLineChart" id="divLineChart">
+                <label>Y Axis : </label>
+                <div class="form-d-flex">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-question"></i></span>
+                    </div>
+                    <select class="form-control" name="LineChart" [(ngModel)]="LineChart">
+                        <option selected="" value="SelectAttribute">--Select Attribute--</option>
+                        <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
+                        
+                    </select>
+                    
+                </div>
+                <div class="text-danger" *ngIf="showLineChartMsg">
+                    <label>Please select Parameter.</label>
+                </div>
+                <label>X Axis : </label>
+                <div class="form-d-flex">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-question"></i></span>
+                    </div>
+                    
+                    <input value="Time" class="form-control" type="text" name="time" readonly>
+                </div>
+                
+            </div>
+
+
+
+            <div class="form-group" *ngIf="showBarChart" id="divBarChart">
+                <label>Y Axis : </label>
+                <div class="form-d-flex">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-question"></i></span>
+                    </div>
+                <select class="form-control" name="BarChart" [(ngModel)]="BarChart">
+                    <option selected="" value="SelectAttribute">--Select Attribute--</option>
+                    <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
+                    
+                </select>
+                </div>
+                <div class="text-danger" *ngIf="showBarChartMsg">
+                    <label>Please select Parameter.</label>
+                </div>
+               
+                <label>X Axis : </label>
+                <div class="form-d-flex">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-question"></i></span>
+                    </div>
+                    
+                    <input value="Time" class="form-control" type="text" name="time" readonly>
+                </div>
+                
+            </div>
+            <div class="form-groupng" *ngIf="showPieChart" id="divPieChart">
+                <label>Select Attribute : </label>
+                <div class="form-d-flex">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-question"></i></span>
+                    </div>
+                <select class="form-control" name="PieChart" [(ngModel)]="PieChart">
+                    <option selected="" value="SelectAttribute">--Select Attribute--</option>
+                    <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
+                </select>
+               
+                </div>
+                <div class="text-danger" *ngIf="showPieChartMsg">
+                    <label>Please select Parameter.</label>
+                </div>  
+            </div>
+            <div class="form-group" *ngIf="showGaugeChart" id="divGaugeChart">
+                <label>Select Attribute : </label>
+                <div class="form-d-flex">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-question"></i></span>
+                    </div>
+                <select class="form-control" name="GaugeChart" [(ngModel)]="GaugeChart">
+                    <option selected="" value="SelectAttribute">--Select Attribute--</option>
+                    <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
+                </select>
+               
+                </div>
+                <div class="text-danger" *ngIf="showGaugeChartMsg">
+                    <label>Please select Parameter.</label>
+                </div>
+                <label>Alert value : </label>
+               
+                <div class="form-d-flex">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-question"></i></span>
+                    </div>
+                    
+                    <input [(ngModel)]="alertValue" class="form-control" type="text" name="alertvalue" >
+                    
+                </div>
+                <div class="text-danger" *ngIf="showAlertValueMsg">
+                    <label>Please enter Alert Value.</label>
+                </div>
+                <label>Low Value : </label>
+                
+                <div class="form-d-flex">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-question"></i></span>
+                    </div>
+                    
+                    <input [(ngModel)]="lowValue" class="form-control" type="text" name="lowValue" >
+                    
+                </div>
+                <div class="text-danger" *ngIf="showLowValueMsg">
+                    <label>Please enter Low Value.</label>
+                </div>
+                <br/>  
+                <label>Medium Value : </label>
+                <div class="form-d-flex">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-question"></i></span>
+                    </div>
+                    
+                    <input [(ngModel)]="mediumValue" class="form-control" type="text" name="mediumValue" >
+                    
+                </div>
+                <div class="text-danger" *ngIf="showMediumValueMsg">
+                    <label>Please enter Medium Value.</label>
+                </div>
+                <label>High Value : </label>
+                <div class="form-d-flex">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-question"></i></span>
+                    </div>
+                    
+                    <input [(ngModel)]="highValue" class="form-control" type="text" name="highValue" >
+                    
+                </div>
+                <div class="text-danger" *ngIf="showHighValueMsg">
+                    <label>Please enter High Value.</label>
+                </div>
+            </div>
+            
+            <div class="form-group" *ngIf="showCurrentLocation" id="divCurrentLocation">
+                <label>Latitude : </label>
+                <div class="form-d-flex">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-question"></i></span>
+                    </div>
+                <select class="form-control" name="Latitude" [(ngModel)]="Latitude">
+                    <option selected="" value="SelectAttribute">--Select Attribute--</option>
+                    <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
+                </select>
+                
+               </div>
+               <div class="text-danger" *ngIf="showLatitudeMsg">
+                <label>Please select Latitude.</label>
+            </div>
+                <label>Longitude : </label>
+                <div class="form-d-flex">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-question"></i></span>
+                    </div>
+                <select class="form-control" name="Longitude" [(ngModel)]="Longitude">
+                    <option selected="" value="SelectAttribute">--Select Attribute--</option>
+                    <option *ngFor="let attrName of attrNames">{{attrName.split(',')}}</option>
+                </select>
+                
+                </div>
+                <div class="text-danger" *ngIf="showLongitudeMsg">
+                    <label>Please select Longitude.</label>
+                </div>
+                     
+            </div>
+
+
+          
+            </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="DetailDeviceSubmit()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  
+
+
 

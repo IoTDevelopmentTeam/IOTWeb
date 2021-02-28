@@ -9,14 +9,30 @@ import {ForgotPasswordComponent} from './forgot-password/forgot-password.compone
 import { UserUpdateComponent } from './user-update/user-update.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'device', component: DeviceComponent },
+  { path: 'login',component: LoginComponent },
+  {path: '',  pathMatch: 'full',  redirectTo: 'login'},
+  // { path: 'dashboard', component: DashboardComponent },
+  // { path: 'device', component: DeviceComponent },
   { path: 'register', component: UserRegistrationComponent },
   { path: 'admindashboard', component: AdminDashboardComponent },
   { path: 'forgetpassword', component:ForgotPasswordComponent},
-  {path:'updateuser',component: UserUpdateComponent}
-  
+  // {path:'updateuser',component: UserUpdateComponent},
+ 
+  {
+    path: 'dashboard',
+    component: DeviceComponent,
+    children: [
+      { path: '', component: DashboardComponent },
+    ]
+  },
+  {
+    path: 'updateuser',
+    component: DeviceComponent,
+    children: [
+      { path: '', component: UserUpdateComponent },
+    ]
+  }
+
 
 ];
 
