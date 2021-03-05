@@ -14,7 +14,8 @@ import { UserService } from '../user.service';
   styleUrls: ['../CSS/light.css','./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  
+  lat:number = 13;
+  lng:number = 80;
   public barChartOptions = {
     scaleShowVerticalLines: false,
     responsive: true,

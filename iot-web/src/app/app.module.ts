@@ -12,6 +12,7 @@ import { UserRegistrationComponent } from './user-registration/user-registration
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
+import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
@@ -30,7 +31,10 @@ import { UserUpdateComponent } from './user-update/user-update.component';
     AppRoutingModule,
     ChartsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule//,
+    // AgmCoreModule.forRoot({
+    //   apiKey: 'AIzaSyB45fOlHe5a7PKBGPqm32FP81WbEFXBlGY'
+    // })
  
   ],
   providers: [],
