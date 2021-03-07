@@ -1,13 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
-import { Color, Label } from 'ng2-charts';
 import {DashboardModel} from './dashboard-model';
 import {IotDataService} from '../iot-data.service';
-import { DeviceModel,DeviceDetail,UserDeviceModel,UserDeviceModelResult,PaneDetails,ConfigDetails } from '../device/device-model';
-import { UserModel } from '../login/user-model';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { ChartDetails } from '../models/chart-details';
 
-import { DeviceService } from '../device.service';
-import { UserService } from '../user.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -56,12 +53,23 @@ export class DashboardComponent implements OnInit {
 
   dashboarddata:DashboardModel=new DashboardModel();
   dashboarddatas: Array<DashboardModel>=[];
+
+  public preferences: Array<any>;
+
   constructor(private iotdataservice:IotDataService) { 
     this.dashboarddatas=[];
     this.barChartData[0].data=[];
     this.lineChartData[0].data=[];
-   
-
+    this.preferences = [];
+    for (let index = 0; index < 8; index++) {
+      const chartDetail: ChartDetails = {
+        chartType: index % 2 == 0 ? 'bar-chart' : 'line-chart'
+      };
+      this.preferences.push({
+        index : index,
+        chart: chartDetail
+      });
+    }
   }
 
   ngOnInit(): void {
@@ -83,12 +91,14 @@ export class DashboardComponent implements OnInit {
          this.lineChartData[0].label=data.thingname;
         } 
       }
-      
     );
-     
-    
   }
 
-  
+  public drop(event: CdkDragDrop<any[]>, destRowIndex: number){
+    const temp = this.preferences[event.item.data.index];
+    this.preferences[event.item.data.index] = this.preferences[destRowIndex];
+    this.preferences[destRowIndex] = temp;
+    this.preferences.forEach((x, i) => x.index = i);
+  }
 
 }

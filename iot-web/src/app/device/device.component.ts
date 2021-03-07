@@ -106,8 +106,8 @@ addPaneFlag:boolean=true;
       this.getAllUserById(UserId); 
       this.displayName=this.user.email.substring(0,this.user.email.indexOf('@'));
     }
-    else
-    this.router.navigateByUrl('/login');
+    else {}
+    // this.router.navigateByUrl('/login');
   }
 
   funcShowSideBar()

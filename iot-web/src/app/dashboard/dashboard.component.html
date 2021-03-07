@@ -1,3 +1,4 @@
+<!--
 <table border="0" width="100%">
             <tr>
               <td>
@@ -27,15 +28,25 @@
                </tr>
                <tr>
                  <td>
-                   <!-- <div>
+                   <div>
                     <agm-map [latitude]="lat" [longitude]="lng">
                       <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
                   </agm-map>
-                   </div> -->
+                   </div>
                  </td>
                  <td></td>
                </tr>
              
            </table> 
+          -->
+<!-- Drag Drop Charts -->
+<div cdkDropListGroup class="flex-container">
+  <div *ngFor="let item of preferences; let rowIndex = index;" class="drag-container" cdkDropList
+  (cdkDropListDropped)="drop($event, rowIndex)">
+    <div class="drag-item" cdkDrag [cdkDragData]="item">
+      <app-chart [chartinfo]="item.chart"></app-chart>
+    </div>
+  </div>
+</div>
 
 				
