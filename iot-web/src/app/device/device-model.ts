@@ -1,3 +1,6 @@
+import { ChartType,ChartDataSets } from "chart.js";
+import { Label } from "ng2-charts";
+
 export class DeviceModel {
     deviceId:number;
     deviceUniqueIdentifier:string;
@@ -74,9 +77,46 @@ export class PaneDetails
 {
     PaneId:number=0; 
     DeviceId :number=0;
-    PositionX :number=0.0;
-    PositionY :number=0.0;
-    Height:number=0.0;
-    Width :number=0.0;
+    DeviceName:string='';
+    Index:number=0;
+    Size:string='';
 
 }
+
+export class PaneDetailsFetch
+{
+    index:number=0;
+    paneId:number=0; 
+    deviceId :number=0;
+    deviceName:string='';
+    chartType:string='';
+    chartLineBarData = [
+        { data: [1,2,3], label: '' },
+      ] as ChartDataSets[];
+    chartPieData = [
+        { data: [1,2,3], label: '' },
+      ];
+    liveDataLabel = [''];
+    chartGaugeData = [
+        { data: [1,2,3],backgroundColor:[''],borderWidth :0,hoverBackgroundColor:[''],hoverBorderWidth:0 }
+      ] ;
+     
+    isLiveData:boolean=false;
+    
+    chartLabels: Label[] = ['', '', '', '', '', ''];
+    chartReady:boolean = false;
+    size:string='small';
+    cssClass:string='';
+    height:string='';
+    chartLegend = true;
+    chartPlugins = [];
+}
+export class ConfigDetailsFetch
+{
+    id:number=0;
+    masterId:number=0;
+    paneId :number=0;
+    parameterName:string='';
+    parameterValue :string='';
+}
+

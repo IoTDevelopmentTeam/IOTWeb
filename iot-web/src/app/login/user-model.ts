@@ -1,7 +1,7 @@
 export class UserModel {
     userId:number=0;
     email:string='';
-    phoneNo?:number
+    phoneNo?:string
     userType:number=1;
     password:string='';
     securityQuesId:number=0;

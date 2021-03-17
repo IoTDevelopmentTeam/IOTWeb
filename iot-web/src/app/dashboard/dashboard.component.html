@@ -1,41 +1,77 @@
-<table border="0" width="100%">
-            <tr>
-              <td>
-               <div >
-                   <canvas baseChart
-                   [datasets]="barChartData"
-                   [labels]="barChartLabels"
-                   [options]="barChartOptions"
-                   [legend]="barChartLegend"
-                   [chartType]="barChartType">
-               </canvas>
-            
-               </div>
-             </td>
-             <td>
-               <div>
-                   <canvas baseChart
-                   [datasets]="lineChartData"
-                   [labels]="lineChartLabels"
-                   [options]="lineChartOptions"
-                   [legend]="lineChartLegend"
-                   [chartType]="lineChartType">
-               </canvas>
-                 
-               </div>
-             </td>
-               </tr>
-               <tr>
-                 <td>
-                   <!-- <div>
-                    <agm-map [latitude]="lat" [longitude]="lng">
-                      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-                  </agm-map>
-                   </div> -->
-                 </td>
-                 <td></td>
-               </tr>
-             
-           </table> 
+           <h1 class="h3 mb-3">Graph
+		   <button style="float:right" type="submit" class="btn btn-primary ml-3" (click)="updatePane()">Save</button>
+		</h1>
+						<div  class="row">
+							
+							<div class="col-12" >
+								<div cdkDropListGroup class="row flex-container">
+									<div *ngFor="let pane of paneDetails" class="{{pane.cssClass}} graph-wrapper drag-container" cdkDropList
+									(cdkDropListDropped)="drop($event, pane.index)">
+										<div  cdkDrag [cdkDragData]="pane" class="graph-content" *ngIf="pane.chartReady&&pane.isLiveData==false">
+											<!-- Div Options -->
+											<p>{{pane.deviceName}}<a  (click)="removePane(pane)">X</a></p>
+											<a class="nav-link dropdown-toggle d-none d-sm-inline-block" data-toggle="dropdown">
+												<i class="hamburger align-self-center"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right">
+											   <a class="dropdown-item" (click)="resize(pane.paneId,'small')">Small</a>
+											   <a class="dropdown-item" (click)="resize(pane.paneId,'mid')">Medium</a>
+											   <a class="dropdown-item" (click)="resize(pane.paneId,'large')">Large</a>
+											</div>
+											<!-- End of div option -->
+											<canvas height="{{pane.height}}" id="canvas{{pane.paneId}}" *ngIf="pane.chartType=='bar'||pane.chartType=='line'" baseChart
+											[datasets]="pane.chartLineBarData"
+											[labels]="pane.chartLabels"
+											[options]="chartOptions"
+											[legend]="pane.chartLegend"
+											[chartType]="pane.chartType">
+											</canvas>
+											<div *ngIf="pane.chartType=='doughnut'">
+											<canvas height="{{pane.height}}" id="canvas{{pane.paneId}}" baseChart
+											[datasets]="pane.chartGaugeData"
+											[labels]="pane.chartLabels"
+											[options]="gaugeOptions"
+											[legend]="pane.chartLegend"
+											[chartType]="pane.chartType">
+											
+											</canvas>
+											
+											</div>
+											
+											
+											<canvas height="{{pane.height}}" id="canvas{{pane.paneId}}" *ngIf="pane.chartType=='pie'" baseChart
+											[datasets]="pane.chartPieData"
+											[labels]="pane.chartLabels"
+											[options]="chartOptions"
+											[legend]="pane.chartLegend"
+											[chartType]="pane.chartType"></canvas>
+											
+											
+											</div>
 
-				
+											<div cdkDrag [cdkDragData]="pane" class="graph-content" *ngIf="pane.chartReady&&pane.isLiveData==true">
+											<!-- Div Options -->
+											<p>{{pane.deviceName}}<a (click)="removePane(pane)">X</a></p>
+											<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown" aria-expanded="true">
+												<i class="hamburger align-self-center"></i>
+											</a>
+											<div class="dropdown-menu dropdown-menu-right">
+											   <a class="dropdown-item" (click)="resize(pane.paneId,'small')">Small</a>
+											   <a class="dropdown-item" (click)="resize(pane.paneId,'mid')">Medium</a>
+											   <a class="dropdown-item" (click)="resize(pane.paneId,'large')">Large</a>
+											</div>
+											<!-- End of div option -->
+											<ul>
+												<li *ngFor="let data of pane.liveDataLabel">
+												<p>{{data}}</p>
+																	
+												</li>
+											</ul>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+							
+						</div>
+            

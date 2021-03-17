@@ -9,13 +9,13 @@ import { data } from './dashboard/dashboard-model';
   providedIn: 'root'
 })
 export class AdminService {
-  // addDeviceApiUrl:string='http://localhost:50364/api/Device/AddDevice';
-  // getDeviceList:string='http://localhost:50364/api/Device/DeviceListAdmin';
-  // updateDeviceApiUrl:string='http://localhost:50364/api/Device/UpdateDevice';
+  addDeviceApiUrl:string='http://localhost:50364/api/Device/AddDevice';
+  getDeviceList:string='http://localhost:50364/api/Device/DeviceListAdmin';
+  updateDeviceApiUrl:string='http://localhost:50364/api/Device/UpdateDevice';
 
-  addDeviceApiUrl:string='http://52.14.214.29/api/Device/AddDevice';
-  getDeviceList:string='http://52.14.214.29/api/Device/DeviceListAdmin';
-  updateDeviceApiUrl:string='http://52.14.214.29/api/Device/UpdateDevice';
+  // addDeviceApiUrl:string='http://52.14.214.29/api/Device/AddDevice';
+  // getDeviceList:string='http://52.14.214.29/api/Device/DeviceListAdmin';
+  // updateDeviceApiUrl:string='http://52.14.214.29/api/Device/UpdateDevice';
 
   constructor(private http:HttpClient) { }
 

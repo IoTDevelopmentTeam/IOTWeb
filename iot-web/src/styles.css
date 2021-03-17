@@ -326,7 +326,7 @@ h2{
 }
 main.content{
 	background: #FFF;
-	height: 100vh;
+	min-height: 100vh;
 }
 
 .navbar-collapse{
@@ -361,7 +361,7 @@ main.content{
 
 .graph-content{
 	position: relative;
-	height: 250px;
+	height: 350px;
     border: 1px solid #CCC;
 }
 

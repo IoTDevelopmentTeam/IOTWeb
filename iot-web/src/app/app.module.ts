@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChartsModule } from 'ng2-charts';
@@ -12,7 +13,8 @@ import { UserRegistrationComponent } from './user-registration/user-registration
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
-import { AgmCoreModule } from '@agm/core';
+
+// import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
@@ -31,10 +33,12 @@ import { AgmCoreModule } from '@agm/core';
     AppRoutingModule,
     ChartsModule,
     FormsModule,
-    HttpClientModule//,
+     HttpClientModule,
+     DragDropModule
     // AgmCoreModule.forRoot({
     //   apiKey: 'AIzaSyB45fOlHe5a7PKBGPqm32FP81WbEFXBlGY'
     // })
+   
  
   ],
   providers: [],

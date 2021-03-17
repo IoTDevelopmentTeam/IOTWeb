@@ -13,7 +13,7 @@ export class UserUpdateComponent implements OnInit {
   userId:number=0;
   userName:string='';
   email:string='';
-  phoneNo?:number;
+  phoneNo?:string;
   userType:string='';
 
   listSecurityQues:Array<SecurityQuestions>=new Array<SecurityQuestions>();
@@ -95,7 +95,7 @@ export class UserUpdateComponent implements OnInit {
     if(emailExist==false){
     this.user.userId=this.userId;
     this.user.email=this.email;
-    this.user.phoneNo=Number(this.phoneNo);
+    this.user.phoneNo=this.phoneNo;
     this.user.updateDate=new Date();
     this.user.securityQuesId=Number(this.securityQues);
     this.user.securityQuesAns=this.securityAns;

@@ -119,6 +119,7 @@ addPaneFlag:boolean=true;
   }
   LogOut(){
     sessionStorage.removeItem('loggedinuser');
+    sessionStorage.removeItem('userdevices');
     this.router.navigateByUrl('/login');
   }
   
@@ -127,6 +128,7 @@ addPaneFlag:boolean=true;
     this.deviceservice.getAllDeviceList(UserId).subscribe(data=>
       {
         this.devices=data;
+        sessionStorage.setItem('userdevices',JSON.stringify(this.devices));
       }
     );
     
@@ -196,6 +198,11 @@ addPaneFlag:boolean=true;
     this.CheckValues();
    if(this.addPaneFlag==true)
     {
+    const paneCount=sessionStorage.getItem('paneCount');
+    if(paneCount!=null)
+    this.paneDetails.Index=Number(paneCount);
+    this.paneDetails.Size='small';
+    this.paneDetails.DeviceName=this.deviceDetailLabelName;
     this.paneDetails.DeviceId=this.deviceDetailId;
       const promise=await this.deviceservice.addPanelDetails(this.paneDetails).toPromise().then(data=>
       {

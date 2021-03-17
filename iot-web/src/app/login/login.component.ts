@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
         if(this.user.userType==1)
         this.router.navigateByUrl('/admindashboard');
         else
-        this.router.navigateByUrl('/dashboard');
+        this.router.navigateByUrl('/device/dashboard');
       }
       else
       {

@@ -19,17 +19,17 @@ const routes: Routes = [
   // {path:'updateuser',component: UserUpdateComponent},
  
   {
-    path: 'dashboard',
+    path: 'device',
     component: DeviceComponent,
     children: [
-      { path: '', component: DashboardComponent },
+      { path: 'dashboard', component: DashboardComponent },
     ]
   },
   {
-    path: 'updateuser',
+    path: 'device',
     component: DeviceComponent,
     children: [
-      { path: '', component: UserUpdateComponent },
+      { path: 'updateuser', component: UserUpdateComponent },
     ]
   }
 
