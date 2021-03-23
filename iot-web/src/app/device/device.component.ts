@@ -195,6 +195,7 @@ addPaneFlag:boolean=true;
   }
  
   DetailDeviceSubmit=async()=>{
+    
     this.CheckValues();
    if(this.addPaneFlag==true)
     {
@@ -214,6 +215,9 @@ addPaneFlag:boolean=true;
           const promise= this.deviceservice.addConfigDetails(configDetail).toPromise().then(data=>
             {
               alert('Pane added succesfully.');
+              
+              if(window.location.pathname=='/device/dashboard')
+              location.reload();
             })
             .catch(res=>
               {

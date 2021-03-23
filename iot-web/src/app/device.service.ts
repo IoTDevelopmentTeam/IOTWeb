@@ -9,25 +9,25 @@ import {DeviceModel,UserDeviceModelResult,UserDeviceModel,PaneDetails,ConfigDeta
   providedIn: 'root'
 })
 export class DeviceService {
-  ApiUrl:string='http://localhost:50364/api/Device/DeviceList';
-  addDeviceApiUrl:string='http://localhost:50364/api/Device/AddDevice';
-  addDeviceToUserApiUrl:string='http://localhost:50364/api/Device/UserDeviceAssociation';
-  panelDetailsApi:string='http://localhost:50364/api/Pane/AddPaneDetails';
-  configDetailsApi:string='http://localhost:50364/api/Pane/AddConfigDetails';
-  getPaneDetailsApi:string='http://localhost:50364/api/Pane/GetPaneDetails/';
-  getConfigDetailsApi:string='http://localhost:50364/api/Pane/GetConfigDetails/';
-  updatepanelApi:string='http://localhost:50364/api/Pane/UpdatePaneDetails';
-  deletepanelApi:string='http://localhost:50364/api/Pane/RemovePaneDetails';
+  // ApiUrl:string='http://localhost:50364/api/Device/DeviceList';
+  // addDeviceApiUrl:string='http://localhost:50364/api/Device/AddDevice';
+  // addDeviceToUserApiUrl:string='http://localhost:50364/api/Device/UserDeviceAssociation';
+  // panelDetailsApi:string='http://localhost:50364/api/Pane/AddPaneDetails';
+  // configDetailsApi:string='http://localhost:50364/api/Pane/AddConfigDetails';
+  // getPaneDetailsApi:string='http://localhost:50364/api/Pane/GetPaneDetails/';
+  // getConfigDetailsApi:string='http://localhost:50364/api/Pane/GetConfigDetails/';
+  // updatepanelApi:string='http://localhost:50364/api/Pane/UpdatePaneDetails';
+  // deletepanelApi:string='http://localhost:50364/api/Pane/RemovePaneDetails';
   
-  // ApiUrl:string='http://52.14.214.29/api/Device/DeviceList';
-  // addDeviceApiUrl:string='http://52.14.214.29/api/Device/AddDevice';
-  // addDeviceToUserApiUrl:string='http://52.14.214.29/api/Device/UserDeviceAssociation';
-  // panelDetailsApi:string='http://52.14.214.29/api/Pane/AddPaneDetails';
-  // configDetailsApi:string='http://52.14.214.29/api/Pane/AddConfigDetails';
-  // getPaneDetailsApi:string='http://52.14.214.29/api/Pane/GetPaneDetails/';
-  // getConfigDetailsApi:string='http://52.14.214.29/api/Pane/GetConfigDetails/';
-  // updatepanelApi:string='http://52.14.214.29/api/Pane/UpdatePaneDetails';
-  // deletepanelApi:string='http://52.14.214.29/api/Pane/RemovePaneDetails';
+  ApiUrl:string='http://52.14.214.29/api/Device/DeviceList';
+  addDeviceApiUrl:string='http://52.14.214.29/api/Device/AddDevice';
+  addDeviceToUserApiUrl:string='http://52.14.214.29/api/Device/UserDeviceAssociation';
+  panelDetailsApi:string='http://52.14.214.29/api/Pane/AddPaneDetails';
+  configDetailsApi:string='http://52.14.214.29/api/Pane/AddConfigDetails';
+  getPaneDetailsApi:string='http://52.14.214.29/api/Pane/GetPaneDetails/';
+  getConfigDetailsApi:string='http://52.14.214.29/api/Pane/GetConfigDetails/';
+  updatepanelApi:string='http://52.14.214.29/api/Pane/UpdatePaneDetails';
+  deletepanelApi:string='http://52.14.214.29/api/Pane/RemovePaneDetails';
   
 
   httpOptions = {
@@ -51,14 +51,14 @@ export class DeviceService {
   }
 
   getAttributeNames(deviceName:string):Observable<string[]> {
-    
+   
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
       })
     };
-    const endpoint = 'http://localhost:50364/api/Pane/AttributeName/'+deviceName;
-    //  const endpoint = 'http://52.14.214.29/api/Pane/AttributeName/'+deviceName;
+    // const endpoint = 'http://localhost:50364/api/Pane/AttributeName/'+deviceName;
+     const endpoint = 'http://52.14.214.29/api/Pane/AttributeName/'+deviceName;
      return this.http.get<string[]>(endpoint);
 
      //return this.http.get<DashboardModel[]>(endpoint,httpOptions);

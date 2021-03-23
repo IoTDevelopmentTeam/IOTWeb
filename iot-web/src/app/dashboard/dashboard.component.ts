@@ -117,15 +117,15 @@ export class DashboardComponent implements OnInit {
         this.paneDetails[i].size="small";
       if(this.paneDetails[i].size=="small")
        {this.paneDetails[i].cssClass="col-md-4"; 
-       this.paneDetails[i].height="255";
+       this.paneDetails[i].height="230";
         }
       else if(this.paneDetails[i].size=="mid")
        {this.paneDetails[i].cssClass="col-md-8"; 
-       this.paneDetails[i].height="120"; 
+       this.paneDetails[i].height="115"; 
       }
       else 
         {this.paneDetails[i].cssClass="col-md-12";
-        this.paneDetails[i].height="80";
+        this.paneDetails[i].height="70";
       }
       this.getConfigDetail(this.paneDetails[i].paneId,i,this.paneDetails[i].deviceId);
       
@@ -166,16 +166,27 @@ export class DashboardComponent implements OnInit {
         {
           paramValue.push(this.configDetails[i].parameterValue);
         }
+        this.paneDetails[paneSlNo].deviceName=this.paneDetails[paneSlNo].deviceName+' (Live Data)';
         this.getDeviceDataLiveData(deviceId,paneSlNo,paramValue); 
       } 
-      else if(this.configDetails[0].masterId==2)
+      else if(this.configDetails[0].masterId==2){
       paneType='line' as ChartType;
-      else if(this.configDetails[0].masterId==3)
+      this.paneDetails[paneSlNo].deviceName=this.paneDetails[paneSlNo].deviceName+' (Line Chart)';
+      }
+      else if(this.configDetails[0].masterId==3){
       paneType='bar' as ChartType;
+      this.paneDetails[paneSlNo].deviceName=this.paneDetails[paneSlNo].deviceName+' (Bar Chart)';
+    }
       else if(this.configDetails[0].masterId==4)
+      {
       paneType='pie' as ChartType;
+      this.paneDetails[paneSlNo].deviceName=this.paneDetails[paneSlNo].deviceName+' (Pie Chart)';
+      }
       else if(this.configDetails[0].masterId==5)
+      {
       paneType='doughnut' as ChartType;
+      this.paneDetails[paneSlNo].deviceName=this.paneDetails[paneSlNo].deviceName+' (Gauge Chart)';
+      }
       this.paneDetails[paneSlNo].chartType=paneType;
       if(this.paneDetails[paneSlNo].chartType=='bar'||this.paneDetails[paneSlNo].chartType=='line')
       {
@@ -550,10 +561,11 @@ resize(paneid:number, size:string){
    {
      if(!this.paneDetails[i].isLiveData){
       var canvas = document.getElementById('canvas'+paneid.toString()) as HTMLElement;
-      canvas.style.maxHeight ="320px";
-      canvas.style.minHeight="320px";
-      canvas.style.height="320px";
-      canvas.style.lineHeight="320px";
+      canvas.style.maxHeight ="310px";
+      canvas.style.minHeight="310px";
+      // canvas.style.height="310px";
+      // canvas.style.lineHeight="310px";
+      
      }
      if(size=='small')
      {
@@ -596,7 +608,8 @@ resize(paneid:number, size:string){
 
 
 removePane=async(pane:PaneDetailsFetch)=>{
-  
+  var confrm=confirm('Do you want to remove Pane?');
+if(confrm==true){
   this.panedetailsRemove.PaneId=pane.paneId;
   this.panedetailsRemove.DeviceId=pane.deviceId;
   this.panedetailsRemove.DeviceName=pane.deviceName;
@@ -607,10 +620,23 @@ removePane=async(pane:PaneDetailsFetch)=>{
   const promise=await this.deviceservice.deletePanelDetails(this.panedetailsRemove).toPromise().then(data=>
     {
       alert('Pane deleted successfully.');
+      var removepos=-1;
+      for(var i=0;i<this.paneDetails.length;i++)
+      {
+        if(this.paneDetails[i].paneId==pane.paneId)
+        {
+          removepos=i;
+          break;
+        }
+
+      }
+      if(removepos>=0)
+      this.paneDetails.splice(removepos,1);
     })
     .catch(res=>
     {alert('Error occured during deleting Pane.\n Error: '+JSON.stringify(res))}
     );
+  } 
   
  }
 }

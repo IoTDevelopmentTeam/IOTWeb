@@ -22,8 +22,8 @@ dashboards:Array<DashboardModel1>=[];
         'Content-Type':  'application/json'
       })
     };
-    const endpoint = 'http://localhost:50364/api/Device/DeviceData/'+id.toString();
-    // const endpoint = 'http://52.14.214.29/api/Device/DeviceData/'+id.toString();
+    // const endpoint = 'http://localhost:50364/api/Device/DeviceData/'+id.toString();
+    const endpoint = 'http://52.14.214.29/api/Device/DeviceData/'+id.toString();
      return this.http.get<DashboardModel1[]>(endpoint);
 
      //return this.http.get<DashboardModel[]>(endpoint,httpOptions);
