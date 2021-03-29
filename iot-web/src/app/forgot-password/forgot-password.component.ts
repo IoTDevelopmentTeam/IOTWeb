@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from '../user.service'
 import {UserSecurityQuestions,ResetPassword} from '../login/user-model'
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-forgot-password',
@@ -46,7 +47,7 @@ export class ForgotPasswordComponent implements OnInit {
          
       if(res.securityQuesId==0)
       { 
-        window.alert('Email Id is not registered.');
+        Swal.fire('Error!', 'Email Id is not registered.', 'error');
       }
       else {
         this.userSecQuestion=res;
@@ -59,7 +60,8 @@ export class ForgotPasswordComponent implements OnInit {
     } )
     .catch(res=>
       {
-        alert('Error occured during Security Question fetching.\n Error: '+JSON.stringify(res))});
+        Swal.fire('Error!','Error occured during Security Question fetching.\n Error: '+JSON.stringify(res), 'error');
+      });
      
    
       }  
@@ -81,7 +83,7 @@ export class ForgotPasswordComponent implements OnInit {
           }
           else
           {
-            alert('Security Answas is not correct. Please contact admin for Password Reset.');
+            Swal.fire('Information','Security Answas is not correct. Please contact admin for Password Reset.','info');
           }
         }
   }
@@ -97,7 +99,7 @@ export class ForgotPasswordComponent implements OnInit {
       else
         this.showConfirmPwdMsg=false;
       if(this.password!=""&& this.confirmPassword!="" && this.password!=this.confirmPassword)
-        alert('Password does not match');
+        Swal.fire('Error!', 'Password does not match', 'error');
 
       if(this.userEmail!="" && this.password!="" && this.password==this.confirmPassword)
        {
@@ -106,13 +108,14 @@ export class ForgotPasswordComponent implements OnInit {
         
         const promise=await this.userservice.ResetPassword(this.resetpassword).toPromise().then(res => { // Success
            
-        
-        alert('Password reset succussfully.');
+        Swal.fire('Success!', 'Password reset succussfully.', 'success');
         this.router.navigateByUrl('');
       } )
       .catch(res=>
         {
-          alert('Error occured during Resetting Password.\n Error: '+JSON.stringify(res))});
+          Swal.fire('Error!', 'Error occured during Resetting Password.\n Error: '+JSON.stringify(res), 'error');
+          
+        });
        
      
         }  

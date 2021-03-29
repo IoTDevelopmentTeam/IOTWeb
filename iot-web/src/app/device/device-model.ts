@@ -91,7 +91,7 @@ export class PaneDetailsFetch
     deviceName:string='';
     chartType:string='';
     chartLineBarData = [
-        { data: [1,2,3], label: '' },
+        { data: [1,2,3], label: '',backgroundColor:[], borderColor:[],hoverBackgroundColor:[]},
       ] as ChartDataSets[];
     chartPieData = [
         { data: [1,2,3], label: '' },

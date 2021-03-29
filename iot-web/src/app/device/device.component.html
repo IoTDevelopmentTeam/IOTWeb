@@ -16,7 +16,7 @@
                 <li class="nav-item dropdown">
                    
                    <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
-                    <span class="text-dark">{{displayName}}</span>
+                    <span class="text-light">{{displayName}}</span>
                    </a>
                    <div class="dropdown-menu dropdown-menu-right">
                      <a class="dropdown-item"  routerLink="/device/dashboard"><i class="align-middle mr-1" data-feather="user"></i> Dashboard</a>
@@ -34,6 +34,7 @@
        <!-- Main Body -->
        <div class="d-flex">
         <nav *ngIf="showSideBar" id="sidebar" class="sidebar">
+            <div class="sidebar-header"> Main Navigation </div>
             <div class="sidebar-content js-simplebar">
                <!--a class="sidebar-brand" href="index.html">
                <span class="align-middle mr-3">Wishtree</span>
@@ -41,21 +42,32 @@
             
              
             <ul class="sidebar-nav">
-             
+                <li class="sidebar-item">
+                <a routerLink="/device/dashboard" class="sidebar-link collapsed">
+                   <span class="align-middle"><i class="fa fa-desktop"></i>Dashboards</span>
+                </a>
+                
+             </li>
              <li class="sidebar-item">
                 <a href="#device" data-toggle="collapse" class="sidebar-link expand">
-                <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Device</span>
+                    <span class="align-middle"><i class="fa fa-mobile" aria-hidden="true"></i>Device</span>
                 </a>
                 <ul id="device" class="sidebar-dropdown list-unstyled expand " data-parent="#sidebar">
-                   <li class="sidebar-item"><a class="sidebar-link" href="#" data-toggle="modal" data-target="#divAddDevice">Add Device</a></li>
+                   <li class="sidebar-item">
+                       <a class="sidebar-link" href="#" data-toggle="modal" data-target="#divAddDevice">
+                        <span class="align-middle"><i class="fa fa-plus" aria-hidden="true"></i>Add Device</span>
+                       </a>
+                    </li>
                    <li class="sidebar-item">
                       <a href="#addeddevice" data-toggle="collapse" class="sidebar-link collapsed">
-                      Your Devices
+                        <span class="align-middle"><i class="fa fa-cogs" aria-hidden="true"></i>Your Device</span>
                       </a>
                       <ul id="addeddevice" class="sidebar-dropdown list-unstyled collapse">
                         
                          <li *ngFor="let device of devices" class="sidebar-item">
-                             <a class="sidebar-link" href="#" data-toggle="modal" data-target="#divDetailDevice" (click)="openDeviceDetailPopup(device)">{{device.deviceName}}</a>
+                             <a class="sidebar-link" href="#" data-toggle="modal" data-target="#divDetailDevice" (click)="openDeviceDetailPopup(device)">
+                                <span class="align-middle"><i class="fa fa-cog" aria-hidden="true"></i> {{device.deviceName}}</span>
+                                </a>
                           </li>
                          
                       </ul>

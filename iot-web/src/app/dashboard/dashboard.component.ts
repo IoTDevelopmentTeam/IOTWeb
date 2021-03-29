@@ -15,6 +15,7 @@ import { async } from '@angular/core/testing';
 
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { bottom } from '@popperjs/core';
+import Swal from 'sweetalert2';
 
 
 
@@ -46,6 +47,10 @@ export class DashboardComponent implements OnInit {
       }]
     }
   };
+  public pieChartOptions = {
+    scaleShowVerticalLines: false,
+    responsive: true,
+  };
 
 
   public gaugeOptions = {
@@ -60,8 +65,8 @@ export class DashboardComponent implements OnInit {
     },
     title: {
         "display": true,
-        "text": "4"
-        // "position": bottom
+        "text": "",
+        //"position": bottom
     }
   };
   
@@ -90,14 +95,17 @@ export class DashboardComponent implements OnInit {
       this.devices=JSON.parse(userdevices);
       
     //  this.getDetail(this.devices);
+    // setInterval(() => { 
+    //   this.getDetail(UserId),60000});
+ 
     this.getDetail(UserId);
     }
-    
   }
+  
   getDetail=async(id:number)=>{//(devices:DeviceModel[])=>{
     // for(var i=0;i<devices.length;i++)
     // {
-      
+      this.paneDetails=[];
       //this.getPaneDetail(this.devices[i].deviceId,this.paneDetails);
       await this.deviceservice.getPaneDetail(id).toPromise().then(res => { // Success
     
@@ -146,12 +154,12 @@ export class DashboardComponent implements OnInit {
   })
   .catch(res=>
   {
-      alert('Error occured during Pane Detail fetching.\n Error: '+JSON.stringify(res))});
+    Swal.fire('Error!', 'Error occured during Pane Detail fetching.\n Error: '+JSON.stringify(res), 'error');
+  });
   } 
 
   getConfigDetail=async(id:number,paneSlNo:number,deviceId:number)=>{
     const promise=await this.deviceservice.getConfigDetail(id).toPromise().then(res => { // Success
-      // alert(JSON.stringify(this.configDetails));
       this.configDetails=res;
       var paneType='' as ChartType; 
       var lowvalue:number=0;
@@ -228,18 +236,23 @@ export class DashboardComponent implements OnInit {
   })
   .catch(res=>
   {
-      alert('Error occured during Config Detail fetching.\n Error: '+JSON.stringify(res))});
+    Swal.fire('Error!', 'Error occured during Config Detail fetching.\n Error: '+JSON.stringify(res), 'error');
+    });
   } 
   getDeviceDataLineBar=async(id:number,paneSlNo:number,xaxis:string,yaxis:string)=>{
       var xaxisvalue:string[]=[];
       var yaxisvalue:number[]=[]; 
+      var bgcolor:string[]=[];
+      var bcolor:string[]=[];
+      var hoverBgColor:string[]=[];
+      var hoverBColor:string[]=[];
      
       const promise=await this.iotdataservice.getDeviceData(id).toPromise().then(data=>
       {
         this.dashboarddatas=data;
         this.paneDetails[paneSlNo].chartLabels=xaxisvalue;
         this.paneDetails[paneSlNo].chartLineBarData = [
-          { data: [], label: '' },
+          { data: [], label: '' ,backgroundColor:[], borderColor:[],hoverBackgroundColor:[]},
         ];
         var prevDate:string="00/00/0000";    
         for(let data1 of this.dashboarddatas)
@@ -255,6 +268,11 @@ export class DashboardComponent implements OnInit {
                 if(paramValue[0]=='"'+yaxis+'"')
                   yaxisvalue.push(Number(paramValue[1].replace("\"","").replace("\"","")));
 
+                  bgcolor.push('#6495ED');
+                  bcolor.push('#6495ED');
+                  hoverBgColor.push('#6495ED');
+                  hoverBColor.push('#6495ED');
+
               }
               if(xaxis=="Time")
               {
@@ -268,16 +286,24 @@ export class DashboardComponent implements OnInit {
               
           this.paneDetails[paneSlNo].chartLineBarData[0].data=yaxisvalue;
           this.paneDetails[paneSlNo].chartLineBarData[0].label=yaxis;
+          this.paneDetails[paneSlNo].chartLineBarData[0].backgroundColor=bgcolor;
+          this.paneDetails[paneSlNo].chartLineBarData[0].borderColor=bcolor;
+          this.paneDetails[paneSlNo].chartLineBarData[0].hoverBackgroundColor=hoverBgColor;
+          this.paneDetails[paneSlNo].chartLineBarData[0].hoverBorderColor=hoverBColor;
+          this.paneDetails[paneSlNo].chartLineBarData[0].pointBackgroundColor=hoverBColor;
+          this.paneDetails[paneSlNo].chartLineBarData[0].pointBorderColor=hoverBColor;
+          this.paneDetails[paneSlNo].chartLineBarData[0].pointHoverBackgroundColor=hoverBColor;
+          this.paneDetails[paneSlNo].chartLineBarData[0].pointHoverBorderColor=hoverBColor;
+          this.paneDetails[paneSlNo].chartLineBarData[0].fill=false;
           this.paneDetails[paneSlNo].isLiveData=false;
           this.paneDetails[paneSlNo].chartReady=true;  
       
       })
       .catch(res=>
         {
-            alert('Error occured during Line-Bar chart Data Processing.\n Error: '+JSON.stringify(res))
+          Swal.fire('Error!', 'Error occured during Line-Bar chart Data Processing.\n Error: '+JSON.stringify(res), 'error');
         });
-     
-        
+           
     
   }
 
@@ -336,7 +362,8 @@ export class DashboardComponent implements OnInit {
     })
     .catch(res=>
       {
-          alert('Error occured during Pie chart Data Processing.\n Error: '+JSON.stringify(res))
+        Swal.fire('Error!', 'Error occured during Pie chart Data Processing.\n Error: '+JSON.stringify(res), 'error');
+          
       });
    
       
@@ -378,7 +405,7 @@ getDeviceDataLiveData=async(id:number,paneSlNo:number,paramname:string[])=>{
   })
   .catch(res=>
     {
-        alert('Error occured during Live Data Processing.\n Error: '+JSON.stringify(res))
+      Swal.fire('Error!', 'Error occured during Live Data Processing.\n Error: '+JSON.stringify(res), 'error');
     });
  
     
@@ -397,7 +424,7 @@ getDeviceDataGauge=async(id:number,paneSlNo:number,lowmidhighalert:number[],gaug
   var colhigh:string="#FF8633";//high
   var col2:string="#FFFFFF";
 
-  lowmidhighalert[3]=0;
+  
   const promise=await this.iotdataservice.getDeviceData(id).toPromise().then(data=>
   {
     this.dashboarddatas=data;
@@ -422,104 +449,416 @@ getDeviceDataGauge=async(id:number,paneSlNo:number,lowmidhighalert:number[],gaug
           
             if(paramValue[0]=='"'+gaugeattribute+'"')
               {
-                attrValue=0;//Number(paramValue[1].replace("\"","").replace("\"",""));
+                attrValue=Number(paramValue[1].replace("\"","").replace("\"",""));
                   break;          
               }
                     
         }
         var color1:string[]=[];
         var color2:string[]=[];
-     if(attrValue==lowmidhighalert[3])
+        var lowValue=lowmidhighalert[0];
+        var midValue=lowmidhighalert[1];
+        var highValue=lowmidhighalert[2];
+        var alertValue=lowmidhighalert[3];
+     if(attrValue==alertValue)
      {
        var values:number[]=[];
        if(attrValue==0)
        {
-        values=[1,0.5,lowmidhighalert[0]-1.5,lowmidhighalert[1]-lowmidhighalert[0],lowmidhighalert[2]-lowmidhighalert[1]];
+        values=[1,0.5,lowValue-1.5,midValue-lowValue,highValue-midValue];
         color1= [colattr,colalert,collow,colmid,colhigh];
         color2= [colattr,col2,col2,col2,col2];
        }
-       else if(attrValue<lowmidhighalert[0])
+       else if(attrValue<lowValue)
        {
-        values=[attrValue-1,1,0.5,lowmidhighalert[0]-(attrValue+1.5),lowmidhighalert[1]-lowmidhighalert[0],lowmidhighalert[2]-lowmidhighalert[1]];
+        values=[attrValue-1,1,0.5,lowValue-(attrValue+0.5),midValue-lowValue,highValue-midValue];
         color1= [collow,colattr,colalert,collow,colmid,colhigh];
         color2= [col2,colattr,col2,col2,col2,col2];
        }
-       else if(attrValue==lowmidhighalert[0])
+       else if(attrValue==lowValue)
        {
-        values=[lowmidhighalert[0],1,0.5,lowmidhighalert[1]-(lowmidhighalert[0]+1.5),lowmidhighalert[2]-lowmidhighalert[1]];
+        values=[lowValue,1,0.5,midValue-(lowValue+1.5),highValue-midValue];
         color1= [collow,colattr,colalert,colmid,colhigh];
         color2= [col2,colattr,col2,col2,col2];
        }
-       else if(attrValue>lowmidhighalert[0] && attrValue<lowmidhighalert[1])
+       else if(attrValue>lowValue && attrValue<midValue)
        {
-        values=[lowmidhighalert[0],(attrValue-1)-lowmidhighalert[0],1,0.5,lowmidhighalert[1]-(attrValue+1.5),lowmidhighalert[2]-lowmidhighalert[1]];
+        values=[lowValue,(attrValue-1)-lowValue,1,0.5,midValue-(attrValue+0.5),highValue-midValue];
         color1= [collow,colmid,colattr,colalert,colmid,colhigh];
         color2= [col2,col2,colattr,col2,col2,col2];
        }
-       else if(attrValue==lowmidhighalert[1])
+       else if(attrValue==midValue)
        {
-        values=[lowmidhighalert[0],lowmidhighalert[1]-lowmidhighalert[0],1,0.5,lowmidhighalert[2]-(lowmidhighalert[1]+1.5)];
+        values=[lowValue,midValue-lowValue,1,0.5,highValue-(midValue+1.5)];
         color1= [collow,colmid,colattr,colalert,colhigh];
         color2= [col2,col2,colattr,col2,col2]
        }
-       else if(attrValue>lowmidhighalert[1] && attrValue<lowmidhighalert[2])
+       else if(attrValue>midValue && attrValue<highValue)
        {
-        values=[lowmidhighalert[0],lowmidhighalert[1]-lowmidhighalert[0],(attrValue-1)-lowmidhighalert[1],1,0.5,lowmidhighalert[2]-(attrValue+1.5)];
+        values=[lowValue,midValue-lowValue,(attrValue-1)-midValue,1,0.5,highValue-(attrValue+0.5)];
         color1= [collow,colmid,colhigh,colattr,colalert,colhigh];
         color2= [col2,col2,col2,colattr,col2,col2]
        }
-       else if(attrValue>=lowmidhighalert[2])
+       else if(attrValue>=highValue)
        {
-        values=[lowmidhighalert[0],lowmidhighalert[1]-lowmidhighalert[0],lowmidhighalert[2]-lowmidhighalert[1],1,0.5];
+        values=[lowValue,midValue-lowValue,highValue-midValue,1,0.5];
         color1= [collow,colmid,colhigh,colattr,colalert];
         color2= [col2,col2,col2,colattr,col2];
        }
 
      }
-     else if(attrValue>lowmidhighalert[3])
+     else if(attrValue>alertValue)
      {
        var values:number[]=[];
-       if(lowmidhighalert[3]==0)
+       if(alertValue==0)
        {
-
+          if(attrValue<lowValue)
+          {
+            values=[0.5,attrValue-0.5,1,lowValue-(attrValue+1),midValue-lowValue,highValue-(midValue)];
+            color1= [colalert,collow,colattr,collow,colmid,colhigh];
+            color2= [col2,col2,colattr,col2,col2,col2];
+          }
+          else if(attrValue==lowValue)
+          {
+            values=[0.5,lowValue-1.5,1,midValue-lowValue,highValue-(midValue)];
+            color1= [colalert,collow,colattr,colmid,colhigh];
+            color2= [col2,col2,colattr,col2,col2];
+          }
+          else if(attrValue>lowValue && attrValue<midValue)
+          {
+            values= [0.5,lowValue-0.5,attrValue-lowValue,1,midValue-(attrValue+1),highValue-(midValue)];
+            color1= [colalert,collow,colmid,colattr,colmid,colhigh];
+            color2= [col2,col2,col2,colattr,col2,col2];
+          }
+          else if(attrValue==midValue)
+          {
+            values= [0.5,lowValue-0.5,midValue-(lowValue-1),1,highValue-(midValue)];
+            color1= [colalert,collow,colmid,colattr,colhigh];
+            color2= [col2,col2,col2,colattr,col2];
+          }
+          else if(attrValue>midValue && attrValue<highValue)
+          {
+            values= [0.5,lowValue-0.5,midValue-(lowValue-0.5),attrValue-midValue,1,highValue-(attrValue+1)];
+            color1= [colalert,collow,colmid,colhigh,colattr,colhigh];
+            color2= [col2,col2,col2,col2,colattr,col2];
+          }
+          else if(attrValue>=highValue)
+          { 
+            values= [0.5,lowValue-0.5,midValue-(lowValue+0.5),highValue-(midValue-1),1];
+            color1= [colalert,collow,colmid,colhigh,colattr];
+            color2= [col2,col2,col2,col2,colattr];
+          }
+   
        }
-       else if(lowmidhighalert[3]<lowmidhighalert[0])
-       {}
-       else if(lowmidhighalert[3]==lowmidhighalert[0])
-       {}
-       else if(lowmidhighalert[3]>lowmidhighalert[0] && lowmidhighalert[3]<lowmidhighalert[1])
-       {}
-       else if(lowmidhighalert[3]==lowmidhighalert[1])
+       else if(alertValue<lowValue)
        {
-
+        if(attrValue<lowValue)
+        {
+          values=[alertValue,0.5,attrValue-(alertValue+0.5),1,lowValue-attrValue,midValue-lowValue,highValue-(midValue)];
+          color1= [collow,colalert,collow,colattr,collow,colmid,colhigh];
+          color2= [col2,col2,col2,colattr,col2,col2,col2];
+        }
+        else if(attrValue==lowValue)
+        {
+          values=[alertValue,0.5,lowValue-(alertValue-1),1,midValue-lowValue,highValue-(midValue)];
+            color1= [collow,colalert,collow,colattr,colmid,colhigh];
+            color2= [col2,col2,col2,colattr,col2,col2];
+        }
+        else if(attrValue>lowValue && attrValue<midValue)
+        {
+          values= [alertValue,0.5,(lowValue-alertValue+0.5),attrValue-lowValue,1,midValue-(attrValue+1),highValue-(midValue)];
+            color1= [collow,colalert,collow,colmid,colattr,colmid,colhigh];
+            color2= [col2,col2,col2,col2,colattr,col2,col2];
+        }
+        else if(attrValue==midValue)
+        {
+          values= [alertValue,0.5,lowValue-(alertValue+0.5),midValue-(lowValue),1,highValue-(midValue)];
+            color1= [collow,colalert,collow,colmid,colattr,colhigh];
+            color2= [col2,col2,col2,col2,colattr,col2];
+        }
+        else if(attrValue>midValue && attrValue<highValue)
+        {
+          values= [alertValue,0.5,lowValue-(alertValue+0.5),midValue-(lowValue),attrValue-midValue,1,highValue-(attrValue+1)];
+            color1= [collow,colalert,collow,colmid,colhigh,colattr,colhigh];
+            color2= [col2,col2,col2,col2,col2,colattr,col2];
+        }
+        else if(attrValue>=highValue)
+        {
+          values= [alertValue,0.5,lowValue-(alertValue+0.5),midValue-(lowValue),highValue-(midValue-1),1];
+            color1= [collow,colalert,collow,colmid,colhigh,colattr];
+            color2= [col2,col2,col2,col2,col2,colattr];
+        }
        }
-       else if(lowmidhighalert[3]>lowmidhighalert[1] && lowmidhighalert[3]<lowmidhighalert[2])
-       {}
-       else if(lowmidhighalert[3]>=lowmidhighalert[2])
-       {}
+       else if(alertValue==lowValue)
+       {
+        
+        if(attrValue>lowValue && attrValue<midValue)
+        {
+          values= [lowValue-0.5,0.5,attrValue-lowValue,1,midValue-(attrValue+1),highValue-(midValue)];
+            color1= [collow,colalert,colmid,colattr,colmid,colhigh];
+            color2= [col2,col2,col2,colattr,col2,col2];
+        }
+        else if(attrValue==midValue)
+        {
+          values= [lowValue-0.5,0.5,midValue-(lowValue+1),1,highValue-(midValue)];
+          color1= [collow,colalert,colmid,colattr,colhigh];
+          color2= [col2,col2,col2,colattr,col2];
+        }
+        else if(attrValue>midValue && attrValue<highValue)
+        {
+          values= [lowValue-0.5,0.5,midValue-(lowValue),attrValue-midValue,1,highValue-(attrValue+1)];
+            color1= [collow,colalert,colmid,colhigh,colattr,colhigh];
+            color2= [col2,col2,col2,col2,colattr,col2];
+        }
+        else if(attrValue>=highValue)
+        {
+          values= [lowValue-0.5,0.5,midValue-(lowValue),highValue-(midValue+1),1];
+            color1= [collow,colalert,colmid,colhigh,colattr];
+            color2= [col2,col2,col2,col2,colattr];
+        }
+       }
+       else if(alertValue>lowValue && alertValue<midValue)
+       {
+        if(attrValue>lowValue && attrValue<midValue)
+        { values= [lowValue,alertValue-lowValue,0.5,attrValue-(alertValue+0.5),1,midValue-(attrValue+1),highValue-midValue];
+          color1= [collow,colmid,colalert,colmid,colattr,collow,colhigh];
+          color2= [col2,col2,col2,col2,colattr,col2,col2];
+        }
+        else if(attrValue==midValue)
+        {
+          values= [lowValue,alertValue-lowValue,0.5,midValue-(alertValue+1.5),1,highValue-midValue];
+          color1= [collow,colmid,colalert,colmid,colattr,colhigh];
+          color2= [col2,col2,col2,col2,colattr,col2];
+        }
+        else if(attrValue>midValue && attrValue<highValue)
+        {
+            values= [lowValue,alertValue-lowValue,0.5,midValue-(alertValue+0.5),attrValue-midValue,1,highValue-(attrValue+1)];
+            color1= [collow,colmid,colalert,colmid,colhigh,colattr,colhigh];
+            color2= [col2,col2,col2,col2,col2,colattr,col2];
+        }
+        else if(attrValue>=highValue)
+        {
+          values= [lowValue,alertValue-lowValue,0.5,midValue-(alertValue+0.5),highValue-(midValue+1),1];
+            color1= [collow,colmid,colalert,colmid,colhigh,colattr];
+            color2= [col2,col2,col2,col2,col2,colattr];
+        }
+       }
+       else if(alertValue==midValue)
+       {
+        if(attrValue>midValue && attrValue<highValue)
+        {
+          values= [lowValue,midValue-(lowValue+0.5),0.5,attrValue-midValue,1,highValue-(attrValue+1)];
+            color1= [collow,colmid,colalert,colhigh,colattr,colhigh];
+            color2= [col2,col2,col2,col2,colattr,col2];
+        }
+        else if(attrValue>=highValue)
+        {
+          values= [lowValue,midValue-(lowValue+0.5),0.5,highValue-(midValue-1),1];
+            color1= [collow,colmid,colalert,colhigh,colattr];
+            color2= [col2,col2,col2,col2,colattr];
+        }
+       }
+       else if(alertValue>midValue && alertValue<highValue)
+       {
+        if(attrValue>midValue && attrValue<highValue)
+        {
+          values= [lowValue,midValue-(lowValue),alertValue-(midValue+0.5),0.5,attrValue-(alertValue+1),1,highValue-(attrValue)];
+            color1= [collow,colmid,colhigh,colalert,colhigh,colattr,colhigh];
+            color2= [col2,col2,col2,col2,col2,colattr,col2];
+        }
+        else if(attrValue>=highValue)
+        {
+          values= [lowValue,midValue-(lowValue),alertValue-(midValue+0.5),0.5,highValue-(alertValue+1),1];
+            color1= [collow,colmid,colhigh,colalert,colhigh,colattr];
+            color2= [col2,col2,col2,col2,col2,colattr];
+        }
+       }
+       else if(alertValue>=highValue)
+       {
+        if(attrValue>=highValue)
+        {values= [lowValue,midValue-(lowValue),highValue-(midValue-1.5),0.5,1];
+          color1= [collow,colmid,colhigh,colalert,colattr];
+          color2= [col2,col2,col2,col2,colattr];
+       }
+      }
 
      }
      else
      {
-       var values:number[]=[];
-       if(attrValue==0)
+      var values:number[]=[];
+      if(attrValue==0)
+      {
+         if(alertValue<lowValue)
+         {
+          values=[1,alertValue-1,0.5,lowValue-alertValue,midValue-lowValue,highValue-midValue];
+          color1= [colattr,collow,colalert,collow,colmid,colhigh];
+          color2= [colattr,col2,col2,col2,col2,col2];
+         }
+         else if(alertValue==lowValue)
+         {
+          values=[1,lowValue-1.5,0.5,midValue-lowValue,highValue-midValue];
+          color1= [colattr,collow,colalert,colmid,colhigh];
+          color2= [colattr,col2,col2,col2,col2];
+         }
+         else if(alertValue>lowValue && alertValue<midValue)
+         {
+          values=[1,lowValue-1,alertValue-lowValue,0.5,midValue-(alertValue+0.5),highValue-midValue];
+          color1= [colattr,collow,colmid,colalert,colmid,colhigh];
+          color2= [colattr,col2,col2,col2,col2,col2];
+         }
+         else if(alertValue==midValue)
+         {
+          values=[1,lowValue-1,midValue-(lowValue+0.5),0.5,highValue-midValue];
+          color1= [colattr,collow,colmid,colalert,colhigh];
+          color2= [colattr,col2,col2,col2,col2];
+         }
+         else if(alertValue>midValue && alertValue<highValue)
+         {
+          values=[1,lowValue-1,midValue-lowValue,alertValue-(midValue+0.5),0.5,highValue-alertValue];
+          color1= [colattr,collow,colmid,colhigh,colalert,colhigh];
+          color2= [colattr,col2,col2,col2,col2,col2];
+         }
+         else if(alertValue>=highValue)
+         {
+          
+          values=[1,lowValue-1,midValue-lowValue,highValue-(midValue+0.5),0.5];
+          color1= [colattr,collow,colmid,colhigh,colalert];
+          color2= [colattr,col2,col2,col2,col2];
+         }
+  
+      }
+      else if(attrValue<lowValue)
+      {
+       if(alertValue<lowValue)
        {
-
+        values=[attrValue-lowValue-1,1,alertValue-(attrValue+0.5),0.5,lowValue-alertValue,midValue-lowValue,highValue-midValue];
+        color1= [collow,colattr,collow,colalert,collow,colmid,colhigh];
+        color2= [col2,colattr,col2,col2,col2,col2,col2];
        }
-       else if(attrValue<lowmidhighalert[0])
-       {}
-       else if(attrValue==lowmidhighalert[0])
-       {}
-       else if(attrValue>lowmidhighalert[0] && attrValue<lowmidhighalert[1])
-       {}
-       else if(attrValue==lowmidhighalert[1])
+       else if(alertValue==lowValue)
        {
-
+        values=[attrValue-1,1,lowValue-(attrValue+0.5),0.5,midValue-lowValue,highValue-midValue];
+        color1= [collow,colattr,collow,colalert,colmid,colhigh];
+        color2= [col2,colattr,col2,col2,col2,col2];
        }
-       else if(attrValue>lowmidhighalert[1] && attrValue<lowmidhighalert[2])
-       {}
-       else if(attrValue>=lowmidhighalert[2])
-       {}
+       else if(alertValue>lowValue && alertValue<midValue)
+       {
+        values=[attrValue-1,1,lowValue-attrValue,alertValue-(lowValue+0.5),0.5,midValue-alertValue,highValue-midValue];
+        color1= [collow,colattr,collow,colmid,colalert,colmid,colhigh];
+        color2= [col2,colattr,col2,col2,col2,col2,col2];
+       }
+       else if(alertValue==midValue)
+       {
+        values=[attrValue-1,1,lowValue-attrValue,midValue-(lowValue+0.5),0.5,highValue-midValue];
+        color1= [collow,colattr,collow,colmid,colalert,colhigh];
+        color2= [col2,colattr,col2,col2,col2,col2];
+       }
+       else if(alertValue>midValue && alertValue<highValue)
+       {
+        values=[attrValue-1,1,lowValue-attrValue,midValue-lowValue,alertValue-(midValue+0.5),0.5,highValue-alertValue];
+        color1= [collow,colattr,collow,colmid,colhigh,colalert,colhigh];
+        color2= [col2,colattr,col2,col2,col2,col2,col2];
+       }
+       else if(alertValue>=highValue)
+       {
+        values=[attrValue-1,1,lowValue-attrValue,midValue-lowValue,highValue-(midValue-0.5),0.5];
+        color1= [collow,colattr,collow,colmid,colhigh,colalert];
+        color2= [col2,colattr,col2,col2,col2,col2];
+       }
+      }
+      else if(attrValue==lowValue)
+      {
+       if(alertValue>lowValue && alertValue<midValue)
+       {
+        values=[lowValue-1,1,alertValue-(lowValue+0.5),0.5,midValue-alertValue,highValue-midValue];
+        color1= [collow,colattr,colmid,colalert,colmid,colhigh];
+        color2= [col2,colattr,col2,col2,col2,col2];
+       }
+       else if(alertValue==midValue)
+       {
+        values=[lowValue-1,1,midValue-(lowValue+0.5),0.5,highValue-midValue];
+        color1= [collow,colattr,colmid,colalert,colhigh];
+        color2= [col2,colattr,col2,col2,col2];
+       }
+       else if(alertValue>midValue && alertValue<highValue)
+       {
+        values=[lowValue-1,1,midValue-lowValue,alertValue-(midValue+0.5),0.5,highValue-alertValue];
+        color1= [collow,colattr,colmid,colhigh,colalert,colhigh];
+        color2= [col2,colattr,col2,col2,col2,col2];
+       }
+       else if(alertValue>=highValue)
+       {
+        values=[lowValue-1,1,midValue-lowValue,highValue-(midValue+0.5),0.5];
+        color1= [collow,colattr,colmid,colhigh,colalert];
+        color2= [col2,colattr,col2,col2,col2];
+       }
+      }
+      else if(attrValue>lowValue && attrValue<midValue)
+      {
+       if(alertValue>lowValue && alertValue<midValue)
+       {
+        values=[lowValue,attrValue-(lowValue+1),1,alertValue-(attrValue+0.5),0.5,midValue-alertValue,highValue-midValue];
+        color1= [collow,colmid,colattr,colmid,colalert,colmid,colhigh];
+        color2= [col2,col2,colattr,col2,col2,col2,col2];
+       }
+       else if(alertValue==midValue)
+       {
+        values=[lowValue,attrValue-(lowValue+1),1,midValue-(attrValue+0.5),0.5,highValue-midValue];
+        color1= [collow,colmid,colattr,colmid,colalert,colhigh];
+        color2= [col2,col2,colattr,col2,col2,col2];
+       }
+       else if(alertValue>midValue && alertValue<highValue)
+       {
+        values=[lowValue,attrValue-(lowValue+1),1,midValue-attrValue,alertValue-(midValue+0.5),0.5,highValue-alertValue];
+        color1= [collow,colmid,colattr,colmid,colhigh,colalert,colhigh];
+        color2= [col2,col2,colattr,col2,col2,col2,col2];
+       }
+       else if(alertValue>=highValue)
+       {
+        values=[lowValue,attrValue-(lowValue+1),1,midValue-attrValue,highValue-(midValue+0.5),0.5];
+        color1= [collow,colmid,colattr,colmid,colhigh,colalert];
+        color2= [col2,col2,colattr,col2,col2,col2];
+       }
+      }
+      else if(attrValue==midValue)
+      {
+       if(alertValue>midValue && alertValue<highValue)
+       {
+        values=[lowValue,midValue-(lowValue+1),1,alertValue-(midValue+0.5),0.5,highValue-alertValue];
+        color1= [collow,colmid,colattr,colhigh,colalert,colhigh];
+        color2= [col2,col2,colattr,col2,col2,col2];
+       }
+       else if(alertValue>=highValue)
+       {
+        values=[lowValue,midValue-(lowValue+1),1,highValue-(midValue+0.5),0.5];
+        color1= [collow,colmid,colattr,colhigh,colalert];
+        color2= [col2,col2,colattr,col2,col2];
+       }
+      }
+      else if(attrValue>midValue && attrValue<highValue)
+      {
+       if(alertValue>midValue && alertValue<highValue)
+       {
+        values=[lowValue,midValue-lowValue,attrValue-(midValue+1),1,alertValue-(attrValue+0.5),0.5,highValue-alertValue];
+        color1= [collow,colmid,colhigh,colattr,colhigh,colalert,colhigh];
+        color2= [col2,col2,col2,colattr,col2,col2,col2];
+       }
+       else if(alertValue>=highValue)
+       {
+        values=[lowValue,midValue-lowValue,attrValue-(midValue+1),1,highValue-(attrValue+0.5),0.5];
+        color1= [collow,colmid,colhigh,colattr,colhigh,colalert];
+        color2= [col2,col2,col2,colattr,col2,col2];
+       }
+      }
+      else if(attrValue>=highValue)
+      {
+       if(alertValue>=highValue)
+       {
+        values=[lowValue,midValue-lowValue,(highValue-midValue+1.5),0.5,1];
+        color1= [collow,colmid,colhigh,colalert,colattr];
+        color2= [col2,col2,col2,col2,colattr];
+       }
+      }
 
      }
       this.paneDetails[paneSlNo].chartGaugeData[0].data=values;
@@ -529,7 +868,7 @@ getDeviceDataGauge=async(id:number,paneSlNo:number,lowmidhighalert:number[],gaug
       this.paneDetails[paneSlNo].chartGaugeData[1].backgroundColor=color2;
       this.paneDetails[paneSlNo].chartGaugeData[1].hoverBackgroundColor=color2;
       this.paneDetails[paneSlNo].chartLabels=chartlabels;
-      this.gaugeOptions.title.text=attrValue.toString();
+      this.gaugeOptions.title.text="Attribute : "+attrValue.toString() + "\n Alert : "+ alertValue.toString()+ "\n Low : "+ lowValue.toString()+ "\n Mid : "+ midValue.toString()+ "\n High : "+ highValue.toString();
       this.paneDetails[paneSlNo].isLiveData=false;
       this.paneDetails[paneSlNo].chartReady=true;  
 
@@ -539,9 +878,8 @@ getDeviceDataGauge=async(id:number,paneSlNo:number,lowmidhighalert:number[],gaug
   })
   .catch(res=>
     {
-        alert('Error occured during Gauge chart Data Processing.\n Error: '+JSON.stringify(res))
+      Swal.fire('Error!', 'Error occured during Gauge chart Data Processing.\n Error: '+JSON.stringify(res), 'error');
     });
- 
     
 
 }
@@ -600,43 +938,58 @@ resize(paneid:number, size:string){
     {
     })
     .catch(res=>
-    {alert('Error occured during saving Dashboard Detail.\n Error: '+JSON.stringify(res))}
-    );
+    {
+      Swal.fire('Error!', 'Error occured during saving Dashboard Detail.\n Error: '+JSON.stringify(res), 'error');
+    });
   }
-  alert('Dashboard configuration saved successfully.');
+  Swal.fire('Success!', 'Dashboard configuration saved successfully.', 'success');
+  
   }
 
 
 removePane=async(pane:PaneDetailsFetch)=>{
-  var confrm=confirm('Do you want to remove Pane?');
-if(confrm==true){
-  this.panedetailsRemove.PaneId=pane.paneId;
-  this.panedetailsRemove.DeviceId=pane.deviceId;
-  this.panedetailsRemove.DeviceName=pane.deviceName;
-  this.panedetailsRemove.Index=pane.index;
-  this.panedetailsRemove.Size=pane.size;
-
-
-  const promise=await this.deviceservice.deletePanelDetails(this.panedetailsRemove).toPromise().then(data=>
-    {
-      alert('Pane deleted successfully.');
-      var removepos=-1;
-      for(var i=0;i<this.paneDetails.length;i++)
-      {
-        if(this.paneDetails[i].paneId==pane.paneId)
+  Swal.fire({
+    title: 'Do you want to remove Pane?',
+    showDenyButton: true,
+    showCancelButton: false,
+    confirmButtonText: `Remove`,
+    denyButtonText: `Cancel`,
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      this.panedetailsRemove.PaneId=pane.paneId;
+      this.panedetailsRemove.DeviceId=pane.deviceId;
+      this.panedetailsRemove.DeviceName=pane.deviceName;
+      this.panedetailsRemove.Index=pane.index;
+      this.panedetailsRemove.Size=pane.size;
+    
+    
+      const promise=this.deviceservice.deletePanelDetails(this.panedetailsRemove).toPromise().then(data=>
         {
-          removepos=i;
-          break;
+          Swal.fire('Success!', 'Pane deleted successfully.', 'success');
+          
+          var removepos=-1;
+          for(var i=0;i<this.paneDetails.length;i++)
+          {
+            if(this.paneDetails[i].paneId==pane.paneId)
+            {
+              removepos=i;
+              break;
+            }
+    
+          }
+          if(removepos>=0)
+          this.paneDetails.splice(removepos,1);
+        })
+        .catch(res=>
+        {
+          Swal.fire('Error!','Error occured during deleting Pane.\n Error: '+JSON.stringify(res), 'error');
+          
         }
-
-      }
-      if(removepos>=0)
-      this.paneDetails.splice(removepos,1);
-    })
-    .catch(res=>
-    {alert('Error occured during deleting Pane.\n Error: '+JSON.stringify(res))}
-    );
-  } 
+        );
+    } 
+  })
   
+   
  }
 }

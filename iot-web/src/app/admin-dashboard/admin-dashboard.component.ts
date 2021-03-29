@@ -6,6 +6,7 @@ import { DeviceAdminModel,DeviceAddModel} from '../device/device-model';
 import { UserModel } from '../login/user-model';
 import {DeviceModel} from '../device/device-model';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -21,6 +22,7 @@ export class AdminDashboardComponent implements OnInit {
   tagsNo:number=1;
   devices: Array<DeviceAdminModel>=[];
   updateDevice:DeviceAdminModel=new DeviceAdminModel();
+  displayName:string='';
   constructor(private userservice:UserService,private adminservice:AdminService,private router:Router) { 
     this.user=new UserModel();
   }
@@ -30,14 +32,12 @@ export class AdminDashboardComponent implements OnInit {
     const userstring=sessionStorage.getItem('loggedinuser');
     if(userstring!=null)
     { const loggedinuser = JSON.parse(userstring);
-            
-      this.user=this.userservice.getUser();
-      var UserId=this.user.userId;
+      this.user=loggedinuser;
       this.getAllDevices();
+      this.displayName=this.user.email.substring(0,this.user.email.indexOf('@'));
     }
     else
     this.router.navigateByUrl('/login');
-    
   }
 
   getAllDevices(){
@@ -61,14 +61,14 @@ export class AdminDashboardComponent implements OnInit {
     }
       
     const promise=await this.adminservice.addDevice(this.devicesadd).toPromise().then(res => { // Success
-      alert('Devices added successfully.');
+      Swal.fire('Success!', 'Devices added successfully.', 'success');
       this.tagName=res;
-      alert(this.tagName);
       this.getAllDevices();
       
     } )
     .catch(res=>
-      {alert('Error occured during adding device.\n Error: '+JSON.stringify(res))});
+      {Swal.fire('Error!', 'Error occured during adding device.\n Error: '+JSON.stringify(res), 'error');
+      });
      
   }
 
@@ -87,12 +87,17 @@ export class AdminDashboardComponent implements OnInit {
       
     } )
     .catch(res=>
-      {alert('Error occured during updating device.\n Error: '+JSON.stringify(res))
-      this.getAllDevices();
-    });
+      {
+        Swal.fire('Error!', 'Error occured during updating device.\n Error: '+JSON.stringify(res), 'error');
+        this.getAllDevices();
+      });
      
   }
   
-  
+  LogOut(){
+    sessionStorage.removeItem('loggedinuser');
+    sessionStorage.removeItem('userdevices');
+    this.router.navigateByUrl('/login');
+  }
 
 }

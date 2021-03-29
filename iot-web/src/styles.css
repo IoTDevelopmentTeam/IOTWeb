@@ -28,6 +28,7 @@ h2{
     border-radius: 5px;
     margin-top: 5%;
     margin-bottom: 5%;
+	
 }
 .tag-group{
 	max-width: 400px;
@@ -151,10 +152,14 @@ h2{
 	max-width: 260px;
 	transition: margin-left .35s ease-in-out, left .35s ease-in-out, margin-right .35s ease-in-out, right .35s ease-in-out;
 	direction: ltr;
-	background: #293042
+	background: rgb(249 250 252);
+	border-right: 1px solid rgb(210 214 222);
 }
 
-
+.sidebar-header{
+	padding: 24px 24px 6px 24px;
+	font-size: 12px;
+}
 
 .sidebar-nav {
     padding-left: 0;
@@ -173,7 +178,11 @@ h2{
     position: relative;
     text-decoration: none;
     cursor: pointer;
-    color: rgba(233, 236, 239, 1);
+    color: rgb(68 68 68);
+}
+
+.sidebar-link span .fa{
+	margin-right: 10px;
 }
 
 .sidebar [data-toggle=collapse]:before {
@@ -202,16 +211,29 @@ h2{
 .sidebar-dropdown .sidebar-link {
     padding: .55rem 1.5rem .55rem 3.7rem;
     font-weight: 400;
-    color: rgba(233, 236, 239, 1);
+    color: rgba(68, 68, 68);
 }
 
 .sidebar-link:hover {
-    color: rgba(233, 236, 239, .75);
+    color: rgba(68, 68, 68, .75);
+	background: rgba(244, 244, 245);
+}
+
+.sidebar-link{
+	background: rgba(244, 244, 245);
+}
+
+.sidebar-link.collapsed{
+	background: rgb(244 244 245 / 0%)
 }
 
 .sidebar-dropdown .sidebar-item .sidebar-link:hover {
     font-weight: 400;
-    color: rgba(233, 236, 239, .75);
+    color: rgba(68, 68, 68, .75);
+}
+
+.sidebar-dropdown.show{
+	background: rgba(244, 244, 245);
 }
 
 .sidebar-toggle {
@@ -230,7 +252,7 @@ h2{
     border-radius: 1px;
     height: 3px;
     width: 24px;
-    background: #495057;
+    background: #FFF; /* Changed style */
     display: block;
     content: "";
     transition: background .1s ease-in-out, color .1s ease-in-out;
@@ -277,6 +299,7 @@ h2{
     display: inline-block;
     padding: 2px;
     transform: rotate(45deg);
+	border-color: #FFF; /* Changed style */
 }
 
 .sidebar.collapsed {
@@ -320,12 +343,15 @@ h2{
 	border-bottom-right-radius: 5px;
 }
 .navbar{
-	background: #FFF;
-	border-bottom: 1px solid #000;
+	background: rgb(96 92 168); /* Changed style */
+	/*border-bottom: 1px solid #000;*/
 	justify-content: space-between !important;
+	box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.75); /* Changed style */
+	-webkit-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.75); /* Changed style */
+	-moz-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.75); /* Changed style */
 }
 main.content{
-	background: #FFF;
+	background: rgb(236 240 245);
 	min-height: 100vh;
 }
 
@@ -340,19 +366,22 @@ main.content{
 .graph-wrapper .dropdown-toggle{
     position: absolute;
 	right: -5px;
-    top: 5px;
+    top: 43px; /* Changed style */
 }
 
 .graph-wrapper .dropdown-toggle .hamburger{
     width: 3px;
+	background: #000;
 }
 
 .graph-wrapper .dropdown-toggle .hamburger:before{
 	width: 3px;
+	background: #000;
 }
 
 .graph-wrapper .dropdown-toggle .hamburger:after{
 	width: 3px;
+	background: #000;
 }
 
 .graph-wrapper .dropdown-toggle:after{
@@ -361,10 +390,49 @@ main.content{
 
 .graph-content{
 	position: relative;
-	height: 350px;
-    border: 1px solid #CCC;
+	height: 375px;
+    background: #FFF;
+	box-shadow: 0px 3px 4px -1px rgba(0,0,0,0.75);
+	-webkit-box-shadow: 0px 3px 4px -1px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 3px 4px -1px rgba(0,0,0,0.75);
+	border-top: 3px solid rgb(60 141 188);
+	border-radius: 3px;
 }
 
 .form-group .text-danger{
 	font-size: 12px;
+}
+/* Changed style */
+.graph-header{
+	padding: 7px;
+	border-bottom: 1px solid rgb(210 214 222);
+	margin-bottom:30px;
+	
+	
+}
+
+.graph-close {
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  width: 12px;
+  height: 12px;
+  opacity: 0.75;
+}
+.graph-close:hover {
+  opacity: 1;
+}
+.graph-close:before, .graph-close:after {
+  position: absolute;
+  left: 5px;
+  content: ' ';
+  height: 12px;
+  width: 2px;
+  background-color: rgb(68 68 68);
+}
+.graph-close:before {
+  transform: rotate(45deg);
+}
+.graph-close:after {
+  transform: rotate(-45deg);
 }

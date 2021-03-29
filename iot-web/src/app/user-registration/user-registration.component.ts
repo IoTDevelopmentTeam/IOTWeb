@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from '../user.service';
 import {UserModel,SecurityQuestions} from '../login/user-model';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-registration',
@@ -72,24 +73,28 @@ export class UserRegistrationComponent implements OnInit {
     
      var result=res;
      if(result==true){
-     alert('Email already registered.')
+      Swal.fire('Information!', 'Email already registered.', 'info');
     }
     else
     {
       const promise1=this.userservice.UserRegistration(this.user).toPromise().then(res => { // Success
       
         this.user=res;
-        alert('User registration successfully.');
+        Swal.fire('Success!', 'User registration successfully.', 'success');
         this.router.navigateByUrl('/login');
              
       } )
       .catch(res=>
-        {alert('Error occured during User Registration.\n Error: '+JSON.stringify(res))});
+        {
+          Swal.fire('Error!', 'Error occured during User Registration.\n Error: '+JSON.stringify(res), 'error');
+        });
     }
            
     } )
     .catch(res=>
-      {alert('Error occured during fetching Email Availability.\n Error: '+JSON.stringify(res))});
+      {
+        Swal.fire('Error!', 'Error occured during fetching Email Availability.\n Error: '+JSON.stringify(res), 'error');
+      });
      
     
     }
@@ -105,7 +110,9 @@ export class UserRegistrationComponent implements OnInit {
                 
     } )
     .catch(res=>
-      {alert('Error occured during fetching Security Questions.\n Error: '+JSON.stringify(res))});
+      {
+        Swal.fire('Error!', 'Error occured during fetching Security Questions.\n Error: '+JSON.stringify(res), 'error');
+      });
      
   }
  

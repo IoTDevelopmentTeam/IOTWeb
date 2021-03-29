@@ -1,46 +1,36 @@
-<!-- <p>admin-dashboard</p>
-<label>No of tags : </label>
-<input type="number" min="1" max="20" [(ngModel)]="tagsNo"/>
-<button (click)="generateTagName()">Generate TagName</button>
-<br/>
-<label>Generated Device TagName is : {{tagName}}</label>
-
-<br/>
-<table border="1">
-    <thead>
-        <td>Is Used</td>
-        <td>Tag Name</td>
-        <td>Generated On</td>
-        <td>Mapped Device Name</td>
-        <td>First Use</td>
-        <td>Exp date</td>
-    </thead>
-    <tr *ngFor="let device of devices">
-        <td><input type="checkbox" checked="true"></td>
-        <td>{{device.deviceTagName}}</td>
-        <td>{{device.inputDate}}</td>
-        <td>{{device.deviceName}}</td>
-        <td></td>
-        <td></td>
-        
-    </tr>
-</table> -->
-
-
-
-
 <div class="container-fluid ">
         <div class="container ">
             <div class="row ">
                 
                 <div class="col-sm-10 login-box">
-                    <div class="row">
+                    <div class="main">
 					
-					<div class="small-logo">
+							<!-- <div class="small-logo">
                                 <img class="img-fluid" src="assets\logo.png" >
-                            </div>
+                            </div> -->
+							<nav class="navbar navbar-expand navbar-light navbar-bg">
+								
+								<div class="small-logo">
+									<img class="img-fluid" src="assets\logo.png" >
+								</div>
+								  
+								<div class="navbar-collapse collapse">
+								   <ul class="navbar-nav navbar-align">
+									  <li class="nav-item dropdown">
+										 
+										 <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
+										  <span class="text-light">{{displayName}}</span>
+										 </a>
+										 <div class="dropdown-menu dropdown-menu-right">
+																
+											<a class="dropdown-item" (click)="LogOut()">Sign out</a>
+										 </div>
+									  </li>
+								   </ul>
+								</div>
+							 </nav>
 
-						<div class="col-md-12 mt-3">
+						<!-- <div class="col-md-12 mt-3">
 							<div class="card">
 								<div class="card-header">
 									<h5 class="card-title">Generate TagName</h5>
@@ -61,10 +51,36 @@
 									<small class="form-text text-muted">Created Tags : {{tagName}}</small>
 								</div>
 							</div>
-						</div>
+						</div> -->
 						
+						<div class="col-md-12">
+							<div class="">
+							<h2 class="h2 mb-2 mt-2 text-center">Generate TagName</h2>
+							<p class="small-info text-center mb-2">You can provide more text about create tag.</p>
+							
+							<div class="card-body">
+							<form class="form-group tag-group">
+							<!--label class="form-label">Tag</label-->
+							<div class="form-inline justify-content-center">
+							<div class="form-d-flex">
+							<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon1"><i class="fas fa-tag"></i></span>
+							</div>
+							<input type="number" min="1" max="20" [(ngModel)]="tagsNo" class="form-control mb-0" name="validation-email" >
+							</div>
+							<button type="submit" class="btn btn-primary ml-0 ml-md-3 mt-3 mt-md-0" (click)="generateTagName()">Submit</button>
+							</div>
+							</form>
+							<small class="form-text text-muted d-flex">
+							<div class="font-weight-bold">Created Tags :</div>
+							<p class="font-italic">{{tagName}}</p>
+							</small>
+							</div>
+							</div>
+							</div>
+
 						<!-- Table Start -->
-						
+						<div class="dark w-100">
 						<div class="col-12 mb-3">
 							<div class="card">
 								<div class="card-header">
@@ -99,6 +115,7 @@
 									</table>
 								</div>
 							</div>
+						</div>
 						</div>
 						
 						<!-- End table -->

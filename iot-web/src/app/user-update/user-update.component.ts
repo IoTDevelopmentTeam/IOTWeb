@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import {UserService} from '../user.service';
 import {UserModel,SecurityQuestions} from '../login/user-model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-update',
@@ -57,7 +58,9 @@ export class UserUpdateComponent implements OnInit {
                 
     } )
     .catch(res=>
-      {alert('Error occured during fetching Security Questions.\n Error: '+JSON.stringify(res))});
+      {
+        Swal.fire('Error!', 'Error occured during fetching Security Questions.\n Error: '+JSON.stringify(res), 'error');
+      });
      
   }
 
@@ -85,11 +88,14 @@ export class UserUpdateComponent implements OnInit {
       var result=res;
       if(result==true){
         emailExist=true;
-      alert('Email already registered.')
+        Swal.fire('Information!', 'Email already registered.', 'info');
+      
      }
     })
     .catch(res=>
-      {alert('Error occured during Email checking.\n Error: '+JSON.stringify(res))});
+      {
+        Swal.fire('Error!', 'Error occured during Email checking.\n Error: '+JSON.stringify(res), 'error');
+      });
     }
     
     if(emailExist==false){
@@ -103,11 +109,13 @@ export class UserUpdateComponent implements OnInit {
       
       sessionStorage.setItem('loggedinuser',JSON.stringify(this.user));
       this.user=res;
-      alert('User Detail updated successfully.');
-                
+      Swal.fire('Success!', 'User Detail updated successfully.', 'success');
+                     
     } )
     .catch(res=>
-      {alert('Error occured during User detail update.\n Error: '+JSON.stringify(res))});
+      {
+        Swal.fire('Error!', 'Error occured during User detail update.\n Error: '+JSON.stringify(res), 'error');
+      });
     }
   }
   }

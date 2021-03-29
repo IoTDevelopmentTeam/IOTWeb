@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserModel} from './user-model';
 import {UserService} from '../user.service'
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class LoginComponent implements OnInit {
       const promise=await this.userservice.loginCheck(this.user).toPromise().then(res => { // Success
       if(res==null)
       { 
-        alert('Invalid Email or Password.');
+        Swal.fire('Error!', 'Invalid Email or Password.', 'error');
       }
       else {
       this.user=res;
@@ -52,15 +53,17 @@ export class LoginComponent implements OnInit {
       }
       else
       {
-        window.alert('Invalid User');
+        Swal.fire('Error!', 'Invalid User', 'error');
+        
       }
     }
       
     })
     .catch(res=>
     {
-        alert('Error occured during Login.\n Error: '+JSON.stringify(res))});
-    }  
+      Swal.fire('Error!','Error occured during Login.\n Error: '+JSON.stringify(res), 'error');
+    });
+  }  
   }
 
 }

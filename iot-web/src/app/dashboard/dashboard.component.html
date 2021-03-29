@@ -9,7 +9,9 @@
 									(cdkDropListDropped)="drop($event, pane.index)">
 										<div  cdkDrag [cdkDragData]="pane" class="graph-content" *ngIf="pane.chartReady&&pane.isLiveData==false">
 											<!-- Div Options -->
-											<p>{{pane.deviceName}}<a  (click)="removePane(pane)">X</a></p>
+											<div class="graph-header">
+												{{pane.deviceName}}<a class="graph-close" (click)="removePane(pane)"></a>
+											</div>
 											<a class="nav-link dropdown-toggle d-none d-sm-inline-block" data-toggle="dropdown">
 												<i class="hamburger align-self-center"></i>
 											</a>
@@ -42,7 +44,7 @@
 											<canvas height="{{pane.height}}" id="canvas{{pane.paneId}}" *ngIf="pane.chartType=='pie'" baseChart
 											[datasets]="pane.chartPieData"
 											[labels]="pane.chartLabels"
-											[options]="chartOptions"
+											[options]="pieChartOptions"
 											[legend]="pane.chartLegend"
 											[chartType]="pane.chartType"></canvas>
 											
@@ -51,7 +53,9 @@
 
 											<div cdkDrag [cdkDragData]="pane" class="graph-content" *ngIf="pane.chartReady&&pane.isLiveData==true">
 											<!-- Div Options -->
-											<p>{{pane.deviceName}}<a (click)="removePane(pane)">X</a></p>
+											<div class="graph-header">
+												{{pane.deviceName}}<a class="graph-close" (click)="removePane(pane)"></a>
+											</div>
 											<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown" aria-expanded="true">
 												<i class="hamburger align-self-center"></i>
 											</a>

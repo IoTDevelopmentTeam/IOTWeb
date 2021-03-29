@@ -6,6 +6,7 @@ import { DeviceModel,DeviceDetail,UserDeviceModel,UserDeviceModelResult,PaneDeta
 import {FormGroup,FormControl,FormBuilder,Validators} from '@angular/forms';
 import { UserModel } from '../login/user-model';
 import { Router , NavigationStart } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-device',
@@ -149,8 +150,10 @@ addPaneFlag:boolean=true;
       }
     )
     .catch(res=>
-    {alert('Error occured during fetching Attributes.\n Error: '+JSON.stringify(res))}
-    );
+    {
+      Swal.fire('Error!', 'Error occured during fetching Attributes.\n Error: '+JSON.stringify(res), 'error');
+      
+    });
     
     this.deviceDetailLabelName=device.deviceName;
     this.deviceDetailId=device.deviceId;
@@ -178,16 +181,19 @@ addPaneFlag:boolean=true;
      const promise=await this.deviceservice.addDevice(this.userdevice).toPromise().then(res => { 
       
         this.resultmapdevice=res;
-        alert(this.resultmapdevice.message);
-        if(this.resultmapdevice.isDeviceUserAssociationSucceded)
-        this.AddDeviceClose.nativeElement.click();
+        Swal.fire('Success!',this.resultmapdevice.message, 'success')
+          
+            if(this.resultmapdevice.isDeviceUserAssociationSucceded)
+            this.AddDeviceClose.nativeElement.click();
+         
         
         
         this.getAllUserById(this.user.userId);
       })
       .catch(res=>
-        {alert('Error occured during device mapping.\n Error: '+JSON.stringify(res))
-      });
+        {
+          Swal.fire('Error!','Error occured during device mapping.\n Error: '+JSON.stringify(res), 'error');
+        });
        
     }
     
@@ -201,7 +207,7 @@ addPaneFlag:boolean=true;
     {
     const paneCount=sessionStorage.getItem('paneCount');
     if(paneCount!=null)
-    this.paneDetails.Index=Number(paneCount);
+    this.paneDetails.Index=Number(paneCount)+1;
     this.paneDetails.Size='small';
     this.paneDetails.DeviceName=this.deviceDetailLabelName;
     this.paneDetails.DeviceId=this.deviceDetailId;
@@ -214,22 +220,27 @@ addPaneFlag:boolean=true;
           configDetail= this.PrepareConfigData(paneId);
           const promise= this.deviceservice.addConfigDetails(configDetail).toPromise().then(data=>
             {
-              alert('Pane added succesfully.');
-              
-              if(window.location.pathname=='/device/dashboard')
-              location.reload();
+              Swal.fire('Success!', 'Pane added succesfully.', 'success').then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                  if(window.location.pathname=='/device/dashboard')
+                  location.reload();
+                }
+              })
             })
             .catch(res=>
               {
-                alert('Error occured during saving Config Detail.\n Error: '+JSON.stringify(res))}
-              )
+                Swal.fire('Error!', 'Error occured during saving Config Detail.\n Error: '+JSON.stringify(res), 'error');
+                
+              })
         }
         
       }
     )
     .catch(res=>
-    {alert('Error occured during saving Pane Detail.\n Error: '+JSON.stringify(res))}
-    );
+    {
+      Swal.fire('Error!', 'Error occured during saving Pane Detail.\n Error: '+JSON.stringify(res), 'error');
+    });
     this.allGraphShowFalse();
     this.showCurrentLocation=false;
     this.showParam=false;
