@@ -11,7 +11,7 @@ import { UserService } from '../user.service';
 import { identifierName } from '@angular/compiler';
 import { NumberFormatStyle } from '@angular/common';
 import { Observable } from 'rxjs';
-import { async } from '@angular/core/testing';
+
 
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { bottom } from '@popperjs/core';
@@ -98,13 +98,23 @@ export class DashboardComponent implements OnInit {
     // setInterval(() => { 
     //   this.getDetail(UserId),60000});
  
-    this.getDetail(UserId);
+    // this.getDetail(UserId);
+
+    var that=this;
+    let timerId =setTimeout(function prepareDashboard() {
+      
+      that.getDetail(UserId);
+      timerId=setTimeout(prepareDashboard, 60000); // (*)
+    }, 0);
+    
     }
   }
   
-  getDetail=async(id:number)=>{//(devices:DeviceModel[])=>{
+  public getDetail=async(id:number)=>{//(devices:DeviceModel[])=>{
     // for(var i=0;i<devices.length;i++)
     // {
+      
+     
       this.paneDetails=[];
       //this.getPaneDetail(this.devices[i].deviceId,this.paneDetails);
       await this.deviceservice.getPaneDetail(id).toPromise().then(res => { // Success
@@ -419,9 +429,9 @@ getDeviceDataGauge=async(id:number,paneSlNo:number,lowmidhighalert:number[],gaug
   
   var colattr:string="#191717";//attrvalue
   var colalert:string="#FF3333";//alert
-  var collow:string="#FFFF33";//low
-  var colmid:string="#80FF33";//mid
-  var colhigh:string="#FF8633";//high
+  var collow:string="#AEC7F4";//low
+  var colmid:string="#5992F9";//mid
+  var colhigh:string="#0A5FF9";//high
   var col2:string="#FFFFFF";
 
   
