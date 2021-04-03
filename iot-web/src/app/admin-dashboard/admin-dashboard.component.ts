@@ -44,6 +44,7 @@ export class AdminDashboardComponent implements OnInit {
     this.adminservice.getAllDeviceList().subscribe(data=>
       {
         this.devices=data;
+       
       }
     );
     

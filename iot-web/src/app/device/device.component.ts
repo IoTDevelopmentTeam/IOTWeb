@@ -181,9 +181,12 @@ addPaneFlag:boolean=true;
      const promise=await this.deviceservice.addDevice(this.userdevice).toPromise().then(res => { 
       
         this.resultmapdevice=res;
-        Swal.fire('Success!',this.resultmapdevice.message, 'success')
+        if(this.resultmapdevice.isDeviceUserAssociationSucceded)
+          Swal.fire('Success!',this.resultmapdevice.message, 'success')
+        else
+          Swal.fire('Error!',this.resultmapdevice.message, 'error')
           
-            if(this.resultmapdevice.isDeviceUserAssociationSucceded)
+        if(this.resultmapdevice.isDeviceUserAssociationSucceded)
             this.AddDeviceClose.nativeElement.click();
          
         

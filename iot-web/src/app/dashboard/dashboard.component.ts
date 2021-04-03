@@ -41,11 +41,28 @@ export class DashboardComponent implements OnInit {
     scales: {
       yAxes: [{
           ticks: {
-              suggestedMin: 0
+              suggestedMin: 0,
+              fontSize:15,
+              fontColor:'black',
               
           }
-      }]
+          
+      }],
+      xAxes: [{
+        ticks: {
+            fontSize:15,
+            fontColor:'black',
+        }
+      }],
+        
+    },
+    legend: {
+      labels:{
+      fontSize:15,
+      fontColor:'black',
+      }
     }
+    
   };
   public pieChartOptions = {
     scaleShowVerticalLines: false,
@@ -104,7 +121,7 @@ export class DashboardComponent implements OnInit {
     let timerId =setTimeout(function prepareDashboard() {
       
       that.getDetail(UserId);
-      timerId=setTimeout(prepareDashboard, 60000); // (*)
+      timerId=setTimeout(prepareDashboard, 60000);
     }, 0);
     
     }
@@ -134,17 +151,11 @@ export class DashboardComponent implements OnInit {
       if(this.paneDetails[i].size==null)
         this.paneDetails[i].size="small";
       if(this.paneDetails[i].size=="small")
-       {this.paneDetails[i].cssClass="col-md-4"; 
-       this.paneDetails[i].height="230";
-        }
+       this.paneDetails[i].cssClass="col-md-4"; 
       else if(this.paneDetails[i].size=="mid")
-       {this.paneDetails[i].cssClass="col-md-8"; 
-       this.paneDetails[i].height="115"; 
-      }
+       this.paneDetails[i].cssClass="col-md-8"; 
       else 
-        {this.paneDetails[i].cssClass="col-md-12";
-        this.paneDetails[i].height="70";
-      }
+        this.paneDetails[i].cssClass="col-md-12";
       this.getConfigDetail(this.paneDetails[i].paneId,i,this.paneDetails[i].deviceId);
       
     }  
@@ -250,7 +261,7 @@ export class DashboardComponent implements OnInit {
     });
   } 
   getDeviceDataLineBar=async(id:number,paneSlNo:number,xaxis:string,yaxis:string)=>{
-      var xaxisvalue:string[]=[];
+      var xaxisvalue:Array<string[]>=[];
       var yaxisvalue:number[]=[]; 
       var bgcolor:string[]=[];
       var bcolor:string[]=[];
@@ -265,45 +276,73 @@ export class DashboardComponent implements OnInit {
           { data: [], label: '' ,backgroundColor:[], borderColor:[],hoverBackgroundColor:[]},
         ];
         var prevDate:string="00/00/0000";    
-        for(let data1 of this.dashboarddatas)
+        for(var j=this.dashboarddatas.length-1;j>=0;j--)
         {
-         
+          let data1 =this.dashboarddatas[j];
            var param= JSON.stringify(data1.content).replace("{","").replace("}","").split(',');
            
             for(var i=0;i<param.length;i++)
               {
                 var paramValue=param[i].split(':');
                 if(paramValue[0]=='"'+xaxis+'"')
-                  xaxisvalue.push(paramValue[1]);
+                  xaxisvalue.push([paramValue[1]]);
                 if(paramValue[0]=='"'+yaxis+'"')
                   yaxisvalue.push(Number(paramValue[1].replace("\"","").replace("\"","")));
 
-                  bgcolor.push('#6495ED');
-                  bcolor.push('#6495ED');
-                  hoverBgColor.push('#6495ED');
-                  hoverBColor.push('#6495ED');
-
+                  
               }
               if(xaxis=="Time")
               {
                 if(new Date(data1.ptime).toLocaleDateString()!=prevDate)
-                  xaxisvalue.push(new Date(data1.ptime).toLocaleString());
+                  {// xaxisvalue.push(new Date(data1.ptime).toLocaleString());
+                    var month=new Date(data1.ptime).getMonth();
+                    var date=new Date(data1.ptime).getDate();
+                    var year=new Date(data1.ptime).getFullYear();
+                    xaxisvalue.push([month+"/"+date+"/"+year,new Date(data1.ptime).toLocaleTimeString()]);
+                    // xaxisvalue.push(['abc',new Date(data1.ptime).toLocaleTimeString()]);
+                  }
                 else
-                  xaxisvalue.push(new Date(data1.ptime).toLocaleTimeString());
+                  xaxisvalue.push([new Date(data1.ptime).toLocaleTimeString()]);
                 prevDate=new Date(data1.ptime).toLocaleDateString();
+              }
+
+              if(j%3==1)
+              {
+                bgcolor.push('#488A99');
+                  bcolor.push('#488A99');
+                  hoverBgColor.push('#488A99');
+                  hoverBColor.push('#488A99');
+
+              }
+              else  if(j%3==2)
+              {
+                bgcolor.push('#1C4E80');
+                  bcolor.push('#1C4E80');
+                  hoverBgColor.push('#1C4E80');
+                  hoverBColor.push('#1C4E80');
+
+              }
+              else{
+                    bgcolor.push('#0091D5');
+                    bcolor.push('#0091D5');
+                    hoverBgColor.push('#0091D5');
+                    hoverBColor.push('#0091D5');
+  
+                
               }
          } 
               
           this.paneDetails[paneSlNo].chartLineBarData[0].data=yaxisvalue;
           this.paneDetails[paneSlNo].chartLineBarData[0].label=yaxis;
           this.paneDetails[paneSlNo].chartLineBarData[0].backgroundColor=bgcolor;
-          this.paneDetails[paneSlNo].chartLineBarData[0].borderColor=bcolor;
+          this.paneDetails[paneSlNo].chartLineBarData[0].borderColor='#0091D5';
           this.paneDetails[paneSlNo].chartLineBarData[0].hoverBackgroundColor=hoverBgColor;
           this.paneDetails[paneSlNo].chartLineBarData[0].hoverBorderColor=hoverBColor;
           this.paneDetails[paneSlNo].chartLineBarData[0].pointBackgroundColor=hoverBColor;
           this.paneDetails[paneSlNo].chartLineBarData[0].pointBorderColor=hoverBColor;
           this.paneDetails[paneSlNo].chartLineBarData[0].pointHoverBackgroundColor=hoverBColor;
           this.paneDetails[paneSlNo].chartLineBarData[0].pointHoverBorderColor=hoverBColor;
+          
           this.paneDetails[paneSlNo].chartLineBarData[0].fill=false;
           this.paneDetails[paneSlNo].isLiveData=false;
           this.paneDetails[paneSlNo].chartReady=true;  
@@ -321,6 +360,7 @@ export class DashboardComponent implements OnInit {
     var xaxisvalue:string[]=[];
     var yaxisvalue:number[]=[]; 
     var paramvalue1:string[]=[];
+    
     
     const promise=await this.iotdataservice.getDeviceData(id).toPromise().then(data=>
     {
@@ -341,7 +381,7 @@ export class DashboardComponent implements OnInit {
               if(paramValue[0]=='"'+paramname+'"')
               paramvalue1.push(paramValue[1]);
             }
-                 
+            
         } 
         for(var i=0,k=0;i<paramvalue1.length;i++)
         {
@@ -386,10 +426,10 @@ getDeviceDataLiveData=async(id:number,paneSlNo:number,paramname:string[])=>{
   const promise=await this.iotdataservice.getDeviceData(id).toPromise().then(data=>
   {
     this.dashboarddatas=data;
-    this.paneDetails[paneSlNo].liveDataLabel = [''];
+    this.paneDetails[paneSlNo].liveDataLabel = [];
     
        var param= JSON.stringify(this.dashboarddatas[0].content).replace("{","").replace("}","").split(',');
-       var k=0;
+      
         for(var i=0;i<param.length;i++)
           {
             var paramValue=param[i].split(':');
@@ -397,20 +437,14 @@ getDeviceDataLiveData=async(id:number,paneSlNo:number,paramname:string[])=>{
             {
               if(paramValue[0]=='"'+paramname[j]+'"')
                 {
-                  this.paneDetails[paneSlNo].liveDataLabel[k]=paramValue[0].replace("\"","").replace("\"","")+" : "+paramValue[1].replace("\"","").replace("\"","");
-                 
-                  // this.paneDetails[paneSlNo].liveData[k]=livedata;
-                  k++;
-                  
+                 this.paneDetails[paneSlNo].liveDataLabel.push({caption:paramValue[0].replace("\"","").replace("\"",""),value:paramValue[1].replace("\"","").replace("\"","")});
                 }
             } 
-            this.paneDetails[paneSlNo].liveDataLabel[k]="Time : "+new Date(this.dashboarddatas[0].ptime).toLocaleString(); 
-
             
           }
-          
+          this.paneDetails[paneSlNo].liveDataLabel.push({caption:"Time",value:new Date(this.dashboarddatas[0].ptime).toLocaleString()});
           this.paneDetails[paneSlNo].isLiveData=true;  
-      this.paneDetails[paneSlNo].chartReady=true;  
+          this.paneDetails[paneSlNo].chartReady=true;  
  
   })
   .catch(res=>
@@ -429,9 +463,9 @@ getDeviceDataGauge=async(id:number,paneSlNo:number,lowmidhighalert:number[],gaug
   
   var colattr:string="#191717";//attrvalue
   var colalert:string="#FF3333";//alert
-  var collow:string="#AEC7F4";//low
-  var colmid:string="#5992F9";//mid
-  var colhigh:string="#0A5FF9";//high
+  var collow:string="#488A99";//low
+  var colmid:string="#0091D5";//mid
+  var colhigh:string="#1C4E80";//high
   var col2:string="#FFFFFF";
 
   
@@ -907,14 +941,6 @@ resize(paneid:number, size:string){
  {
    if(this.paneDetails[i].paneId==paneid)
    {
-     if(!this.paneDetails[i].isLiveData){
-      var canvas = document.getElementById('canvas'+paneid.toString()) as HTMLElement;
-      canvas.style.maxHeight ="310px";
-      canvas.style.minHeight="310px";
-      // canvas.style.height="310px";
-      // canvas.style.lineHeight="310px";
-      
-     }
      if(size=='small')
      {
        this.paneDetails[i].size="small"; 

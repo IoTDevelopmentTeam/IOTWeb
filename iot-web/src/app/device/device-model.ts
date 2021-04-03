@@ -44,6 +44,7 @@ export class DeviceAdminModel {
     isUsed:boolean=false;
     firstUse?:Date;
     expDate?:Date;
+   
 }
 export class UserDeviceModel{
     DeviceName:string='';
@@ -94,9 +95,9 @@ export class PaneDetailsFetch
         { data: [1,2,3], label: '',backgroundColor:[], borderColor:[],hoverBackgroundColor:[]},
       ] as ChartDataSets[];
     chartPieData = [
-        { data: [1,2,3], label: '' },
+        { data: [1,2,3], label: ''},
       ];
-    liveDataLabel = [''];
+    liveDataLabel = [{caption:'',value:''},];
     chartGaugeData = [
         { data: [1,2,3],backgroundColor:[''],borderWidth :0,hoverBackgroundColor:[''],hoverBorderWidth:0 }
       ] ;
@@ -107,7 +108,6 @@ export class PaneDetailsFetch
     chartReady:boolean = false;
     size:string='small';
     cssClass:string='';
-    height:string='';
     chartLegend = true;
     chartPlugins = [];
 }

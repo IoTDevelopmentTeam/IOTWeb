@@ -2,7 +2,7 @@
         <div class="container ">
             <div class="row ">
                 
-                <div class="col-sm-10 login-box">
+                <div class="col-sm-10 login-box tag-box">
                     <div class="main">
 					
 							<!-- <div class="small-logo">
@@ -88,28 +88,33 @@
 									<h6 class="card-subtitle text-muted">Some more text will go here</h6>
 								</div>
 								<div class="table-responsive">
-									<table class="table mb-0">
+									<table class="table mb-0 table-striped">
 										<thead>
 											<tr>
-                                                <th scope="col">Is Used</th>
-												<th scope="col">Tag Name</th>
-												<th scope="col">Generated On</th>
-												<th scope="col">Mapped Device Name</th>
-												<th scope="col">First Use</th>
-												<th scope="col">Exp Date</th>
+                                                <th width="10%" scope="col">Is Used</th>
+												<th width="18%" scope="col">Tag Name</th>
+												<th width="18%" scope="col">Generated On</th>
+												<th width="18%" scope="col">Mapped Device Name</th>
+												<th width="18%" scope="col">First Use</th>
+												<th width="18%" scope="col">Exp Date</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr *ngFor="let device of devices">
-
-                                                <td>
+												
+                                                <td width="10%">
 												<div *ngIf="!device.isUsed" ><input type="checkbox" name={{device.deviceTagName}} (click)="IsUsedChange($event)"></div>
                                                 <div *ngIf="device.isUsed" ><input type="checkbox" name={{device.deviceTagName}} (click)="IsUsedChange($event)" checked></div></td>
-                                                <td>{{device.deviceTagName}}</td>
-                                                <td>{{device.inputDate}}</td>
-                                                <td>{{device.deviceName}}</td>
-                                                <td>{{device.firstUse}}</td>
-                                                <td>{{device.expDate}}</td>
+                                                <td width="18%">{{device.deviceTagName}}</td>
+                                                <td width="18%">{{device.inputDate}}</td>
+                                                <td width="18%">{{device.deviceName}}</td>
+                                                <td width="18%">
+													{{device.firstUse}}
+												</td>
+                                                <td width="18%">
+													{{device.expDate}}
+												</td>
+												
                                             </tr>
 										</tbody>
 									</table>
