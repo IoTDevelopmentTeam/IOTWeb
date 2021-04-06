@@ -2,7 +2,7 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 
 import { DeviceService } from '../device.service';
 import { UserService } from '../user.service';
-import { DeviceModel,DeviceDetail,UserDeviceModel,UserDeviceModelResult,PaneDetails,ConfigDetails } from './device-model';
+import { DeviceModel,DeviceDetail,UserDeviceModel,UserDeviceModelResult,PaneDetails,ConfigDetails,DeviceNameEdit } from './device-model';
 import {FormGroup,FormControl,FormBuilder,Validators} from '@angular/forms';
 import { UserModel } from '../login/user-model';
 import { Router , NavigationStart } from '@angular/router';
@@ -19,6 +19,7 @@ export class DeviceComponent implements OnInit {
 
   @ViewChild('AddDeviceClose') AddDeviceClose:any;
   @ViewChild('DetailDeviceClose') DetailDeviceClose:any;
+  @ViewChild('EditDeviceClose') EditDeviceClose:any;
   displayName:string='';
   paneDetails:PaneDetails=new PaneDetails();
   configDetails:ConfigDetails=new ConfigDetails(0,0,'','');
@@ -26,6 +27,7 @@ export class DeviceComponent implements OnInit {
  
   device: DeviceModel=new DeviceModel(1,'Device 1','Device 1','Device 1',new Date(),1);
   devices: Array<DeviceModel>=[];
+  deviceNameLabel:DeviceNameEdit=new DeviceNameEdit();
   //devices: Array<DeviceModel> = [new DeviceModel(1,'Device 1','Device 1','2021/01/01',1),new DeviceModel(2,'Device 2','Device 2','2021/01/01',1)];
  
   showParam:boolean=false;
@@ -84,6 +86,11 @@ showLineChartMsg:boolean=false;
 showPieChartMsg:boolean=false;
 showGaugeChartMsg:boolean=false;
 addPaneFlag:boolean=true;
+
+showDeviceNewLabelNameMsg:boolean=false;
+deviceEditTagName:string ='';
+deviceEditLabelName:string ='';
+deviceNewLabelName:string='';
 
 
 
@@ -537,6 +544,64 @@ addPaneFlag:boolean=true;
   this.showPieChart=false;
   this.showGaugeChart=false;
  }
+
+ openEditDevicePopup=async(device:DeviceModel)=>{
+    
+  
+  const promise=await this.deviceservice.getAttributeNames(device.deviceTagName).toPromise().then(data=>
+    {
+      this.attrNames=data;
+      
+    }
+  )
+  .catch(res=>
+  {
+    Swal.fire('Error!', 'Error occured during fetching Edit Device Detail.\n Error: '+JSON.stringify(res), 'error');
+    
+  });
+  
+  this.deviceEditLabelName=device.deviceName;
+  this.deviceEditTagName=device.deviceTagName;
+  // this.detail.DeviceLabelName=device.DeviceId;
+  
+ 
+}
+
+
+EditDeviceSubmit=async()=>{
+   
+  if(this.deviceNewLabelName=="")
+    this.showDeviceNewLabelNameMsg=true;
+  else
+    this.showDeviceNewLabelNameMsg=false;
+ 
+  if(this.deviceNewLabelName!="")
+  {
+  this.deviceNameLabel.DeviceTagName=this.deviceEditTagName;
+  this.deviceNameLabel.DeviceName=this.deviceNewLabelName;
+  
+
+   const promise=await this.deviceservice.editDeviceLabelName(this.deviceNameLabel).toPromise().then(res => { 
+    
+      this.resultmapdevice=res;
+     
+        Swal.fire('Success!','Device label name modified successfully.', 'success')
+             
+        this.EditDeviceClose.nativeElement.click();
+       
+      
+      
+      this.getAllUserById(this.user.userId);
+    })
+    .catch(res=>
+      {
+        Swal.fire('Error!','Error occured during device label name change.\n Error: '+JSON.stringify(res), 'error');
+      });
+     
+  }
+  
+ 
+}
 
 }
 

@@ -13,6 +13,7 @@ import { UserRegistrationComponent } from './user-registration/user-registration
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 // import { AgmCoreModule } from '@agm/core';
 
@@ -26,7 +27,8 @@ import { UserUpdateComponent } from './user-update/user-update.component';
     UserRegistrationComponent,
     AdminDashboardComponent,
     ForgotPasswordComponent,
-    UserUpdateComponent
+    UserUpdateComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

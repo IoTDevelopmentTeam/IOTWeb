@@ -7,6 +7,7 @@ import { UserRegistrationComponent } from './user-registration/user-registration
 import {AdminDashboardComponent} from './admin-dashboard/admin-dashboard.component';
 import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 const routes: Routes = [
   { path: 'login',component: LoginComponent },
@@ -30,6 +31,13 @@ const routes: Routes = [
     component: DeviceComponent,
     children: [
       { path: 'updateuser', component: UserUpdateComponent },
+    ]
+  },
+  {
+    path: 'device',
+    component: DeviceComponent,
+    children: [
+      { path: 'changepassword', component: ChangePasswordComponent },
     ]
   }
 

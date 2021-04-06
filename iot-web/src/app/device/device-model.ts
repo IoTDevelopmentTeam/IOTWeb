@@ -34,6 +34,13 @@ export class DeviceAddModel {
     InputBy:string='';
 }
 
+export class DeviceNameEdit {
+   
+    DeviceTagName:string='';
+    DeviceName:string='';
+    
+}
+
 export class DeviceAdminModel {
    
     deviceLabelName:string='';

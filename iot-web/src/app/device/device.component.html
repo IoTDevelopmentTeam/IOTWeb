@@ -8,7 +8,7 @@
                <i class="hamburger align-self-center"></i>
           </a>
           <div class="small-dashbord-logo" style="max-width: 98px;">
-            <img class="img-fluid" src="assets\logo.png" >
+            <img class="img-fluid" src="assets\logo-white.png" >
         </div>
             
           <div class="navbar-collapse collapse">
@@ -21,7 +21,7 @@
                    <div class="dropdown-menu dropdown-menu-right">
                      <a class="dropdown-item"  routerLink="/device/dashboard"><i class="align-middle mr-1" data-feather="user"></i> Dashboard</a>
                       <a class="dropdown-item"   routerLink="/device/updateuser"><i class="align-middle mr-1" data-feather="user"></i> Profile</a>
-                       <a class="dropdown-item" href="#"><i class="align-middle mr-1" data-feather="user"></i> Change Password</a>
+                       <a class="dropdown-item" routerLink="/device/changepassword"><i class="align-middle mr-1" data-feather="user"></i> Change Password</a>
                        
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" (click)="LogOut()">Sign out</a>
@@ -65,9 +65,15 @@
                       <ul id="addeddevice" class="sidebar-dropdown list-unstyled collapse">
                         
                          <li *ngFor="let device of devices" class="sidebar-item">
-                             <a class="sidebar-link" href="#" data-toggle="modal" data-target="#divDetailDevice" (click)="openDeviceDetailPopup(device)">
-                                <span class="align-middle"><i class="fa fa-cog" aria-hidden="true"></i> {{device.deviceName}}</span>
-                                </a>
+                             <a class="sidebar-link" >
+                                <span class="align-middle" href="#" data-toggle="modal" data-target="#divDetailDevice" (click)="openDeviceDetailPopup(device)">
+                                    <i class="fa fa-cog" aria-hidden="true"></i> {{device.deviceName}}
+                                </span>
+                                <span class="align-middle" href="#" data-toggle="modal" data-target="#divEditDevice" (click)="openEditDevicePopup(device)">
+                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                </span>
+                             </a>
+                             
                           </li>
                          
                       </ul>
@@ -410,6 +416,60 @@
       </div>
     </div>
   </div>
+
+
+  <div class="modal fade" id="divEditDevice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content dark">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Device</h5>
+          <button type="button" #EditDeviceClose class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         
+              <div class="form-group">
+                  <label>Tag Name </label>
+                  <div class="form-d-flex">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                      </div>
+                      <input readonly [(ngModel)]="deviceEditTagName" class="form-control" type="text" name="tagName" placeholder="Enter TagName">
+                  </div>
+                </div>
+              <div class="form-group">
+                  <label>Existing Device Label Name </label>
+                  <div class="form-d-flex">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                      </div>
+                      <input readonly [(ngModel)]="deviceEditLabelName" class="form-control" type="text" name="labelname" placeholder="Enter Device Label Name">
+                  </div>
+                  
+              </div>
+              <div class="form-group">
+                <label>New Device Label Name </label>
+                <div class="form-d-flex">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    </div>
+                    <input [(ngModel)]="deviceNewLabelName" class="form-control" type="text" name="labelname" placeholder="Enter Device Label Name">
+                </div>
+                <div class="text-danger" *ngIf="showDeviceNewLabelNameMsg">
+                  <label>Please enter Device Label Name.</label>
+              </div>
+            </div>
+          </div>
+            
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" (click)="EditDeviceSubmit()" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+      </div>
+    </div>
+
 
 
   

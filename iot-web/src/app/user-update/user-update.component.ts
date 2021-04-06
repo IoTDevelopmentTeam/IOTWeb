@@ -25,6 +25,9 @@ export class UserUpdateComponent implements OnInit {
   showEmailMsg:boolean=false;
   showSecQuesMsg:boolean=false;
   showSecAnsMsg:boolean=false;
+  showPhoneMsg:boolean=false;
+  isPhNoValid:boolean=true;
+  phoneLength:number=0;
   constructor(private userservice:UserService) { }
 
   ngOnInit(): void {
@@ -80,7 +83,31 @@ export class UserUpdateComponent implements OnInit {
     else
       this.showSecAnsMsg=false;
 
-    if(this.email!="" && this.securityQues!=0 && this.securityAns!=""){
+    if(this.phoneNo!="")
+    {
+     
+        var phone=Number(this.phoneNo);
+        
+        if(!isNaN(phone)){
+        this.isPhNoValid=true;
+        this.showPhoneMsg=false;
+        if(this.phoneNo?.length!=10)
+        {
+          this.isPhNoValid=false;
+          this.showPhoneMsg=true;
+        }
+        
+        }
+        else{      
+        this.isPhNoValid=false;
+        this.showPhoneMsg=true;
+        }
+
+       
+      
+    }
+
+    if(this.email!="" && this.securityQues!=0 && this.securityAns!=""&& this.isPhNoValid){
     var emailExist=false;
     if(this.user.email!=this.email){
     const promise=await this.userservice.CheckEmailAvialable(this.email).toPromise().then(res => { // Success

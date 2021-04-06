@@ -18,6 +18,9 @@
                                                         <div class="form-group">
                                                             <label for="inputPhone">Phone Number</label>
                                                             <input type="text" [(ngModel)]="phoneNo" class="form-control" placeholder="Phone Number" >
+                                                            <div class="text-danger" *ngIf="showPhoneMsg">
+                                                                <label>Please enter valid Phone Number.</label>
+                                                            </div>
                                                         </div>
 
                                                         <div class="form-group">

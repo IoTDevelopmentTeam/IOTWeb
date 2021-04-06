@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders} from '@angular/common/http';
 
 import {Observable} from "rxjs/index";
-import {DeviceModel,UserDeviceModelResult,UserDeviceModel,PaneDetails,ConfigDetails, PaneDetailsFetch,ConfigDetailsFetch} from './device/device-model'
+import {DeviceModel,UserDeviceModelResult,UserDeviceModel,PaneDetails,ConfigDetails, PaneDetailsFetch,ConfigDetailsFetch,DeviceNameEdit} from './device/device-model'
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,7 @@ export class DeviceService {
   // getConfigDetailsApi:string='http://localhost:50364/api/Pane/GetConfigDetails/';
   // updatepanelApi:string='http://localhost:50364/api/Pane/UpdatePaneDetails';
   // deletepanelApi:string='http://localhost:50364/api/Pane/RemovePaneDetails';
+  // editDeviceLabelNameApi:string='http://localhost:50364/api/Device/EditDeviceLabelName';
   
   ApiUrl:string='http://52.14.214.29/api/Device/DeviceList';
   addDeviceApiUrl:string='http://52.14.214.29/api/Device/AddDevice';
@@ -28,6 +29,7 @@ export class DeviceService {
   getConfigDetailsApi:string='http://52.14.214.29/api/Pane/GetConfigDetails/';
   updatepanelApi:string='http://52.14.214.29/api/Pane/UpdatePaneDetails';
   deletepanelApi:string='http://52.14.214.29/api/Pane/RemovePaneDetails';
+  editDeviceLabelNameApi:string='http://52.14.214.29/api/Device/EditDeviceLabelName';
   
 
   httpOptions = {
@@ -158,5 +160,20 @@ export class DeviceService {
   updateDeviceDetail()
   {
   window.alert('Device detail updated'); 
+  }
+
+  editDeviceLabelName(userdevice:DeviceNameEdit):Observable<UserDeviceModelResult>
+  {
+   const headers = new HttpHeaders()
+   headers.set('content-type', 'application/json'); 
+   headers.set('Access-Control-Allow-Credentials', 'true'); 
+   headers.set('Access-Control-Allow-Origin', '*'); 
+   headers.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, PUT, OPTIONS'); 
+   headers.set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With'); 
+    
+
+    return this.http.post<any>(this.editDeviceLabelNameApi,userdevice,{headers});
+    
+  
   }
 }
