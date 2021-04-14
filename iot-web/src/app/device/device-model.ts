@@ -117,6 +117,8 @@ export class PaneDetailsFetch
     cssClass:string='';
     chartLegend = true;
     chartPlugins = [];
+    isMap:boolean=false;
+    mapType:string='';
 }
 export class ConfigDetailsFetch
 {

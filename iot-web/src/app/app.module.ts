@@ -15,7 +15,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { UserUpdateComponent } from './user-update/user-update.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 
-// import { AgmCoreModule } from '@agm/core';
+import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
@@ -36,11 +36,15 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     ChartsModule,
     FormsModule,
      HttpClientModule,
-     DragDropModule
+     DragDropModule,
     // AgmCoreModule.forRoot({
     //   apiKey: 'AIzaSyB45fOlHe5a7PKBGPqm32FP81WbEFXBlGY'
     // })
    
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBKU-UkCKfe2Q6CrRz1qZHRReHf4oj0Y2k'
+      
+    })
  
   ],
   providers: [],

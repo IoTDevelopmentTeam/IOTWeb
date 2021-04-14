@@ -19,6 +19,7 @@ import Swal from 'sweetalert2';
 
 
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -34,6 +35,10 @@ export class DashboardComponent implements OnInit {
   xaxis:string='';
   yaxis:string='';
   user:UserModel=new UserModel();
+
+  lat = 22.2736308;
+  long = 70.7512555;
+ 
 
   public chartOptions = {
     scaleShowVerticalLines: false,
@@ -215,6 +220,16 @@ export class DashboardComponent implements OnInit {
       {
       paneType='doughnut' as ChartType;
       this.paneDetails[paneSlNo].deviceName=this.paneDetails[paneSlNo].deviceName+' (Gauge Chart)';
+      }
+      else if(this.configDetails[0].masterId==6  )
+      {
+        this.paneDetails[paneSlNo].deviceName=this.paneDetails[paneSlNo].deviceName+' (Current Location)';
+        this.getCurrentLocationData(deviceId,paneSlNo);
+      }
+      else if(this.configDetails[0].masterId==7 )
+      {
+        this.paneDetails[paneSlNo].deviceName=this.paneDetails[paneSlNo].deviceName+' (Route Map)';
+        this.getRouteMapData(deviceId,paneSlNo);
       }
       this.paneDetails[paneSlNo].chartType=paneType;
       if(this.paneDetails[paneSlNo].chartType=='bar'||this.paneDetails[paneSlNo].chartType=='line')
@@ -468,6 +483,7 @@ getDeviceDataGauge=async(id:number,paneSlNo:number,lowmidhighalert:number[],gaug
   var colhigh:string="#1C4E80";//high
   var col2:string="#FFFFFF";
 
+  
   
   const promise=await this.iotdataservice.getDeviceData(id).toPromise().then(data=>
   {
@@ -912,7 +928,7 @@ getDeviceDataGauge=async(id:number,paneSlNo:number,lowmidhighalert:number[],gaug
       this.paneDetails[paneSlNo].chartGaugeData[1].backgroundColor=color2;
       this.paneDetails[paneSlNo].chartGaugeData[1].hoverBackgroundColor=color2;
       this.paneDetails[paneSlNo].chartLabels=chartlabels;
-      this.gaugeOptions.title.text="Attribute : "+attrValue.toString() + "\n Alert : "+ alertValue.toString()+ "\n Low : "+ lowValue.toString()+ "\n Mid : "+ midValue.toString()+ "\n High : "+ highValue.toString();
+      this.gaugeOptions.title.text=gaugeattribute+" : "+attrValue.toString() + "\n, Alert : "+ alertValue.toString()+ "\n, Low : "+ lowValue.toString()+ "\n, Mid : "+ midValue.toString()+ "\n, High : "+ highValue.toString();
       this.paneDetails[paneSlNo].isLiveData=false;
       this.paneDetails[paneSlNo].chartReady=true;  
 
@@ -1028,4 +1044,41 @@ removePane=async(pane:PaneDetailsFetch)=>{
   
    
  }
+getCurrentLocationData=async(id:number,paneSlNo:number)=>{
+ 
+ 
+  const promise=await this.iotdataservice.getDeviceData(id).toPromise().then(data=>
+  {
+     this.paneDetails[paneSlNo].isMap=true;  
+     this.paneDetails[paneSlNo].mapType='CurrentLocation';
+     this.paneDetails[paneSlNo].chartReady=true;  
+ 
+  })
+  .catch(res=>
+    {
+      Swal.fire('Error!', 'Error occured during Current Location Data Processing.\n Error: '+JSON.stringify(res), 'error');
+    });
+ 
+    
+
+}
+
+ getRouteMapData=async(id:number,paneSlNo:number)=>{
+ 
+ 
+  const promise=await this.iotdataservice.getDeviceData(id).toPromise().then(data=>
+  {
+     this.paneDetails[paneSlNo].isMap=true;  
+     this.paneDetails[paneSlNo].mapType='RouteMap';
+     this.paneDetails[paneSlNo].chartReady=true;  
+ 
+  })
+  .catch(res=>
+    {
+      Swal.fire('Error!', 'Error occured during Route Map Data Processing.\n Error: '+JSON.stringify(res), 'error');
+    });
+ 
+    
+
+}
 }
