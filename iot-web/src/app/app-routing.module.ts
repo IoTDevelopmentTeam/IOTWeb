@@ -8,6 +8,7 @@ import {AdminDashboardComponent} from './admin-dashboard/admin-dashboard.compone
 import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { VideoComponent } from './videos/video.component';
 
 const routes: Routes = [
   { path: 'login',component: LoginComponent },
@@ -38,6 +39,13 @@ const routes: Routes = [
     component: DeviceComponent,
     children: [
       { path: 'changepassword', component: ChangePasswordComponent },
+    ]
+  },
+  {
+    path: 'device',
+    component: DeviceComponent,
+    children: [
+      { path: 'videos', component: VideoComponent },
     ]
   }
 

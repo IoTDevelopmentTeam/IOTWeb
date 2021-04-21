@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { VideoComponent } from './videos/video.component';
 import { ChartsModule } from 'ng2-charts';
 import { DeviceComponent } from './device/device.component';
 import { LoginComponent } from './login/login.component';
@@ -28,7 +29,8 @@ import { AgmCoreModule } from '@agm/core';
     AdminDashboardComponent,
     ForgotPasswordComponent,
     UserUpdateComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    VideoComponent
   ],
   imports: [
     BrowserModule,

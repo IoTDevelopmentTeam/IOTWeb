@@ -1,0 +1,28 @@
+<h1 class="h3 mb-3">Videos</h1>
+<div class="row">
+
+  <div class="col-12">
+    <div class="row">
+
+      <ul class="videos">
+        <li *ngFor="let video of vls" [class.selected]="video === selectedVideo" (click)="onSelect(video)">
+          <span class="badge">{{video.id}}</span> {{video.url}}
+        </li>
+      </ul>
+
+      <div *ngIf="selectedVideo">
+
+        <h2>{{selectedVideo.url}} Details</h2>
+        <div><span>id: </span>{{selectedVideo.id}}</div>
+        <div>
+          <label for="video-url">video url: </label>
+          <textarea id="video-url" [(ngModel)]="selectedVideo.url" placeholder="url"></textarea>
+          
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+</div>

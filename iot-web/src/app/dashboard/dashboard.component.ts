@@ -88,7 +88,9 @@ export class DashboardComponent implements OnInit {
     title: {
         "display": true,
         "text": "",
-        //"position": bottom
+       // "position": bottom,
+       fontColor:'#005cff',
+        fontSize:15,
     }
   };
   
@@ -126,7 +128,7 @@ export class DashboardComponent implements OnInit {
     let timerId =setTimeout(function prepareDashboard() {
       
       that.getDetail(UserId);
-      timerId=setTimeout(prepareDashboard, 60000);
+      timerId=setTimeout(prepareDashboard, 900000);
     }, 0);
     
     }
@@ -155,12 +157,15 @@ export class DashboardComponent implements OnInit {
         this.paneDetails[i].index=i; 
       if(this.paneDetails[i].size==null)
         this.paneDetails[i].size="small";
-      if(this.paneDetails[i].size=="small")
+      if(this.paneDetails[i].size=="small"){
        this.paneDetails[i].cssClass="col-md-4"; 
-      else if(this.paneDetails[i].size=="mid")
+  }
+      else if(this.paneDetails[i].size=="mid"){
        this.paneDetails[i].cssClass="col-md-8"; 
-      else 
+        }
+      else {
         this.paneDetails[i].cssClass="col-md-12";
+     }
       this.getConfigDetail(this.paneDetails[i].paneId,i,this.paneDetails[i].deviceId);
       
     }  
@@ -303,7 +308,10 @@ export class DashboardComponent implements OnInit {
                   xaxisvalue.push([paramValue[1]]);
                 if(paramValue[0]=='"'+yaxis+'"')
                   yaxisvalue.push(Number(paramValue[1].replace("\"","").replace("\"","")));
-
+                  bgcolor.push('#6495ED');
+                  bcolor.push('#6495ED');
+                  hoverBgColor.push('#6495ED');
+                  hoverBColor.push('#6495ED');
                   
               }
               if(xaxis=="Time")
@@ -321,36 +329,40 @@ export class DashboardComponent implements OnInit {
                 prevDate=new Date(data1.ptime).toLocaleDateString();
               }
 
-              if(j%3==1)
-              {
-                bgcolor.push('#488A99');
-                  bcolor.push('#488A99');
-                  hoverBgColor.push('#488A99');
-                  hoverBColor.push('#488A99');
+              // if(j%3==1)
+              // {
+              //   bgcolor.push('#488A99');
+              //     bcolor.push('#488A99');
+              //     hoverBgColor.push('#488A99');
+              //     hoverBColor.push('#488A99');
 
-              }
-              else  if(j%3==2)
-              {
-                bgcolor.push('#1C4E80');
-                  bcolor.push('#1C4E80');
-                  hoverBgColor.push('#1C4E80');
-                  hoverBColor.push('#1C4E80');
+              // }
+              // else  if(j%3==2)
+              // {
+              //   bgcolor.push('#1C4E80');
+              //     bcolor.push('#1C4E80');
+              //     hoverBgColor.push('#1C4E80');
+              //     hoverBColor.push('#1C4E80');
 
-              }
-              else{
-                    bgcolor.push('#0091D5');
-                    bcolor.push('#0091D5');
-                    hoverBgColor.push('#0091D5');
-                    hoverBColor.push('#0091D5');
+              // }
+              // else{
+              //       bgcolor.push('#0091D5');
+              //       bcolor.push('#0091D5');
+              //       hoverBgColor.push('#0091D5');
+              //       hoverBColor.push('#0091D5');
   
                 
-              }
+              // }
+              bgcolor.push('#6495ED');
+              bcolor.push('#6495ED');
+              hoverBgColor.push('#6495ED');
+              hoverBColor.push('#6495ED');
          } 
               
           this.paneDetails[paneSlNo].chartLineBarData[0].data=yaxisvalue;
           this.paneDetails[paneSlNo].chartLineBarData[0].label=yaxis;
           this.paneDetails[paneSlNo].chartLineBarData[0].backgroundColor=bgcolor;
-          this.paneDetails[paneSlNo].chartLineBarData[0].borderColor='#0091D5';
+          this.paneDetails[paneSlNo].chartLineBarData[0].borderColor=bcolor;
           this.paneDetails[paneSlNo].chartLineBarData[0].hoverBackgroundColor=hoverBgColor;
           this.paneDetails[paneSlNo].chartLineBarData[0].hoverBorderColor=hoverBColor;
           this.paneDetails[paneSlNo].chartLineBarData[0].pointBackgroundColor=hoverBColor;
@@ -478,9 +490,9 @@ getDeviceDataGauge=async(id:number,paneSlNo:number,lowmidhighalert:number[],gaug
   
   var colattr:string="#191717";//attrvalue
   var colalert:string="#FF3333";//alert
-  var collow:string="#488A99";//low
-  var colmid:string="#0091D5";//mid
-  var colhigh:string="#1C4E80";//high
+  var collow:string="#AEC7F4";//low
+  var colmid:string="#5992F9";//mid
+  var colhigh:string="#0A5FF9";//high
   var col2:string="#FFFFFF";
 
   
@@ -921,16 +933,16 @@ getDeviceDataGauge=async(id:number,paneSlNo:number,lowmidhighalert:number[],gaug
       }
 
      }
-      this.paneDetails[paneSlNo].chartGaugeData[0].data=values;
-      this.paneDetails[paneSlNo].chartGaugeData[1].data=values;
-      this.paneDetails[paneSlNo].chartGaugeData[0].backgroundColor=color1;
-      this.paneDetails[paneSlNo].chartGaugeData[0].hoverBackgroundColor=color1;
-      this.paneDetails[paneSlNo].chartGaugeData[1].backgroundColor=color2;
-      this.paneDetails[paneSlNo].chartGaugeData[1].hoverBackgroundColor=color2;
-      this.paneDetails[paneSlNo].chartLabels=chartlabels;
-      this.gaugeOptions.title.text=gaugeattribute+" : "+attrValue.toString() + "\n, Alert : "+ alertValue.toString()+ "\n, Low : "+ lowValue.toString()+ "\n, Mid : "+ midValue.toString()+ "\n, High : "+ highValue.toString();
-      this.paneDetails[paneSlNo].isLiveData=false;
-      this.paneDetails[paneSlNo].chartReady=true;  
+     this.paneDetails[paneSlNo].chartGaugeData[0].data=values;
+     this.paneDetails[paneSlNo].chartGaugeData[1].data=values;
+     this.paneDetails[paneSlNo].chartGaugeData[0].backgroundColor=color1;
+     this.paneDetails[paneSlNo].chartGaugeData[0].hoverBackgroundColor=color1;
+     this.paneDetails[paneSlNo].chartGaugeData[1].backgroundColor=color2;
+     this.paneDetails[paneSlNo].chartGaugeData[1].hoverBackgroundColor=color2;
+     this.paneDetails[paneSlNo].chartLabels=chartlabels;
+     this.gaugeOptions.title.text=gaugeattribute+" : "+attrValue.toString() + "\n, Alert : "+ alertValue.toString()+ "\n, Low : "+ lowValue.toString()+ "\n, Mid : "+ midValue.toString()+ "\n, High : "+ highValue.toString();
+     this.paneDetails[paneSlNo].isLiveData=false;
+     this.paneDetails[paneSlNo].chartReady=true;  
 
       
 
@@ -975,9 +987,11 @@ resize(paneid:number, size:string){
       this.paneDetails[i].cssClass="col-md-12"; 
       
     }
+   
      break; 
    }
  }
+ this.updatePane(); 
  }
 
  updatePane=async()=>{
@@ -991,10 +1005,11 @@ resize(paneid:number, size:string){
     })
     .catch(res=>
     {
-      Swal.fire('Error!', 'Error occured during saving Dashboard Detail.\n Error: '+JSON.stringify(res), 'error');
+     // Swal.fire('Error!', 'Error occured during saving Dashboard Detail.\n Error: '+JSON.stringify(res), 'error');
     });
   }
-  Swal.fire('Success!', 'Dashboard configuration saved successfully.', 'success');
+  // Swal.fire('Success!', 'Dashboard configuration saved successfully.', 'success');
+  this.ngOnInit();
   
   }
 
