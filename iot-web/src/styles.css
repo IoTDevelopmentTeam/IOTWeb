@@ -470,3 +470,17 @@ main.content{
 agm-map {
 	height: 300px;
 }
+.log-left-pannel .small-logo{
+	top: 8%;
+}
+@media(max-width:767px){
+	.content{
+		padding: 1.5rem 0.6rem 1.5rem;
+	}
+	.sidebar{
+		margin-left: 0;
+	}
+	.log-left-pannel .small-logo {
+		top: 4%;
+	}
+}

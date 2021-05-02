@@ -384,7 +384,8 @@ export class DashboardComponent implements OnInit {
           
           this.paneDetails[paneSlNo].chartLineBarData[0].fill=false;
           this.paneDetails[paneSlNo].isLiveData=false;
-          this.paneDetails[paneSlNo].chartReady=true;  
+          this.paneDetails[paneSlNo].chartReady=true; 
+          console.log('ttt', this.paneDetails[paneSlNo].chartLineBarData[0]); 
       
       })
       .catch(res=>
