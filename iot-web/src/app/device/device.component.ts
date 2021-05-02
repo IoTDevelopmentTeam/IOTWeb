@@ -49,6 +49,7 @@ export class DeviceComponent implements OnInit {
   showPieChart:Boolean=false;
   showGaugeChart:Boolean=false;
   showCurrentLocation:Boolean=false;
+  showRouteMap:Boolean=false;
 
   alertValue:string='';
   lowValue:string='';
@@ -64,6 +65,8 @@ PieChart:string='';
 GaugeChart:string='';
 Latitude:string='';
 Longitude:string='';
+RouteLatitude:string='';
+RouteLongitude:string='';
 DataTypeValue:string='';
 GraphTypeValue:string='';
 MapTypeValue:string='';
@@ -86,6 +89,8 @@ showLineChartMsg:boolean=false;
 showPieChartMsg:boolean=false;
 showGaugeChartMsg:boolean=false;
 addPaneFlag:boolean=true;
+showRouteLongitudeMsg:boolean=false;
+showRouteLatitudeMsg:boolean=false;
 
 showDeviceNewLabelNameMsg:boolean=false;
 deviceEditTagName:string ='';
@@ -253,6 +258,7 @@ deviceNewLabelName:string='';
     });
     this.allGraphShowFalse();
     this.showCurrentLocation=false;
+    this.showRouteMap=false;
     this.showParam=false;
     this.DetailDeviceClose.nativeElement.click();
     }
@@ -384,6 +390,22 @@ deviceNewLabelName:string='';
           else
           this.showLongitudeMsg=false;
         }
+        else if(this.MapTypeValue=="RouteMap"){
+          if(this.RouteLatitude=="SelectAttribute" || this.RouteLatitude=="")
+          {
+            this.showRouteLatitudeMsg=true;
+            this.addPaneFlag=false;
+          }
+          else
+          this.showRouteLatitudeMsg=false;
+          if(this.RouteLongitude=="SelectAttribute" || this.RouteLongitude=="")
+          {
+            this.showRouteLongitudeMsg=true;
+            this.addPaneFlag=false;
+          }
+          else
+          this.showRouteLongitudeMsg=false;
+        }
         
       }
      
@@ -443,7 +465,8 @@ deviceNewLabelName:string='';
       }
       else if(this.MapTypeValue=="RouteMap")
       {
-        this.configs[0]=new ConfigDetails(7,paneid,'ParameterName','ParameterValue');
+        this.configs[0]=new ConfigDetails(7,paneid,'Latitude',this.RouteLatitude);
+        this.configs[1]=new ConfigDetails(7,paneid,'Longitude',this.RouteLongitude);
       }
     }
 
@@ -467,6 +490,7 @@ deviceNewLabelName:string='';
   onDataTypeSelected(selectedValue:string){
     this.allGraphShowFalse();
     this.showCurrentLocation=false;
+    this.showRouteMap=false;
     this.showParam=false;
     if(selectedValue=="Graph")
     {
@@ -499,6 +523,12 @@ deviceNewLabelName:string='';
     }
     else
     this.showCurrentLocation=false;
+    if(selectedValue=="RouteMap")
+    {
+      this.showRouteMap=true;
+    }
+    else
+    this.showRouteMap=false;
   }
 
   onGraphTypeSelected(selectedValue:string){

@@ -119,7 +119,12 @@ export class PaneDetailsFetch
     chartPlugins = [];
     isMap:boolean=false;
     mapType:string='';
-}
+    currentLocLat:number=0;
+    currentLocLong:number=0;
+    routeMap= [
+      {origin: {lat: 0, lng: 0},dest:{lat: 0, lng: 0} }
+      ];
+;}
 export class ConfigDetailsFetch
 {
     id:number=0;

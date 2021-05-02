@@ -18,8 +18,6 @@ import { bottom } from '@popperjs/core';
 import Swal from 'sweetalert2';
 
 
-
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -27,6 +25,7 @@ import Swal from 'sweetalert2';
 })
 export class DashboardComponent implements OnInit {
   
+
   devices: Array<DeviceModel>=[];
   paneDetails:Array<PaneDetailsFetch>=[];
   panedetailsUpdate:PaneDetails=new PaneDetails();
@@ -36,10 +35,7 @@ export class DashboardComponent implements OnInit {
   yaxis:string='';
   user:UserModel=new UserModel();
 
-  lat = 22.2736308;
-  long = 70.7512555;
- 
-
+  
   public chartOptions = {
     scaleShowVerticalLines: false,
     responsive: true,
@@ -159,13 +155,13 @@ export class DashboardComponent implements OnInit {
         this.paneDetails[i].size="small";
       if(this.paneDetails[i].size=="small"){
        this.paneDetails[i].cssClass="col-md-4"; 
-  }
+      }
       else if(this.paneDetails[i].size=="mid"){
        this.paneDetails[i].cssClass="col-md-8"; 
         }
       else {
         this.paneDetails[i].cssClass="col-md-12";
-     }
+      }
       this.getConfigDetail(this.paneDetails[i].paneId,i,this.paneDetails[i].deviceId);
       
     }  
@@ -228,13 +224,29 @@ export class DashboardComponent implements OnInit {
       }
       else if(this.configDetails[0].masterId==6  )
       {
+        var latValue='',longValue='';
+        for(var i=0;i<this.configDetails.length;i++)
+        {
+          if(this.configDetails[i].parameterName=="Latitude")
+            latValue=this.configDetails[i].parameterValue;
+          else if(this.configDetails[i].parameterName=="Longitude")
+            longValue=this.configDetails[i].parameterValue;
+        }
         this.paneDetails[paneSlNo].deviceName=this.paneDetails[paneSlNo].deviceName+' (Current Location)';
-        this.getCurrentLocationData(deviceId,paneSlNo);
+        this.getCurrentLocationData(deviceId,paneSlNo,latValue,longValue);
       }
       else if(this.configDetails[0].masterId==7 )
       {
+        var latValue='',longValue='';
+        for(var i=0;i<this.configDetails.length;i++)
+        {
+          if(this.configDetails[i].parameterName=="Latitude")
+            latValue=this.configDetails[i].parameterValue;
+          else if(this.configDetails[i].parameterName=="Longitude")
+            longValue=this.configDetails[i].parameterValue;
+        }
         this.paneDetails[paneSlNo].deviceName=this.paneDetails[paneSlNo].deviceName+' (Route Map)';
-        this.getRouteMapData(deviceId,paneSlNo);
+        this.getRouteMapData(deviceId,paneSlNo,latValue,longValue);
       }
       this.paneDetails[paneSlNo].chartType=paneType;
       if(this.paneDetails[paneSlNo].chartType=='bar'||this.paneDetails[paneSlNo].chartType=='line')
@@ -1059,11 +1071,24 @@ removePane=async(pane:PaneDetailsFetch)=>{
   
    
  }
-getCurrentLocationData=async(id:number,paneSlNo:number)=>{
- 
- 
+getCurrentLocationData=async(id:number,paneSlNo:number,latParam:string,longParam:string)=>{
+  this.paneDetails[paneSlNo].currentLocLat=0;
+  this.paneDetails[paneSlNo].currentLocLong=0;
+
   const promise=await this.iotdataservice.getDeviceData(id).toPromise().then(data=>
-  {
+  {  this.dashboarddatas=data;
+     var param= JSON.stringify(this.dashboarddatas[0].content).replace("{","").replace("}","").split(',');
+      
+        for(var i=0;i<param.length;i++)
+          {
+            var paramValue=param[i].split(':');
+            
+              if(paramValue[0]=='"'+latParam+'"')
+                this.paneDetails[paneSlNo].currentLocLat=Number(paramValue[1].replace("\"","").replace("\"",""));
+              else if(paramValue[0]=='"'+longParam+'"')
+                this.paneDetails[paneSlNo].currentLocLong=Number(paramValue[1].replace("\"","").replace("\"",""));
+             
+          }
      this.paneDetails[paneSlNo].isMap=true;  
      this.paneDetails[paneSlNo].mapType='CurrentLocation';
      this.paneDetails[paneSlNo].chartReady=true;  
@@ -1078,11 +1103,33 @@ getCurrentLocationData=async(id:number,paneSlNo:number)=>{
 
 }
 
- getRouteMapData=async(id:number,paneSlNo:number)=>{
- 
- 
+ getRouteMapData=async(id:number,paneSlNo:number,latParam:string,longParam:string)=>{
+  this.paneDetails[paneSlNo].routeMap= [
+   
+  ];
   const promise=await this.iotdataservice.getDeviceData(id).toPromise().then(data=>
   {
+    var latValue=[],longValue=[];
+    this.dashboarddatas=data;
+    for(let data1 of this.dashboarddatas)
+      {
+        var param= JSON.stringify(data1.content).replace("{","").replace("}","").split(',');
+      
+        for(var i=0;i<param.length;i++)
+          {
+            var paramValue=param[i].split(':');
+            
+              if(paramValue[0]=='"'+latParam+'"')
+                latValue.push(Number(paramValue[1].replace("\"","").replace("\"","")));
+              else if(paramValue[0]=='"'+longParam+'"')
+                 longValue.push(Number(paramValue[1].replace("\"","").replace("\"","")));
+               
+             
+          }
+          
+      }
+      for(var i=0;i<latValue.length-2;i++)
+      this.paneDetails[paneSlNo].routeMap.push({origin:{lat:latValue[i],lng:longValue[i]},dest:{lat:latValue[i+1],lng:longValue[i+1]}});
      this.paneDetails[paneSlNo].isMap=true;  
      this.paneDetails[paneSlNo].mapType='RouteMap';
      this.paneDetails[paneSlNo].chartReady=true;  

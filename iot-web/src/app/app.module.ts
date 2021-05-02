@@ -17,6 +17,7 @@ import { UserUpdateComponent } from './user-update/user-update.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 
 import { AgmCoreModule } from '@agm/core';
+import { AgmDirectionModule } from 'agm-direction'; 
 
 
 @NgModule({
@@ -44,9 +45,11 @@ import { AgmCoreModule } from '@agm/core';
     // })
    
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBKU-UkCKfe2Q6CrRz1qZHRReHf4oj0Y2k'
+      apiKey: 'AIzaSyBKU-UkCKfe2Q6CrRz1qZHRReHf4oj0Y2k',
+      libraries: ['places', 'drawing', 'geometry']
       
-    })
+    }),
+    AgmDirectionModule,
  
   ],
   providers: [],

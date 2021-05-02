@@ -466,3 +466,7 @@ main.content{
 .tag-box{
 	margin: 0px auto;
 }
+
+agm-map {
+	height: 300px;
+}
