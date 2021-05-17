@@ -7,9 +7,9 @@
 								<div cdkDropListGroup class="row flex-container">
 									<div *ngFor="let pane of paneDetails" class="{{pane.cssClass}} graph-wrapper drag-container" cdkDropList
 									(cdkDropListDropped)="drop($event, pane.index)">
-										<div  cdkDrag [cdkDragData]="pane" class="graph-content" *ngIf="pane.chartReady&&pane.isLiveData==false">
+										<div   class="graph-content" *ngIf="pane.chartReady&&pane.isLiveData==false">
 											<!-- Div Options -->
-											<div class="graph-header">
+											<div class="graph-header" cdkDrag [cdkDragData]="pane">
 												{{pane.deviceName}}<a class="graph-close" (click)="removePane(pane)"></a>
 											</div>
 											<a class="nav-link dropdown-toggle d-none d-sm-inline-block" data-toggle="dropdown">
@@ -21,7 +21,7 @@
 											   <a class="dropdown-item" (click)="resize(pane.paneId,'large')">Large</a>
 											</div>
 											<!-- End of div option -->
-											<canvas id="canvas{{pane.paneId}}" *ngIf="pane.chartType=='bar'||pane.chartType=='line'" baseChart
+											<canvas id="canvas{{pane.paneId}}" class="lineOrBar" *ngIf="pane.chartType=='bar'||pane.chartType=='line'" baseChart
 											[datasets]="pane.chartLineBarData"
 											[labels]="pane.chartLabels"
 											[options]="chartOptions"
@@ -29,7 +29,7 @@
 											[chartType]="pane.chartType">
 											</canvas>
 											
-											<canvas id="canvas{{pane.paneId}}" *ngIf="pane.chartType=='doughnut'" baseChart
+											<canvas id="canvas{{pane.paneId}}" class="doughnutChart" *ngIf="pane.chartType=='doughnut'" baseChart
 											[datasets]="pane.chartGaugeData"
 											
 											[options]="gaugeOptions"
@@ -49,9 +49,9 @@
 
 											</div>
 
-											<div cdkDrag [cdkDragData]="pane" class="graph-content" *ngIf="pane.chartReady&&pane.isLiveData==true">
+											<div  class="graph-content" *ngIf="pane.chartReady&&pane.isLiveData==true">
 											<!-- Div Options -->
-											<div class="graph-header">
+											<div class="graph-header" cdkDrag [cdkDragData]="pane">
 												{{pane.deviceName}}<a class="graph-close" (click)="removePane(pane)"></a>
 											</div>
 											<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown" aria-expanded="true">
@@ -70,9 +70,9 @@
 												</li>
 											</ul>
 										</div>
-										<div cdkDrag [cdkDragData]="pane" class="graph-content" *ngIf="pane.chartReady&&pane.isMap==true">
+										<div  class="graph-content" *ngIf="pane.chartReady&&pane.isMap==true">
 											<!-- Div Options -->
-											<div class="graph-header">
+											<div class="graph-header" cdkDrag [cdkDragData]="pane">
 												{{pane.deviceName}}<a class="graph-close" (click)="removePane(pane)"></a>
 											</div>
 											<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown" aria-expanded="true">
@@ -85,7 +85,7 @@
 											</div>
 											<!-- End of div option -->
 											
-											<agm-map id="canvas{{pane.paneId}}" *ngIf="pane.mapType=='CurrentLocation'"
+											<agm-map id="canvas{{pane.paneId}}" class="customMapHeight"  *ngIf="pane.mapType=='CurrentLocation'"
    											[latitude]='pane.currentLocLat' 
    											[longitude]='pane.currentLocLong'
    											>
@@ -98,7 +98,7 @@
 											
 
 										
-											<agm-map [zoom]="10" id="canvas{{pane.paneId}}" *ngIf="pane.mapType=='RouteMap'"
+											<agm-map [zoom]="10" id="canvas{{pane.paneId}}" class="customMapHeight" *ngIf="pane.mapType=='RouteMap'"
    											[latitude]='pane.routeMap[0].origin.lat' 
    											[longitude]='pane.routeMap[0].dest.lng'
 											[fitBounds]="true"

@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
     legend: {
       labels:{
       fontSize:15,
-      fontColor:'black',
+      fontColor:'#6495ED',
       }
     }
     
@@ -85,7 +85,7 @@ export class DashboardComponent implements OnInit {
         "display": true,
         "text": "",
        // "position": bottom,
-       fontColor:'#005cff',
+        fontColor:'#005cff',
         fontSize:15,
     }
   };
@@ -161,6 +161,7 @@ export class DashboardComponent implements OnInit {
         }
       else {
         this.paneDetails[i].cssClass="col-md-12";
+        
       }
       this.getConfigDetail(this.paneDetails[i].paneId,i,this.paneDetails[i].deviceId);
       
@@ -299,6 +300,7 @@ export class DashboardComponent implements OnInit {
       var bcolor:string[]=[];
       var hoverBgColor:string[]=[];
       var hoverBColor:string[]=[];
+      var fontColor:string[]=[];
      
       const promise=await this.iotdataservice.getDeviceData(id).toPromise().then(data=>
       {
@@ -369,6 +371,7 @@ export class DashboardComponent implements OnInit {
               bcolor.push('#6495ED');
               hoverBgColor.push('#6495ED');
               hoverBColor.push('#6495ED');
+              fontColor.push('#6495ED');
          } 
               
           this.paneDetails[paneSlNo].chartLineBarData[0].data=yaxisvalue;

@@ -385,24 +385,24 @@ main.content{
 
 .graph-wrapper .dropdown-toggle{
     position: absolute;
-	right: -5px;
-    top: 43px; /* Changed style */
+	right: 28px;
+    top: 7px; /* Changed style */
 }
 
 .graph-wrapper .dropdown-toggle .hamburger{
     width: 3px;
-	background: #908f8f;
+	background: #ffffff;
 }
 
 .graph-wrapper .dropdown-toggle .hamburger:before{
 	width: 3px;
-	background: #908f8f;
+	background: #ffffff;
 	top: -6px;
 }
 
 .graph-wrapper .dropdown-toggle .hamburger:after{
 	width: 3px;
-	background: #908f8f;
+	background: #ffffff;
 	bottom: -6px;
 }
 
@@ -421,25 +421,50 @@ main.content{
     border-radius: 3px;
 }
 .graph-content canvas{
-	padding: 0px 10px 20px 10px ;
+	padding: 10px 10px 20px 10px ;
+}
+.graph-content ul{
+	padding-top: 30px;
+}
+.graph-content ul li b{
+	text-transform: capitalize;
 }
 
 .form-group .text-danger{
 	font-size: 12px;
 }
+.form-group input[type=checkbox], .form-group input[type=radio]{
+	margin-right: 10px;
+}
+.form-group ul{
+	list-style-type: none;
+	padding-left: 10px;
+}
+.col-md-12 .doughnutChart{
+	max-width: 900px;
+	margin: 0 auto;
+}
+.col-md-8 .doughnutChart{
+	max-width: 600px;
+	margin: 0 auto;
+}
+.customMapHeight {
+	/* height: calc( 100% - 42px); */ 
+}
 /* Changed style */
 .graph-header{
 	padding: 7px 20px;
 	border-bottom: 1px solid rgb(210 214 222);
-	margin-bottom:30px;
+	margin-bottom:0px;
 	background: #005cff;
 	color:#FFF;
 	margin-top: -1px;
+	text-transform: capitalize;
 }
 
 .graph-close {
   position: absolute;
-  right: 5px;
+  right: 12px;
   top: 10px;
   width: 12px;
   height: 12px;
@@ -468,10 +493,10 @@ main.content{
 }
 
 agm-map {
-	height: 300px;
+	height: calc(100% - 35px);
 }
 .log-left-pannel .small-logo{
-	top: 8%;
+	top: 11%;
 }
 @media(max-width:767px){
 	.content{
