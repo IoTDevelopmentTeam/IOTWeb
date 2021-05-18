@@ -448,9 +448,7 @@ main.content{
 	max-width: 600px;
 	margin: 0 auto;
 }
-.customMapHeight {
-	/* height: calc( 100% - 42px); */ 
-}
+
 /* Changed style */
 .graph-header{
 	padding: 7px 20px;
@@ -495,6 +493,22 @@ main.content{
 agm-map {
 	height: calc(100% - 35px);
 }
+.col-md-12 .customMapHeight{
+	max-width: 900px;
+	margin: 0 auto;
+	height: 603px;
+}
+.col-md-8 .customMapHeight{
+	max-width: 600px;
+	margin: 0 auto;
+	height: 397px;
+}
+.col-md-4 .customMapHeight{
+	max-width: 600px;
+	margin: 0 auto;
+	height: 191px;
+}
+
 .log-left-pannel .small-logo{
 	top: 11%;
 }
