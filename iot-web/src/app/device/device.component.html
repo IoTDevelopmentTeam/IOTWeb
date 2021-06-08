@@ -3,7 +3,7 @@
    
     <div class="main">
         
-       <nav class="navbar navbar-expand navbar-light navbar-bg">
+       <nav class="navbar navbar-expand fixed-top navbar-light navbar-bg">
           <a class="sidebar-toggle" (click)="funcShowSideBar()">
                <i class="hamburger align-self-center"></i>
           </a>
@@ -34,7 +34,7 @@
        <!-- Main Body -->
        <div class="d-flex">
         <nav *ngIf="showSideBar" id="sidebar" class="sidebar">
-            <div class="sidebar-header"> Main Navigation </div>
+            <div class="sidebar-header">  </div>
             <div class="sidebar-content js-simplebar">
                <!--a class="sidebar-brand" href="index.html">
                <span class="align-middle mr-3">Wishtree</span>

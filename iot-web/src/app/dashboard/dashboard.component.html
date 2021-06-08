@@ -21,29 +21,29 @@
 											   <a class="dropdown-item" (click)="resize(pane.paneId,'large')">Large</a>
 											</div>
 											<!-- End of div option -->
-											<canvas id="canvas{{pane.paneId}}" class="lineOrBar" *ngIf="pane.chartType=='bar'||pane.chartType=='line'" baseChart
+											<div class="canvasWrap"><canvas id="canvas{{pane.paneId}}" class="lineOrBar" *ngIf="pane.chartType=='bar'||pane.chartType=='line'" baseChart
 											[datasets]="pane.chartLineBarData"
 											[labels]="pane.chartLabels"
 											[options]="chartOptions"
 											[legend]="pane.chartLegend"
 											[chartType]="pane.chartType">
-											</canvas>
+											</canvas></div>
 											
-											<canvas id="canvas{{pane.paneId}}" class="doughnutChart" *ngIf="pane.chartType=='doughnut'" baseChart
+											<div class="canvasWrap"><canvas id="canvas{{pane.paneId}}" class="doughnutChart" *ngIf="pane.chartType=='doughnut'" baseChart
 											[datasets]="pane.chartGaugeData"
 											
 											[options]="gaugeOptions"
 											[legend]="pane.chartLegend"
 											[chartType]="pane.chartType">
-											</canvas>
+											</canvas></div>
 											
-											<canvas id="canvas{{pane.paneId}}" *ngIf="pane.chartType=='pie'" baseChart
+											<div class="canvasWrap"><canvas id="canvas{{pane.paneId}}" *ngIf="pane.chartType=='pie'" baseChart
 											[datasets]="pane.chartPieData"
 											[labels]="pane.chartLabels"
 											[options]="pieChartOptions"
 											[legend]="pane.chartLegend"
 											[chartType]="pane.chartType">
-										    </canvas>
+										    </canvas></div>
 											
 											
 

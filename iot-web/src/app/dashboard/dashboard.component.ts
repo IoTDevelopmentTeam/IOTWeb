@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
     legend: {
       labels:{
       fontSize:15,
-      fontColor:'#6495ED',
+      fontColor:'#005cff',
       }
     }
     
@@ -322,10 +322,10 @@ export class DashboardComponent implements OnInit {
                   xaxisvalue.push([paramValue[1]]);
                 if(paramValue[0]=='"'+yaxis+'"')
                   yaxisvalue.push(Number(paramValue[1].replace("\"","").replace("\"","")));
-                  bgcolor.push('#6495ED');
-                  bcolor.push('#6495ED');
-                  hoverBgColor.push('#6495ED');
-                  hoverBColor.push('#6495ED');
+                  bgcolor.push('#005cff');
+                  bcolor.push('#005cff');
+                  hoverBgColor.push('#005cff');
+                  hoverBColor.push('#005cff');
                   
               }
               if(xaxis=="Time")
@@ -367,11 +367,11 @@ export class DashboardComponent implements OnInit {
   
                 
               // }
-              bgcolor.push('#6495ED');
-              bcolor.push('#6495ED');
-              hoverBgColor.push('#6495ED');
-              hoverBColor.push('#6495ED');
-              fontColor.push('#6495ED');
+              bgcolor.push('#005cff');
+              bcolor.push('#005cff');
+              hoverBgColor.push('#005cff');
+              hoverBColor.push('#005cff');
+              fontColor.push('#005cff');
          } 
               
           this.paneDetails[paneSlNo].chartLineBarData[0].data=yaxisvalue;
