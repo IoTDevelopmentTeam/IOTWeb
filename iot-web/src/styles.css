@@ -367,8 +367,9 @@ h2{
 	border-bottom-right-radius: 5px;
 }
 .navbar{
-	background: rgb(96 92 168); /* Changed style */
+	/* background: rgb(96 92 168); Changed style */
 	/*border-bottom: 1px solid #000;*/
+	background: rgb(33 73 167);
 	justify-content: space-between !important;
 	box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.75); /* Changed style */
 	-webkit-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.75); /* Changed style */
@@ -377,6 +378,7 @@ h2{
 main.content{
 	background: rgb(236 240 245) url(./assets/4931029.jpg) no-repeat;
 	background-size: cover;
+	background-attachment: fixed;
 	min-height: 100vh;
 	padding-top: 120px;
 }
@@ -396,7 +398,44 @@ main.content{
 	text-shadow: 0px 0px 3px rgb(40 48 67 / 55%);
 	padding: 4px 15px;
     display: inline-block;
-    float: right;
+	float: right;
+	position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+}
+.loginWrapper{
+	position: relative;
+	z-index: 1;
+}
+@media(max-width:768px){
+	.copyRights{
+		position: static;
+    float: none;
+    text-align: center;
+    display: block;
+    z-index: 2;
+    font-size: 11px;
+    letter-spacing: 1px;
+    user-select: none;
+	/* opacity: 0.3; */
+	
+    margin-top: 65px;
+	}
+	.login-box{
+		background: transparent;
+		padding-bottom: 70px;
+		box-shadow: none;
+	}
+	.loginWrapper .log-left-pannel{
+		background: #fff;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+	}
+	.loginWrapper .dark.log-right-pannel{
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+	}
 }
 
 .navbar-collapse{
@@ -441,8 +480,9 @@ main.content{
     box-shadow: 0px 3px 4px -1px rgb(0 0 0 / 75%);
     -webkit-box-shadow: 0px 3px 4px -1px rgb(0 0 0 / 75%);
     -moz-box-shadow: 0px 3px 4px -1px rgba(0,0,0,0.75);
-    border-top: 3px solid #3f7ae4;
-    border-radius: 3px;
+    /* border-top: 3px solid #3f7ae4; */
+	border-radius: 3px;
+	overflow: hidden;
 }
 .graph-content canvas{
 	padding: 10px 10px 20px 10px ;
@@ -479,8 +519,9 @@ main.content{
 	border-bottom: 1px solid rgb(210 214 222);
 	margin-bottom:0px;
 	/* background: #005cff; */
-	background: #3f7ae4;
-	color:#FFF;
+	/* background: #3f7ae4; */
+	background-image: linear-gradient(to right, #092f67, #1b408a, #3151af, #4a62d4, #6673fa);
+			color:#FFF;
 	margin-top: -1px;
 	text-transform: capitalize;
 }

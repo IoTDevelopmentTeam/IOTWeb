@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
     },
     legend: {
       labels:{
-      fontSize:15,
+      fontSize:14,
       fontColor:'#005cff',
       }
     }
@@ -978,6 +978,8 @@ drop(event: CdkDragDrop<any[]>, destRowIndex: number){
  this.paneDetails[event.item.data.index] = this.paneDetails[destRowIndex];
  this.paneDetails[destRowIndex] = temp;
  this.paneDetails.forEach((x, i) => x.index = i);
+ console.log('dropped');
+ this.updatePanewithoutReload(); 
 }
 
 resize(paneid:number, size:string){
@@ -1007,7 +1009,7 @@ resize(paneid:number, size:string){
      break; 
    }
  }
- this.updatePane(); 
+ this.updatePanewithoutReload(); 
  }
 
  updatePane=async()=>{
@@ -1028,6 +1030,25 @@ resize(paneid:number, size:string){
   this.ngOnInit();
   
   }
+
+  updatePanewithoutReload=async()=>{
+    for(var i=0;i<this.paneDetails.length;i++)
+    {
+      this.panedetailsUpdate.PaneId=this.paneDetails[i].paneId;
+      this.panedetailsUpdate.Index=this.paneDetails[i].index;
+      this.panedetailsUpdate.Size=this.paneDetails[i].size;
+      const promise=await this.deviceservice.updatePanelDetails(this.panedetailsUpdate).toPromise().then(data=>
+     {
+     })
+     .catch(res=>
+     {
+      // Swal.fire('Error!', 'Error occured during saving Dashboard Detail.\n Error: '+JSON.stringify(res), 'error');
+     });
+   }
+   // Swal.fire('Success!', 'Dashboard configuration saved successfully.', 'success');
+  //  this.ngOnInit();
+   
+   }
 
 
 removePane=async(pane:PaneDetailsFetch)=>{
